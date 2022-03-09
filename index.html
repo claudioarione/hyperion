@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/main_chart_style.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Hypèrion</title>
+
+</head>
+<body>
+
+<script src="scripts/utilities.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js" integrity="sha512-EbdJQSugx0nVWrtyK3JdQQ/03mS3Q1UiAhRtErbwl1YL/+e2hZdlIcSURxxh7WXHTzn83sjlh2rysACoJGfb6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="scripts/parsing_data.js"></script>
+
+<!--HEADER-->
+<header class="l-header">
+    <nav class="nav bd-grid">
+        <div class="logo__container">
+            <a href="#home" class="nav__logo">
+                <img src="images/utils/hyperion_logo.png" width="80px" alt="Logo">
+            </a>
+        </div>
+
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
+                <li class="nav__item"><a href="#about" class="nav__link">Info</a></li>
+                <li class="nav__item"><a href="#work" class="nav__link">Prodotti</a></li>
+                <li class="nav__item"><a href="#contact" class="nav__link">Contatti</a></li>
+                <!--     Inserisci anche un carrello della spesa        -->
+                <li class="nav__item" id="cartImage">
+                    <img src="images/utils/id-card-solid.svg" alt="Profile image" width="35px" height="50px"/>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav__toggle" id="nav-toggle">
+        </div>
+    </nav>
+</header>
+
+<main class="l-main">
+
+
+    <!--HOME-->
+    <section class="home bd-grid" id="home">
+        <div class="home__data">
+        </div>
+
+        <div class="btn-chart-container">
+
+            <div class="buttons">
+                <button id="dayBtn">
+                    Giorno
+                </button>
+                <button id="weekBtn" class="active">
+                    Settimana
+                </button>
+                <button id="monthBtn">
+                    Mese
+                </button>
+                <button id="yearBtn">
+                    Anno
+                </button>
+            </div>
+
+            <div class="main-chart-container" id="chartContainer">
+            </div>
+            <script src="scripts/main_chart_code.js">
+            </script>
+
+        </div>
+
+    </section>
+
+
+    <!--===== ABOUT =====-->
+    <section class="about section " id="about">
+        <h2 class="section-title">i tuoi consumi di oggi</h2>
+
+        <div class="about__container bd-grid">
+            <div class="about__img">
+                <img src="images/utils/hyperion_logo.png" alt="Logo" id="prova">
+            </div>
+
+            <div style="align-self: center">
+                <h2 class="about__subtitle">Parte</h2>
+                <p class="about__text">Inserire l'immagine della batteria con colore rosso o verde relativo a guadagni</p>
+            </div>
+        </div>
+    </section>
+
+    <!--===== WORK =====-->
+    <section class="work section" id="work">
+        <h2 class="section-title">Dettaglio dei consumi</h2>
+
+    </section>
+
+    <!--===== CONTACT =====-->
+    <section class="contact section" id="contact">
+
+        <h2 class="section-title">Contattaci</h2>
+
+    </section>
+
+</main>
+
+<!--===== SCROLL REVEAL =====-->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!--===== MAIN JS =====-->
+<script src="scripts/index_code.js"></script>
+
+</body>
+</html>
