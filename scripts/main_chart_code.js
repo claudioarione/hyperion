@@ -168,7 +168,7 @@ weekBtn.addEventListener('click', () => {
     });
     weekBtn.classList.add('active');
 
-    const dayToShow = "01/06/22";
+    const dayToShow = "01/01/22";
     const arrByDate = dayToShow.split('/');
     const dayToPass = new Date(parseInt(arrByDate[2])+2000, parseInt(arrByDate[0])-1, parseInt(arrByDate[1]));
     const week = getWeekArrayFromDate(dayToPass);

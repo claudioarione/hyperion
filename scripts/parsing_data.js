@@ -1,6 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 let energyValues = [];
+let energyDayValues = [];
 
 /**
  * Aggregates measures and calculates kWh of an hour
@@ -32,7 +33,7 @@ const showHourValues = (day, hour) => {
     }
     if(count === 0) return 0;
     const deltaTime = (lastTime[0] - firstTime[0])*3600 + (lastTime[1] -  firstTime[1])*60 + (lastTime[2] - firstTime[2]);
-    return ((sum/count)*deltaTime)/3600000;
+    return ((sum/count)*deltaTime)/(3600*1000);
 }
 
 /**
@@ -116,11 +117,44 @@ async function initializeEnergyValues(){
         header : true,
         worker : true,
         dynamicTyping : true,
-        complete : function (result) {
+        step : function (row) {
+            const day = row.data["data"];
+            const value = row.data["watt"];
+            if(value < 20000) {
+                if (energyDayValues.length === 0 || energyDayValues[energyDayValues.length - 1].data !== day) {
+                    energyDayValues.push({
+                        data: day,
+                        measurements: []
+                    });
+                    energyDayValues[energyDayValues.length - 1].measurements.push({
+                        ora: row.data.ora,
+                        watt: value
+                    });
+                } else {
+                    energyDayValues[energyDayValues.length - 1].measurements.push({
+                        ora: row.data.ora,
+                        watt: value
+                    });
+                }
+                energyValues.push(row.data);
+            }
+        },
+        complete : function () {
             console.log('Ho finito di analizzare i dati');
-            energyValues = result.data;
+            // console.log(energyValues);
+            energyDayValues.forEach((day) => {
+                let totWatt = 0;
+                for(let i=0; i<day.measurements.length; i++){
+                    totWatt += day.measurements[i].watt;
+                }
+                day.kWh = ((totWatt/day.measurements.length) * 24)/1000;
+            })
+            console.log("----------------------");
+            console.log(energyDayValues);
         }
     });
+
+
 }
 
 initializeEnergyValues();
