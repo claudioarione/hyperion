@@ -41,6 +41,11 @@ const initialValues = {
     ]
 };
 
+/**
+ * Associate a color gradient to a given kwh value
+ * @param kwh energy value to associate with a linear gradient
+ * @returns {{linearGradient: {y1: number, x1: number, y2: number, x2: number}, stops: (number|string)[][]}}
+ */
 function getColorByKwh(kwh){
     const green = {
         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -69,6 +74,11 @@ function getColorByKwh(kwh){
 }
 
 
+/**
+ * Maps the input in an object in the format required by HighCharts library
+ * @param data An nx2 matrix containing keys and values
+ * @returns the object required by HighCharts
+ */
 function getData(data) {
     return data.map(function (element) {
         return {
@@ -149,6 +159,9 @@ let chart = new Highcharts.Chart({
     }
 });
 
+
+/* Listeners */
+
 const dayBtn = document.getElementById('dayBtn');
 const weekBtn = document.getElementById('weekBtn');
 const monthBtn = document.getElementById('monthBtn');
@@ -188,7 +201,6 @@ weekBtn.addEventListener('click', () => {
 
     const dayToShow = "01/06/22";
     const arrByDate = dayToShow.split('/');
-    // const day = parseInt(arrByDate[0]);
     const dayToPass = new Date(parseInt(arrByDate[2])+2000, parseInt(arrByDate[0])-1, parseInt(arrByDate[1]));
     const week = getWeekArrayFromDate(dayToPass);
     const values = showWeekValues(week);

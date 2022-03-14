@@ -1,20 +1,9 @@
-// noinspection JSUnresolvedFunction
-
-const showMenu = (toggleId, navId) =>{
-    const toggle = document.getElementById(toggleId),
-        nav = document.getElementById(navId)
-
-    if(toggle && nav){
-        toggle.addEventListener('click', ()=>{
-            nav.classList.toggle('show')
-        })
-    }
-}
-showMenu('nav-toggle','nav-menu')
-
 /*==== SCROLL SECTIONS ACTIVE LINK ====================*/
 const sections = document.querySelectorAll('section[id]')
 
+/**
+ * Updates navbar indicator section according to page scroll
+ */
 function scrollActive(){
     const scrollY = window.pageYOffset
 
@@ -32,7 +21,9 @@ function scrollActive(){
 }
 window.addEventListener('scroll', scrollActive)
 
-/*===== SCROLL REVEAL ANIMATION =====*/
+/**
+ * Necessary for scroll reveal animation
+ */
 const sr = ScrollReveal({
     origin: 'top',
     distance: '60px',

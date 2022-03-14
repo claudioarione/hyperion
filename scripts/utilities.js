@@ -1,6 +1,9 @@
-/** Return 1 if date1 is greater than date2
- *  Return -1 if date2 is greater than date1
- *  Else return 0 */
+/**
+ * Compares two dates in the "mm/dd/yy" string format
+ * @param date1 "mm/dd/yy" string indicating the first date of the comparison
+ * @param date2 "mm/dd/yy" string indicating the second date of the comparison
+ * @returns 1 if date1 is after date2; -1 if date2 is after date1; 0 otherwise
+ * */
 const dateCompare = (date1, date2) => {
     if(date1 === null || date2 === null) return 1;
     const slices1 = date1.split("/");
@@ -12,11 +15,21 @@ const dateCompare = (date1, date2) => {
     return -1;
 }
 
+/**
+ * Converts a number into a "xx" string
+ * @param num a number
+ * @returns {string} "xx" string
+ */
 const getStringFromNumber = (num) => {
     if(num<10) return '0'+num.toString();
     return num.toString();
 }
 
+/**
+ * Maps a number into the corresponding Italian month
+ * @param month a number between 1 and 12
+ * @returns {string} string indicating the corresponding Italian month
+ */
 function italianMonth(month){
     switch (month) {
         case 1: return "Gennaio";
@@ -34,6 +47,11 @@ function italianMonth(month){
     }
 }
 
+/**
+ * Maps a number into the corresponding Italian day of the week
+ * @param day a number between 0 and 6
+ * @returns {string} string indicating the corresponding Italian day of the week
+ */
 function italianDayOfTheWeek(day) {
     switch(day){
         case 0: return "Lunedì"

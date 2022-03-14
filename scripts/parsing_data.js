@@ -2,7 +2,12 @@
 
 let energyValues = [];
 
-
+/**
+ * Aggregates measures and calculates kWh of an hour
+ * @param day "mm/dd/yy" string indicating the considered day
+ * @param hour "hh" string containing a number indicating the selected hour (00-24)
+ * @returns {number} kWh value
+ */
 const showHourValues = (day, hour) => {
     let end = false, firstFound = false, lastFound = false;
     let count=0, sum=0, i=0, firstTime, lastTime;
@@ -30,7 +35,11 @@ const showHourValues = (day, hour) => {
     return ((sum/count)*deltaTime)/3600000;
 }
 
-
+/**
+ * Aggregates hours values
+ * @param day "mm/dd/yy" string that indicates the considered day
+ * @returns {*[]} array containing key-value pairs of the hours
+ */
 const showDayValues = (day) => {
     let arrayRes = [];
     for (let i = 0; i < 24; i++) {
@@ -44,6 +53,11 @@ const showDayValues = (day) => {
     return arrayRes;
 }
 
+/**
+ *
+ * @param day "mm/dd/yy" string that indicates the considered day
+ * @returns {number} number indicating total kWh in the selected day
+ */
 const getTotalKwhInADay = (day) => {
     const hourlyKwhOfDays = showDayValues(day);
     let sum = 0;
@@ -53,6 +67,11 @@ const getTotalKwhInADay = (day) => {
     return sum;
 }
 
+/**
+ *
+ * @param week array of "mm/dd/yy" strings from Monday to Sunday
+ * @returns {*[]} array of key-value pair of daily kWh
+ */
 const showWeekValues = (week) => {
     let arrayRes = [];
     for (let i = 0; i < 7; i++) {
@@ -65,7 +84,12 @@ const showWeekValues = (week) => {
     return arrayRes;
 }
 
-
+/**
+ *
+ * @param month "mm" string
+ * @param year "yy" string
+ * @returns {*[]} array of key-value pair of daily kWh
+ */
 const showMonthValues = (month, year) => {
     //I giorni considerati sono month/gg/year
     let arrayRes = [];
@@ -81,7 +105,11 @@ const showMonthValues = (month, year) => {
     return arrayRes;
 }
 
-async function intializeEnergyValues(){
+/**
+ * Parses input into a structure
+ * @returns {Promise<void>}
+ */
+async function initializeEnergyValues(){
     const file = await fetch('./csv/energy.csv');
     const blob = await file.blob();
     Papa.parse(blob, {
@@ -95,6 +123,6 @@ async function intializeEnergyValues(){
     });
 }
 
-intializeEnergyValues();
+initializeEnergyValues();
 
 
