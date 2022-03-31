@@ -1,46 +1,14 @@
-/* FIXME edit intial values with real values */
-const intialPrevValues = {
-    Settimana1: [
-        ['Lun', 0.3],
-        ['Mar', 0.11],
-        ['Mer', 0.24],
-        ['Gio', 0.38],
-        ['Ven', 1.29],
-        ['Sab', 0.46],
-        ['Dom', 0.62]
-    ],
-    Settimana2: [
-        ['Lun', 0.13],
-        ['Mar', 0.8],
-        ['Mer', 0.22],
-        ['Gio', 0.51],
-        ['Ven', 1.9],
-        ['Sab', 0.36],
-        ['Dom', 0.50]
-    ]
-};
-
 const initialValues = {
     Settimana1: [
-        ['Lun', 0.13],
-        ['Mar', 0.8],
-        ['Mer', 0.22],
-        ['Gio', 0.51],
-        ['Ven', 1.9],
-        ['Sab', 0.36],
-        ['Dom', 0.50]
-    ],
-    Settimana2: [
-        ['Lun', 0.13],
-        ['Mar', 5],
-        ['Mer', 0.24],
-        ['Gio', 0.38],
-        ['Ven', 0.29],
-        ['Sab', 0.46],
-        ['Dom', 0.38]
+        ['Lunedì', 0],
+        ['Martedì', 0],
+        ['Mercoledì', 0],
+        ['Giovedì', 0],
+        ['Venerdì', 0],
+        ['Sabato', 0],
+        ['Domenica', 0]
     ]
 };
-
 
 
 /**
@@ -65,11 +33,11 @@ let chart = new Highcharts.Chart({
         type: 'column'
     },
     title: {
-        text: 'Consumi energetici',
+        text: 'Consumi energetici della settimana corrente',
         align: 'center'
     },
     subtitle: {
-        text: 'Grafico dei consumi energetici del giorno',
+        text: 'Grafico dei consumi energetici della settimana',
         align: 'center'
     },
     plotOptions: {
@@ -106,103 +74,102 @@ let chart = new Highcharts.Chart({
         showFirstLabel: false
     }],
     series: [{
+        name : 'Consumo',
         color: 'rgb(158, 159, 163)',
         pointPlacement: -0.2,
         linkedTo: 'main',
-        data: intialPrevValues["Settimana1"].slice(),
-        name: 'Settimana0'
-    }, {
-        name: 'Settimana1',
-        id: 'main',
-        dataLabels: [{
-            enabled: true,
-            inside: true,
-            style: {
-                fontSize: '16px'
-            }
-        }],
-        data: getData(initialValues["Settimana1"]).slice()
+        data: initialValues["Settimana1"].slice()
     }],
     exporting: {
         allowHTML: true
     }
 });
 
-
-/* Listeners */
-
-const dayBtn = document.getElementById('dayBtn');
-const weekBtn = document.getElementById('weekBtn');
-const monthBtn = document.getElementById('monthBtn');
-const yearBtn = document.getElementById('yearBtn');
-
-dayBtn.addEventListener('click', () => {
-    //grafico da 24 colonne, 1 per ogni ora
-    document.querySelectorAll('.buttons button.active').forEach(function (active) {
-        active.classList.remove('active');
-    });
-    dayBtn.classList.add('active');
-
-    const values = showDayValues("11/29/21");
+function showHourChart(day, hourStart) {
+    const values = showHourValues(day, hourStart);
 
     chart.update({
         title: {
-            text: 'Consumi energetici del giorno'
+            text: 'Consumi energetici dell\'ora'
+        },
+        subtitle: {
+            text: 'Grafico dei consumi energetici di ' + fromFormatToItalian(day) + ' tra le ' + hourStart.split(":")[0] + ':00 e le ' + getStringFromNumber(parseInt(hourStart.split(":")[0])+1) + ':00',
+            align: 'center'
         },
         xAxis : {
-            max : 23
+            max : 11
         },
         series: [{
-            name: "11/29/21",
+            name: "Consumo",
             data: getData(values).slice()
         }]
     }, true, false, {
         duration: 800
     });
-});
+}
 
-weekBtn.addEventListener('click', () => {
-    //grafico da 7 gruppi di 3 colonne: 00-08/08-16/16-24
-    document.querySelectorAll('.buttons button.active').forEach(function (active) {
-        active.classList.remove('active');
+/**
+ * Renders a bar chart showing daily consumes [in kWh]
+ * @param day "mm/dd/yy" string
+ */
+function showDayChart(day){
+    const values = showDayValues(day);
+
+    chart.update({
+        title: {
+            text: 'Consumi energetici del giorno'
+        },
+        subtitle: {
+            text: 'Grafico dei consumi energetici di ' + fromFormatToItalian(day),
+            align: 'center'
+        },
+        xAxis : {
+            max : 23
+        },
+        series: [{
+            name: "Consumo",
+            data: getData(values).slice()
+        }]
+    }, true, false, {
+        duration: 800
     });
-    weekBtn.classList.add('active');
+}
 
-    const dayToShow = "01/01/22";
-    const arrByDate = dayToShow.split('/');
+/**
+ * Renders a bar chart showing weekly consumes [in kWh]
+ * @param day "mm/dd/yy" string
+ */
+function showWeekChart(day) {
+    const arrByDate = day.split('/');
     const dayToPass = new Date(parseInt(arrByDate[2])+2000, parseInt(arrByDate[0])-1, parseInt(arrByDate[1]));
     const week = getWeekArrayFromDate(dayToPass);
     const values = showWeekValues(week);
 
     chart.update({
         title : {
-            text : 'Consumi energetici della settimana'
+            text : 'Consumi energetici della settimana corrente'
         },
         subtitle: {
-            text: 'Grafico dei consumi energetici della settimana dal ' + week[0] + ' al ' + week[6],
+            text: 'Grafico dei consumi energetici della settimana da ' + fromFormatToItalian(week[0]) + ' a ' + fromFormatToItalian(week[6]),
             align: 'center'
         },
         xAxis : {
             max : 6
         },
         series: [{
-            //name: "" ,
             data: getData(values).slice()
         }]
     }, true, false, {
         duration: 800
     });
-});
+}
 
-monthBtn.addEventListener('click', () => {
-    //grafico da 28/29/30/31 colonne, 1 per ogni giorno
-    document.querySelectorAll('.buttons button.active').forEach(function (active) {
-        active.classList.remove('active');
-    });
-    monthBtn.classList.add('active');
-
-    const dayToShow = "01/06/22";
-    const arrByDate = dayToShow.split('/');
+/**
+ * Renders a bar chart showing monthly consumes [in kWh]
+ * @param day "mm/dd/yy" string
+ */
+function showMonthChart(day) {
+    const arrByDate = day.split('/');
     // const day = parseInt(arrByDate[0]);
     const values = showMonthValues(arrByDate[0], arrByDate[2]);
 
@@ -224,8 +191,102 @@ monthBtn.addEventListener('click', () => {
     }, true, false, {
         duration: 800
     });
+}
+
+/**
+ * Renders a bar chart showing yearly consumes [in kWh]
+ * @param year "yy" string
+ */
+function showYearChart(year) {
+    const values = showYearValues(year);
+
+    chart.update({
+        title : {
+            text : 'Consumi energetici dell\'anno'
+        },
+        subtitle: {
+            text: 'Grafico dei consumi energetici del 20' + year,
+            align: 'center'
+        },
+        xAxis : {
+            max : 11
+        },
+        series: [{
+            data: getData(values).slice()
+        }]
+    }, true, false, {
+        duration: 800
+    });
+}
+
+/* Listeners */
+
+const dayBtn = document.getElementById('dayBtn');
+const weekBtn = document.getElementById('weekBtn');
+const monthBtn = document.getElementById('monthBtn');
+const yearBtn = document.getElementById('yearBtn');
+const hourBtn = document.getElementById('hourBtn');
+
+hourBtn.addEventListener('click', () => {
+    document.querySelectorAll('.buttons button.active').forEach(function (active) {
+        active.classList.remove('active');
+    });
+    hourBtn.classList.add('active');
+
+    const dpValue = document.getElementById('datePicker').value;
+    const timePicker = document.getElementById('timePicker');
+    timePicker.style.display = '';
+    showHourChart(fromDatePickerToFormat(dpValue), "17:00:00")
+});
+
+dayBtn.addEventListener('click', () => {
+    //grafico da 24 colonne, uno per ogni ora
+    document.querySelectorAll('.buttons button.active').forEach(function (active) {
+        active.classList.remove('active');
+    });
+    dayBtn.classList.add('active');
+
+    timePicker.style.display = 'none';
+
+    const dpValue = document.getElementById('datePicker').value;
+    showDayChart(fromDatePickerToFormat(dpValue))
+});
+
+weekBtn.addEventListener('click', () => {
+    //grafico da sette gruppi di tre colonne: 00-08/08-16/16-24
+    document.querySelectorAll('.buttons button.active').forEach(function (active) {
+        active.classList.remove('active');
+    });
+    weekBtn.classList.add('active');
+
+    timePicker.style.display = 'none';
+
+    const dpValue = document.getElementById('datePicker').value;
+    showWeekChart(fromDatePickerToFormat(dpValue))
+});
+
+monthBtn.addEventListener('click', () => {
+    //grafico da 28/29/30/31 colonne, una per ogni giorno
+    document.querySelectorAll('.buttons button.active').forEach(function (active) {
+        active.classList.remove('active');
+    });
+    monthBtn.classList.add('active');
+
+    timePicker.style.display = 'none';
+
+    const dpValue = document.getElementById('datePicker').value;
+    showMonthChart(fromDatePickerToFormat(dpValue))
 });
 
 yearBtn.addEventListener('click', () => {
-    //grafico da 12 colonne, 1 per ogni mese
+    //grafico da 12 colonne, una per ogni mese
+    document.querySelectorAll('.buttons button.active').forEach(function (active) {
+        active.classList.remove('active');
+    });
+    yearBtn.classList.add('active');
+
+    timePicker.style.display = 'none';
+
+    const dpValue = document.getElementById('datePicker').value;
+    showYearChart(fromDatePickerToFormat(dpValue).split("/")[2]);
 });

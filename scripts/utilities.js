@@ -1,3 +1,5 @@
+const misurationInterval = 17.9
+
 /**
  * Compares two dates in the "mm/dd/yy" string format
  * @param date1 "mm/dd/yy" string indicating the first date of the comparison
@@ -116,5 +118,48 @@ function getColorByKwh(kwh){
     return green;
 }
 
+
+function fromDatePickerToFormat(date) {
+    const partsOfDate = date.split("-");
+    return partsOfDate[1] + "/" + partsOfDate[2] + "/" + getStringFromNumber(parseInt(partsOfDate[0])-2000);
+}
+
+function fromFormatToItalian(date) {
+    const partsOfDate = date.split("/");
+    const dayToPass = new Date(parseInt(partsOfDate[2])+2000, parseInt(partsOfDate[0])-1, parseInt(partsOfDate[1]));
+    const dayOfTheWeek = italianDayOfTheWeek((dayToPass.getDay()+6)%7).toLowerCase();
+    return dayOfTheWeek + " " + partsOfDate[1] + " " + italianMonth(parseInt(partsOfDate[0])) + " 20" + partsOfDate[2];
+}
+
+function changeMinuteAndSecondOfHour(hour, minute, second) {
+    const partsOfHour = hour.split(":");
+    return partsOfHour[0] + ":" + getStringFromNumber(minute) + ":" + getStringFromNumber(second)
+}
+
+function checkImageCompatibility(name) {
+    const nameToCheck = name.toLowerCase();
+    if(nameToCheck.includes("lavastovigl"))
+        return "dishwasher";
+    if(nameToCheck.includes("ferro") || nameToCheck.includes("stir"))
+        return "iron";
+    if (nameToCheck.includes("forn"))
+        return "oven";
+    if (nameToCheck.includes("tv") || nameToCheck.includes("tele"))
+        return "television";
+    if (nameToCheck.includes("lavatrice") || nameToCheck.includes("lavabianch"))
+        return "washing_machine";
+    if (nameToCheck.includes("aspira") || nameToCheck.includes("polvere"))
+        return "vacuum_cleaner";
+    if (nameToCheck.includes("phon") || nameToCheck.includes("asciugacap"))
+        return "hair_dryer";
+    return "general";
+}
+
+function enableOrDisableBtn(btn, enable) {
+    if(enable)
+        btn.classList.add("active");
+    else
+        btn.classList.remove("active");
+}
 
 

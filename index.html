@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/main_chart_style.css">
+    <link rel="stylesheet" href="styles/appliances_style.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -54,21 +55,91 @@
         <div class="home__data">
         </div>
 
+        <div class="wrapper">
+            <header>I tuoi elettrodomestici</header>
+            <div class="inputField">
+                <div class="input__appliance__container">
+                    <input type="text" id="applianceName" placeholder="Nome dell'elettrodomestico">
+                    <div class="details__appliance__container">
+                        <input id="applianceWatt" type="number" min="0" max="20000" step="0.01" class="input__number__watt" placeholder="Consumo" oninput="validity.valid||(value='');">
+                        <span style="margin-right: 10px; margin-top: 4px">Watt</span>
+                        <select id="applianceCategoryName" style="margin-right: 10px; border-radius: 4px; box-shadow:  0 10px 15px rgba(0,0,0,0.1);">
+                            <option value="" disabled selected>Categoria...</option>
+                            <option value="general">Generale</option>
+                            <option value="iron">Ferro da stiro</option>
+                            <option value="oven">Forno</option>
+                            <option value="television">Televisione</option>
+                            <option value="dishwasher">Lavastoviglie</option>
+                            <option value="washing_machine">Lavatrice</option>
+                            <option value="vacuum_cleaner">Aspirapolvere</option>
+                            <option value="hair_dryer">Asciugacapelli</option>
+                        </select>
+                        <img id="applianceCategoryImg" src="images/appliance_icons/general.png" width="32px" alt="">
+                    </div>
+                </div>
+                <button id="addApplianceBtn"><i class="fa fa-plus"></i></button>
+            </div>
+            <ul class="todoList">
+                <!-- data comes from local storage -->
+            </ul>
+            <div class="footer">
+                <span>Hai <span class="pendingTasks"></span> elettrodomestici</span>
+                <button id="deleteAllAppliances">Cancella tutto</button>
+            </div>
+        </div>
+
         <div class="btn-chart-container">
 
-            <div class="buttons">
-                <button id="dayBtn">
-                    Giorno
-                </button>
-                <button id="weekBtn" class="active">
-                    Settimana
-                </button>
-                <button id="monthBtn">
-                    Mese
-                </button>
-                <button id="yearBtn">
-                    Anno
-                </button>
+            <div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 2rem">
+                <div class="buttons">
+                    <button id="hourBtn">
+                        Ora
+                    </button>
+                    <button id="dayBtn">
+                        Giorno
+                    </button>
+                    <button id="weekBtn" class="active">
+                        Settimana
+                    </button>
+                    <button id="monthBtn">
+                        Mese
+                    </button>
+                    <button id="yearBtn">
+                        Anno
+                    </button>
+                </div>
+
+                <input id="datePicker" type="date" class="date__picker" onkeydown="return false;">
+<!--                <input id="timePicker" type="time" class="time__picker" value="17:00" onkeydown="return false;">-->
+<!--                <label for="timePicker"></label>-->
+                <label for="timePicker"></label>
+                <select name="tp" id="timePicker" class="time__picker" onkeydown="return false;">
+                    <option value="1">00:00-01:00</option>
+                    <option value="2">01:00-02:00</option>
+                    <option value="3">02:00-03:00</option>
+                    <option value="4">03:00-04:00</option>
+                    <option value="5">04:00-05:00</option>
+                    <option value="6">05:00-06:00</option>
+                    <option value="7">06:00-07:00</option>
+                    <option value="8">07:00-08:00</option>
+                    <option value="9">08:00-09:00</option>
+                    <option value="10">09:00-10:00</option>
+                    <option value="11">10:00-11:00</option>
+                    <option value="12">11:00-12:00</option>
+                    <option value="13">12:00-13:00</option>
+                    <option value="14">13:00-14:00</option>
+                    <option value="15">14:00-15:00</option>
+                    <option value="16">15:00-16:00</option>
+                    <option value="17">16:00-17:00</option>
+                    <option value="18">17:00-18:00</option>
+                    <option value="19">18:00-19:00</option>
+                    <option value="20">19:00-20:00</option>
+                    <option value="21">20:00-21:00</option>
+                    <option value="22">21:00-22:00</option>
+                    <option value="23">22:00-23:00</option>
+                    <option value="24">23:00-24:00</option>
+                </select>
+
             </div>
 
             <div class="main-chart-container" id="chartContainer">
@@ -83,7 +154,7 @@
 
     <!--===== ABOUT =====-->
     <section class="about section " id="about">
-        <h2 class="section-title">i tuoi consumi di oggi</h2>
+        <h2 class="section-title">I tuoi consumi di oggi</h2>
 
         <div class="about__container bd-grid">
             <div class="about__img">
@@ -117,6 +188,7 @@
 
 <!--===== MAIN JS =====-->
 <script src="scripts/index_code.js"></script>
+<script src="scripts/appliances_code.js"></script>
 
 </body>
 </html>
