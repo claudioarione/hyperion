@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/main_chart_style.css">
     <link rel="stylesheet" href="styles/appliances_style.css">
+    <link rel="stylesheet" href="styles/comparison_styles.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -63,7 +64,7 @@
                     <div class="details__appliance__container">
                         <input id="applianceWatt" type="number" min="0" max="20000" step="0.01" class="input__number__watt" placeholder="Consumo" oninput="validity.valid||(value='');">
                         <span style="margin-right: 10px; margin-top: 4px">Watt</span>
-                        <select id="applianceCategoryName" style="margin-right: 10px; border-radius: 4px; box-shadow:  0 10px 15px rgba(0,0,0,0.1);">
+                        <select id="applianceCategoryName">
                             <option value="" disabled selected>Categoria...</option>
                             <option value="general">Generale</option>
                             <option value="iron">Ferro da stiro</option>
@@ -157,14 +158,71 @@
         <h2 class="section-title">I tuoi consumi di oggi</h2>
 
         <div class="about__container bd-grid">
-            <div class="about__img">
-                <img src="images/utils/hyperion_logo.png" alt="Logo" id="prova">
-            </div>
 
-            <div style="align-self: center">
-                <h2 class="about__subtitle">Parte</h2>
-                <p class="about__text">Inserire l'immagine della batteria con colore rosso o verde relativo a guadagni</p>
+            <div id="project_container">
+                <div style="display: flex">
+                    <div id="firstIndexBattery" class='battery'>
+                        <div class='bar' data-power='10'></div>
+                        <div class='bar' data-power='20'></div>
+                        <div class='bar' data-power='30'></div>
+                        <div class='bar' data-power='40'></div>
+                        <div class='bar' data-power='50'></div>
+                        <div class='bar' data-power='60'></div>
+                        <div class='bar' data-power='70'></div>
+                        <div class='bar' data-power='80'></div>
+                        <div class='bar' data-power='90'></div>
+                        <div class='bar' data-power='100'></div>
+                    </div>
+                    <span id="firstIndex" style="margin-left: 24px">First index</span>
+                </div>
+                <div style="display: flex; margin-top: 20px">
+                    <div id="secondIndexBattery" class='battery'>
+                        <div class='bar' data-power='10'></div>
+                        <div class='bar' data-power='20'></div>
+                        <div class='bar' data-power='30'></div>
+                        <div class='bar' data-power='40'></div>
+                        <div class='bar' data-power='50'></div>
+                        <div class='bar' data-power='60'></div>
+                        <div class='bar' data-power='70'></div>
+                        <div class='bar' data-power='80'></div>
+                        <div class='bar' data-power='90'></div>
+                        <div class='bar' data-power='100'></div>
+                    </div>
+                    <span id="secondIndex" style="margin-left: 24px">Second index</span>
+                </div>
+                <div style="display: flex; margin-top: 20px">
+                    <div id="thirdIndexBattery" class='battery'>
+                        <div class='bar' data-power='10'></div>
+                        <div class='bar' data-power='20'></div>
+                        <div class='bar' data-power='30'></div>
+                        <div class='bar' data-power='40'></div>
+                        <div class='bar' data-power='50'></div>
+                        <div class='bar' data-power='60'></div>
+                        <div class='bar' data-power='70'></div>
+                        <div class='bar' data-power='80'></div>
+                        <div class='bar' data-power='90'></div>
+                        <div class='bar' data-power='100'></div>
+                    </div>
+                    <span id="thirdIndex" style="margin-left: 24px">Third index</span>
+                </div>
+                <div style="display: flex; margin-top: 20px">
+                    <div id="fourthIndexBattery" class='battery'>
+                        <div class='bar' data-power='10'></div>
+                        <div class='bar' data-power='20'></div>
+                        <div class='bar' data-power='30'></div>
+                        <div class='bar' data-power='40'></div>
+                        <div class='bar' data-power='50'></div>
+                        <div class='bar' data-power='60'></div>
+                        <div class='bar' data-power='70'></div>
+                        <div class='bar' data-power='80'></div>
+                        <div class='bar' data-power='90'></div>
+                        <div class='bar' data-power='100'></div>
+                    </div>
+                    <span id="fourthIndex" style="margin-left: 24px">Fourth index</span>
+                </div>
             </div>
+            <script src="scripts/comparison_script.js"></script>
+
         </div>
     </section>
 

@@ -73,6 +73,7 @@ datePicker.addEventListener('change', ()=> {
                 break;
         }
     });
+    compareWithLastDayOfWeek();
 });
 
 timePicker.addEventListener('change', () => {

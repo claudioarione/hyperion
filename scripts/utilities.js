@@ -1,4 +1,25 @@
 const misurationInterval = 17.9
+const green = {
+    linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+    stops: [
+        [0, '#00ff80'],
+        [1, '#9cffb8']
+    ]
+};
+const red ={
+    linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+    stops: [
+        [0, '#ff0030'],
+        [1, '#e17a3b']
+    ]
+}
+const yellow = {
+    linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+    stops: [
+        [0, 'rgb(255,233,9)'],
+        [1, 'rgba(255,240,107,0.68)']
+    ]
+}
 
 /**
  * Compares two dates in the "mm/dd/yy" string format
@@ -89,35 +110,30 @@ function getWeekArrayFromDate(date){
 /**
  * Associate a color gradient to a given kwh value
  * @param kwh energy value to associate with a linear gradient
+ * @param type an integer representing the selected interval of time: 0 for "5 minutes", 1 for "1 hour", 2 for "1 day"
+ *             and 3 for "1 month"
  * @returns {{linearGradient: {y1: number, x1: number, y2: number, x2: number}, stops: (number|string)[][]}}
  */
-function getColorByKwh(kwh){
-    const green = {
-        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-        stops: [
-            [0, '#73d003'],
-            [1, '#9cffee']
-        ]
-    };
-    const red ={
-        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-        stops: [
-            [0, '#ff0030'],
-            [1, '#9cffee']
-        ]
+function getColorByKwh(kwh, type){
+    switch (type) {
+        case 0:
+            if(kwh >= (1/12)) return red;
+            if(kwh >= (0.4/12)) return yellow;
+            return green;
+        case 2:
+            if(kwh >= 6.8) return red;
+            if(kwh >= 4.2) return yellow;
+            return green;
+        case 3:
+            if(kwh >= 190) return red;
+            if(kwh >= 150) return yellow;
+            return green;
+        default:
+            if(kwh >= 1) return red;
+            if(kwh >= 0.4) return yellow;
+            return green;
     }
-    const yellow = {
-        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-        stops: [
-            [0, 'rgba(234,221,33,0.73)'],
-            [1, 'rgba(64,145,8,0.68)']
-        ]
-    }
-    if(kwh >= 1) return red;
-    if(kwh >= 0.4) return yellow;
-    return green;
 }
-
 
 function fromDatePickerToFormat(date) {
     const partsOfDate = date.split("-");

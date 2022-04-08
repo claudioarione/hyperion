@@ -14,14 +14,16 @@ const initialValues = {
 /**
  * Maps the input in an object in the format required by HighCharts library
  * @param data An nx2 matrix containing keys and values
+ * @param type an integer representing the selected interval of time: 0 for "5 minutes", 1 for "1 hour", 2 for "1 day"
+ *             and 3 for "1 month"
  * @returns the object required by HighCharts
  */
-function getData(data) {
+function getData(data, type) {
     return data.map(function (element) {
         return {
             name: element[0],
             y: element[1],
-            color: getColorByKwh(element[1])
+            color: getColorByKwh(element[1], type)
         };
     });
 }
@@ -101,7 +103,7 @@ function showHourChart(day, hourStart) {
         },
         series: [{
             name: "Consumo",
-            data: getData(values).slice()
+            data: getData(values, 0).slice()
         }]
     }, true, false, {
         duration: 800
@@ -128,7 +130,7 @@ function showDayChart(day){
         },
         series: [{
             name: "Consumo",
-            data: getData(values).slice()
+            data: getData(values, 1).slice()
         }]
     }, true, false, {
         duration: 800
@@ -157,7 +159,7 @@ function showWeekChart(day) {
             max : 6
         },
         series: [{
-            data: getData(values).slice()
+            data: getData(values, 2).slice()
         }]
     }, true, false, {
         duration: 800
@@ -186,7 +188,7 @@ function showMonthChart(day) {
         },
         series: [{
             //name: "" ,
-            data: getData(values).slice()
+            data: getData(values, 2).slice()
         }]
     }, true, false, {
         duration: 800
@@ -212,7 +214,7 @@ function showYearChart(year) {
             max : 11
         },
         series: [{
-            data: getData(values).slice()
+            data: getData(values, 3).slice()
         }]
     }, true, false, {
         duration: 800

@@ -1,0 +1,40 @@
+.battery {
+    padding: 2px;
+    width: 125px;
+    height: 26px;
+    border: solid thin rgba(63, 57, 57, 0.49);
+    position: relative;
+}
+
+.battery:after {
+    content: " ";
+    top: 10px;
+    right: -7px;
+    height: 6px;
+    width: 7px;
+    position: absolute;
+    background: rgba(63, 57, 57, 0.49);
+}
+
+.bar {
+    cursor: pointer;
+    display: inline-block;
+    width: 4px;
+    border: solid thin rgba(255, 255, 255, .1);
+    padding: 3px;
+    height: 20px;
+    background: transparent;
+    transition: background 1s;
+}
+
+.bar.active {
+    background: limegreen;
+}
+
+.bar.active_negative {
+    background: rgba(255,0,48,0.73);
+}
+
+.bar.active_medium {
+    background: rgba(234, 221, 33, 0.73);
+}
