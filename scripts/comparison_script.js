@@ -7,7 +7,7 @@
 function fillBarsInBattery(batteryId, classToChange, charge){
     let index = 0;
     document.querySelectorAll("#"+ batteryId +" .bar").forEach( (element) => {
-        const power = Math.round(charge / 10);
+        const power = Math.ceil(charge / 10);
         $(element).removeClass();
         $(element).addClass('bar');
         if (index !== power) {
@@ -57,6 +57,7 @@ function updateIndexes() {
     findWorstDays();
     compareWithPreviousMonth();
     compareWithPreviousWeek();
+    compareSamePeriodInDifferentMonths();
 }
 
 
@@ -179,7 +180,7 @@ function compareWithPreviousMonth() {
     let result = 0;
     let textToShow = '';
 
-    if (actualMonthTotal === undefined || actualMonthTotal === null || actualMonthTotal === 0)
+    if (actualMonthTotal === undefined || actualMonthTotal === 0)
         textToShow = 'Non sono disponibili dati per il mese selezionato';
     else if (previousMonthTotal === undefined || previousMonthTotal === null || previousMonthTotal === 0)
         textToShow = 'Non sono disponibili dati per ' + previousDate;
@@ -200,4 +201,50 @@ function findWorstDays() {
     const actualDate = fromDatePickerToFormat(document.getElementById('datePicker').value);
     const monthValues = getMonthSubArray(energyDayValues, actualDate);
 
+}
+
+/**
+ * Compares the kWh consumed between the selected day and the first day of this month with the kWh consumed
+ * in the same range of the previous month
+ */
+function compareSamePeriodInDifferentMonths() {
+    const currentDate = document.getElementById('datePicker').value;
+    const supportDate = new Date(currentDate);
+
+    const curMonthValues = showMonthValues(getStringFromNumber(supportDate.getMonth()+1), (supportDate.getFullYear()-2000).toString());
+    const numberOfDaysOfCurrentMonth = new Date(supportDate.getFullYear(), supportDate.getMonth()+1, 0).getDate();
+    supportDate.setDate(supportDate.getDate()-numberOfDaysOfCurrentMonth);
+    const pastMonthValues = showMonthValues(getStringFromNumber(supportDate.getMonth()+1), (supportDate.getFullYear()-2000).toString());
+
+    const curDayOfMonth = parseInt(currentDate.split("-")[2]);
+    const currentMonth = currentDate.split("-")[1];
+    const currDate = getStringFromNumber(curDayOfMonth) + "/" + currentMonth
+
+    let curMonthKWh = 0;
+    for (let i = 0; curMonthValues[i][0] <= currDate; i++ ){
+        curMonthKWh += curMonthValues[i][1];
+    }
+
+    const pastDate = getStringFromNumber(curDayOfMonth) + '/' + (supportDate.getMonth()+1).toString();
+    let pastMonthKWh = 0;
+    for (let i = 0; pastMonthValues[i][0] <= pastDate; i++ ){
+        pastMonthKWh += pastMonthValues[i][1];
+    }
+
+    let result = 0;
+    let textToShow = 'Da inizio mese al giorno selezionato (' + fromFormatToItalian(fromDateObjectToFormat(new Date(currentDate))) +
+                        ') hai consumato ' + curMonthKWh.toFixed(ROUND_TO_DIGITS) + ' kWh';
+
+    if (curMonthKWh !== 0 && pastMonthKWh !== 0){
+        result = 100 - (curMonthKWh / pastMonthKWh) * 100;
+        let plusOrMinus = 'più';
+        if (result > 0){
+            plusOrMinus = 'meno';
+        }
+        textToShow += ', il ' + Math.abs(result).toFixed(ROUND_TO_DIGITS) + '% in ' + plusOrMinus + ' dello stesso periodo di tempo nel mese precedente'
+    }
+
+    document.getElementById('thirdIndex').textContent = textToShow;
+
+    setContentOfBattery(result, 'thirdIndexBattery');
 }
