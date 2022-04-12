@@ -25,9 +25,10 @@ function setContentOfBattery(charge, batteryId) {
 
 
 // First index: comparison with the same day of the previous week
-// Second index: comparison with the previous 7 days
-// Third index: comparison of the week in the previous 4 weeks
+// Second index: comparison of the week with the previous week
+// Third index: worst day of the week
 // Fourth index: comparison of the month with the previous month
+// Fifth index: worst day of month
 
 // IDEA: absolute indexes - show in which day of the week/month the kWh consumed are greater
 
@@ -59,13 +60,11 @@ function compareWithLastDayOfWeek(){
         textToShow = 'Non sono disponibili dati per ' + previousDate;
     else {
         result = 100 - (actualDateKwh.kWh / previousDateKwh.kWh) * 100;
-        let resultString = result.toFixed(ROUND_TO_DIGITS);
-
         let plusOrMinus = 'più';
-        if (result > 0) {
+        if (result > 0){
             plusOrMinus = 'meno';
         }
-        textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(parseFloat(resultString)) + '% in ' + plusOrMinus + ' di ' + previousDate;
+        textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(result) + '% in ' + plusOrMinus + ' di ' + previousDate;
         if (result === 0)
             textToShow = 'Nel giorno selezionato hai consumato esattamente quanto ' + previousDate;
     }

@@ -10,6 +10,7 @@ const initialValues = {
     ]
 };
 
+// X-chart
 
 /**
  * Maps the input in an object in the format required by HighCharts library
