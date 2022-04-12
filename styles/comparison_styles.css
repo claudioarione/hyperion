@@ -46,3 +46,11 @@
     text-align: right;
     margin-left: 24px;
 }
+
+.comparison_list {
+    list-style: disclosure-closed;
+}
+
+.comparison_list li {
+    margin-bottom: 1rem;
+}

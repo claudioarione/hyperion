@@ -248,3 +248,35 @@ function getMonthSubArray(array, date) {
         )
 }
 
+/**
+ * Returns an array containing the days of the given week starting from monday
+ * @param array an array of objects who have a "data" field
+ * @param date a MM/DD/YY string
+ * @returns {*} an array containing the days of the given week
+ */
+function getWeekSubArray(array, date) {
+    const arrByDate = date.split('/');
+    const dayToPass = new Date(parseInt(arrByDate[2]) + 2000, parseInt(arrByDate[0]) - 1, parseInt(arrByDate[1]));
+    const week = getWeekArrayFromDate(dayToPass);
+
+    const res = [];
+    for (let i = 0; i < week.length; i++) {
+        const value = array.find(({data}) => (data === week[i]));
+        if (value) res.push(value);
+    }
+
+    return res;
+}
+
+/**
+ * Finds the day when the most kWh were consumed
+ * @param array an array of days containing both a "data" and a "kWh" field
+ * @returns {*} the day object when the most kWh were consumed, or null if the array is empty
+ */
+function findWorstDay(array) {
+    if (array.length === 0) {
+        return null;
+    }
+
+    return array.reduce((prev, curr) => (prev.kWh > curr.kWh) ? prev : curr);
+}
