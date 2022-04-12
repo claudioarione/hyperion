@@ -74,6 +74,7 @@ datePicker.addEventListener('change', ()=> {
     });
     updateIndexes();
     compareWithLastDayOfWeek();
+    compareWithPreviousWeek();
 });
 
 timePicker.addEventListener('change', () => {
