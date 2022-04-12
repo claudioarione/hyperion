@@ -231,7 +231,6 @@ async function initializeEnergyValues(){
             });
             showWeekChart(fromDatePickerToFormat(datePicker.value));
             updateIndexes();
-            console.log(energyDayValues)
         }
     });
 

@@ -95,6 +95,8 @@ function getWeekArrayFromDate(date){
     let week = [];
     // Starting Monday not Sunday obviously
     let first = date.getDate() - date.getDay() + 1;
+    if (date.getDay() === 0)
+        first = first - 7;
     let dateToAdd = new Date(date.setDate(first));
     for (let i = 0; i < 7; i++) {
         const dateString = getStringFromNumber((dateToAdd.getMonth() + 1)) + "/" +
@@ -134,6 +136,12 @@ function getColorByKwh(kwh, type){
     }
 }
 
+function fromDateObjectToFormat(date) {
+    return  getStringFromNumber((date.getMonth() + 1)) + "/" +
+        getStringFromNumber(date.getDate()) + "/" +
+        getStringFromNumber(date.getFullYear()-2000);
+}
+
 /**
  * Changes the format of the date from "dd-mm-yyyy" to "mm/dd/yy"
  * @param date the date from the date picker
@@ -153,7 +161,7 @@ function fromFormatToItalian(date) {
     const partsOfDate = date.split("/");
     const dayToPass = new Date(parseInt(partsOfDate[2])+2000, parseInt(partsOfDate[0])-1, parseInt(partsOfDate[1]));
     const dayOfTheWeek = italianDayOfTheWeek((dayToPass.getDay()+6)%7).toLowerCase();
-    return dayOfTheWeek + " " + partsOfDate[1] + " " + italianMonth(parseInt(partsOfDate[0])) + " 20" + partsOfDate[2];
+    return dayOfTheWeek + " " + parseInt(partsOfDate[1]) + " " + italianMonth(parseInt(partsOfDate[0])) + " 20" + partsOfDate[2];
 }
 
 /**
@@ -202,6 +210,28 @@ function enableOrDisableBtn(btn, enable) {
         btn.classList.add("active");
     else
         btn.classList.remove("active");
+}
+
+/**
+ * Returns the cumulative cost of the 7 days before the day provided in input
+ * @param date a generic {@code Date}
+ * @returns a number representing the cumulative cost of the 7 days before the day provided in input
+ */
+function getTotalKwhOfPrevious7Days(date){
+    let totalKWhOfWeek = 0;
+    for (let i = 0; i < 7; i++) {
+        const dayInCurrent7Days = new Date(date);
+        dayInCurrent7Days.setDate(dayInCurrent7Days.getDate()-i);
+        const searchDate = fromDateObjectToFormat(dayInCurrent7Days);
+        const result = energyDayValues.find(
+            ({data}) => data === searchDate
+        );
+        let kWhOfDay = 0;
+        if (result !== undefined && result != null)
+            kWhOfDay = result.kWh;
+        totalKWhOfWeek += kWhOfDay;
+    }
+    return totalKWhOfWeek;
 }
 
 /**

@@ -1,17 +1,11 @@
 /**
- * Sets the charge level of the provided battery
- * @param charge an integer representing the % of kWh consumed in addiction (in subraction if negative) to
- * @param batteryId
+ * Fills the given battery with the given charge
+ * @param batteryId id of the provided battery
+ * @param classToChange a {@code String} which can be "active", "active_medium" or "active_negative"
+ * @param charge an integer representing the charge level of the battery
  */
-function setContentOfBattery(charge, batteryId) {
+function fillBarsInBattery(batteryId, classToChange, charge){
     let index = 0;
-    let classToChange = "active";
-    if (charge < 0) {
-        classToChange = "active_negative";
-        charge = 0 - charge;
-    }
-    else if (charge < 20)
-        classToChange = "active_medium";
     document.querySelectorAll("#"+ batteryId +" .bar").forEach( (element) => {
         const power = Math.round(charge / 10);
         $(element).removeClass();
@@ -24,12 +18,45 @@ function setContentOfBattery(charge, batteryId) {
 }
 
 /**
+ * Sets the percentage charge level of the provided battery
+ * @param charge an integer representing the % of kWh consumed in addiction (in subtraction if negative) to
+ * @param batteryId
+ */
+function setContentOfBattery(charge, batteryId) {
+    let classToChange = "active";
+    if (charge < 0) {
+        classToChange = "active_negative";
+        charge = 0 - charge;
+    }
+    else if (charge < 20)
+        classToChange = "active_medium";
+    fillBarsInBattery(batteryId, classToChange, charge)
+}
+
+/**
+ * Sets the absolute charge level of the provided battery
+ * @param charge an integer representing the % of kWh consumed in addiction (in subtraction if negative) to
+ * @param batteryId
+ */
+function setAbsoluteContentOfBattery(charge, batteryId){
+    let classToChange = "active_medium";
+    if (charge > 100) {
+        classToChange = "active_negative";
+        charge = 100;
+    }
+    else if (charge < 40)
+        classToChange = "active";
+    fillBarsInBattery(batteryId, classToChange, charge);
+}
+
+/**
  * Updates the indexes in the "Indici e confronti" page
  */
 function updateIndexes() {
     compareWithLastDayOfWeek();
     findWorstDays();
     compareWithPreviousMonth();
+    compareWithPreviousWeek();
 }
 
 
@@ -73,7 +100,7 @@ function compareWithLastDayOfWeek(){
         if (result > 0){
             plusOrMinus = 'meno';
         }
-        textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(result).toFixed(ROUND_TO_DIGITS) + '% in ' + plusOrMinus + ' di ' + previousDate;
+        textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(result).toFixed(ROUND_TO_DIGITS) + '% in ' + plusOrMinus + ' rispetto a ' + previousDate;
         if (result === 0)
             textToShow = 'Nel giorno selezionato hai consumato esattamente quanto ' + previousDate;
     }
@@ -81,6 +108,43 @@ function compareWithLastDayOfWeek(){
     document.getElementById('firstIndex').textContent = textToShow;
 
     setContentOfBattery(result, 'firstIndexBattery')
+
+}
+
+/**
+ * Compares the 7 days before the selected day with the 7 days before them
+ */
+function compareWithPreviousWeek() {
+    const currentDate = new Date(document.getElementById('datePicker').value);
+    const firstDayOfCurrent7Days = new Date(currentDate);
+    firstDayOfCurrent7Days.setDate(firstDayOfCurrent7Days.getDate()-6);
+
+    // const lastDayOfPrevious7 = new Date(firstDayOfCurrent7Days);
+    // lastDayOfPrevious7.setDate(lastDayOfPrevious7.getDate()-1);
+    const firstDayOfPrevious7 = new Date(currentDate);
+    firstDayOfPrevious7.setDate(firstDayOfPrevious7.getDate()-7);
+
+    const kWhOfCurrentWeek = getTotalKwhOfPrevious7Days(currentDate).toFixed(2);
+    const kWhOfPastWeek = getTotalKwhOfPrevious7Days(firstDayOfPrevious7).toFixed(2);
+
+    let textToShow = 'Nei sette giorni da ' + fromFormatToItalian(fromDateObjectToFormat(firstDayOfCurrent7Days)) + ' a ' +
+            fromFormatToItalian(fromDateObjectToFormat(currentDate)) + ' hai consumato ' + kWhOfCurrentWeek + ' kWh';
+
+    let result = 0;
+
+    if (parseFloat(kWhOfCurrentWeek) !== 0 && parseFloat(kWhOfPastWeek) !== 0){
+        result = 100 - (kWhOfCurrentWeek / kWhOfPastWeek) * 100;
+        let plusOrMinus = 'più';
+        if (result > 0){
+            plusOrMinus = 'meno';
+        }
+
+        textToShow += ', il ' + Math.abs(result).toFixed(ROUND_TO_DIGITS) + '% in ' + plusOrMinus + ' dei sette giorni precedenti'
+    }
+
+    setContentOfBattery(result, 'secondIndexBattery')
+
+    document.getElementById('secondIndex').textContent = textToShow;
 
 }
 
@@ -121,12 +185,12 @@ function compareWithPreviousMonth() {
         textToShow = 'Non sono disponibili dati per ' + previousDate;
     else {
         result = (actualMonthTotal / previousMonthTotal) * 100;
-        textToShow = 'Nel mese selezionato hai consumato il ' + result.toFixed(ROUND_TO_DIGITS) + '% rispetto al mese precedente';
+        textToShow = 'Nel mese selezionato hai consumato il ' + result.toFixed(ROUND_TO_DIGITS) + '% dell\'energia consumata nel mese precedente';
     }
 
     document.getElementById('fourthIndex').textContent = textToShow;
 
-    setContentOfBattery(result, 'fourthIndexBattery');
+    setAbsoluteContentOfBattery(result, 'fourthIndexBattery');
 }
 
 /**
