@@ -177,4 +177,16 @@ function enableOrDisableBtn(btn, enable) {
         btn.classList.remove("active");
 }
 
-
+/**
+ * Returns an array containing the days of the given month
+ * @param array an array of objects who have a "data" field
+ * @param date a MM/DD/YY string
+ * @returns {*} an array containing the days of the given month
+ */
+function getMonthSubArray(array, date) {
+    return array
+        .filter(({data}) =>
+            (data.split('/')[0] === date.split('/')[0]) &&
+            (data.split('/')[2] === date.split('/')[2])
+        )
+}
