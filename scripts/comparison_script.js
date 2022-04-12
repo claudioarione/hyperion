@@ -29,6 +29,7 @@ function setContentOfBattery(charge, batteryId) {
 function updateIndexes() {
     compareWithLastDayOfWeek();
     findWorstDays();
+    compareWithPreviousMonth();
 }
 
 
@@ -84,13 +85,55 @@ function compareWithLastDayOfWeek(){
 }
 
 /**
+ * Compares the selected month with the previous one
+ */
+function compareWithPreviousMonth() {
+    const actualDate = document.getElementById('datePicker').value;
+    const supportDate = new Date(actualDate);
+    const actualMonthValues = getMonthSubArray(energyDayValues, fromDatePickerToFormat(actualDate));
+
+    let previousDate;
+    if (supportDate.getMonth() === 0)
+        previousDate = "12/01/" + (supportDate.getFullYear() - 2001).toString();
+    else
+        previousDate = getStringFromNumber(supportDate.getMonth()) + "/01/" + (supportDate.getFullYear() - 2000).toString();
+
+    const previousMonthValues = getMonthSubArray(energyDayValues, previousDate);
+
+    let actualMonthTotal = 0;
+    for (let i = 0; i < actualMonthValues.length; i++)
+        if (actualMonthValues[i].kWh !== undefined && actualMonthValues[i].kWh !== null)
+            actualMonthTotal += actualMonthValues[i].kWh;
+
+    let previousMonthTotal = 0;
+    for (i = 0; i < previousMonthValues.length; i++)
+        if (previousMonthValues[i].kWh !== undefined && previousMonthValues[i].kWh !== null)
+            previousMonthTotal += previousMonthValues[i].kWh;
+
+    previousDate = italianMonth(parseInt(previousDate.split('/')[0])) + ' ' + (parseInt(previousDate.split('/')[2]) + 2000).toString();
+
+    let result = 0;
+    let textToShow = '';
+
+    if (actualMonthTotal === undefined || actualMonthTotal === null || actualMonthTotal === 0)
+        textToShow = 'Non sono disponibili dati per il mese selezionato';
+    else if (previousMonthTotal === undefined || previousMonthTotal === null || previousMonthTotal === 0)
+        textToShow = 'Non sono disponibili dati per ' + previousDate;
+    else {
+        result = (actualMonthTotal / previousMonthTotal) * 100;
+        textToShow = 'Nel mese selezionato hai consumato il ' + result.toFixed(ROUND_TO_DIGITS) + '% rispetto al mese precedente';
+    }
+
+    document.getElementById('fourthIndex').textContent = textToShow;
+
+    setContentOfBattery(result, 'fourthIndexBattery');
+}
+
+/**
  * Finds the day of the selected week and month when more KWh were consumed.
  */
 function findWorstDays() {
     const actualDate = fromDatePickerToFormat(document.getElementById('datePicker').value);
     const monthValues = getMonthSubArray(energyDayValues, actualDate);
-
-    console.log(monthValues)
-
 
 }

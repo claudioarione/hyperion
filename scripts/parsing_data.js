@@ -153,7 +153,7 @@ const showWeekValues = (week) => {
  * @returns {*[]} array of key-value pair of daily kWh
  */
 const showMonthValues = (month, year) => {
-    //I giorni considerati sono month/gg/year
+    //I giorni considerati sono month/day/year
     let arrayRes = [];
     const numOfDays = new Date(parseInt(year)+2000, parseInt(month), 0).getDate();
     for(let i = 0; i< numOfDays; i++){
@@ -181,10 +181,10 @@ const showYearValues = (year) => {
     for (let month = 1; month <= 12; month++) {
         let monthlyKwh = 0;
         const numOfDays = new Date(parseInt(year)+2000, month, 0).getDate();
-        for (let day = 1; day < numOfDays; day++) {
+        for (let day = 1; day <= numOfDays; day++) {
             const dayConsidered = getStringFromNumber(month) + "/" + getStringFromNumber(day) + "/" + year;
             const searchResult = energyDayValues.find(({data}) => data === dayConsidered);
-            if(searchResult !== undefined && searchResult !== null)
+            if (searchResult !== undefined && searchResult !== null)
                 monthlyKwh += searchResult.kWh;
         }
         const key = getStringFromNumber(month) + "/" + year;

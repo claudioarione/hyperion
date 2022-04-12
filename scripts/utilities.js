@@ -134,11 +134,21 @@ function getColorByKwh(kwh, type){
     }
 }
 
+/**
+ * Changes the format of the date from "dd-mm-yyyy" to "mm/dd/yy"
+ * @param date the date from the date picker
+ * @returns {string} a string representing the date in the csv format "mm/dd/yy"
+ */
 function fromDatePickerToFormat(date) {
     const partsOfDate = date.split("-");
     return partsOfDate[1] + "/" + partsOfDate[2] + "/" + getStringFromNumber(parseInt(partsOfDate[0])-2000);
 }
 
+/**
+ * Translates a date in the format "mm/dd/yy" in the corresponding italian date
+ * @param date the date in the csv format "mm/dd/yy"
+ * @returns {string} the date written in italian
+ */
 function fromFormatToItalian(date) {
     const partsOfDate = date.split("/");
     const dayToPass = new Date(parseInt(partsOfDate[2])+2000, parseInt(partsOfDate[0])-1, parseInt(partsOfDate[1]));
@@ -146,11 +156,23 @@ function fromFormatToItalian(date) {
     return dayOfTheWeek + " " + partsOfDate[1] + " " + italianMonth(parseInt(partsOfDate[0])) + " 20" + partsOfDate[2];
 }
 
+/**
+ * Sets the minutes and seconds of a selected hour
+ * @param hour the selected hour
+ * @param minute the minute we want to set
+ * @param second the second we want to set
+ * @returns {string} a string in the form "hh:mm:ss" where mm and ss are picked from the input
+ */
 function changeMinuteAndSecondOfHour(hour, minute, second) {
     const partsOfHour = hour.split(":");
     return partsOfHour[0] + ":" + getStringFromNumber(minute) + ":" + getStringFromNumber(second)
 }
 
+/**
+ * Returns the correct appliance name accordingly to the input string
+ * @param name the string representing the appliance
+ * @returns {string} the complete name of the correct appliance
+ */
 function checkImageCompatibility(name) {
     const nameToCheck = name.toLowerCase();
     if(nameToCheck.includes("lavastovigl"))
@@ -170,6 +192,11 @@ function checkImageCompatibility(name) {
     return "general";
 }
 
+/**
+ * If enable is true, the function adds to the selected button the "active" class
+ * @param btn the selected button
+ * @param enable a boolean signal
+ */
 function enableOrDisableBtn(btn, enable) {
     if(enable)
         btn.classList.add("active");
