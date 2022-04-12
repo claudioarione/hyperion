@@ -190,3 +190,4 @@ function getMonthSubArray(array, date) {
             (data.split('/')[2] === date.split('/')[2])
         )
 }
+
