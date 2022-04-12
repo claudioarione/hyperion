@@ -23,6 +23,14 @@ function setContentOfBattery(charge, batteryId) {
     });
 }
 
+/**
+ * Updates the indexes in the "Indici e confronti" page
+ */
+function updateIndexes() {
+    compareWithLastDayOfWeek();
+    findWorstDays();
+}
+
 
 // First index: comparison with the same day of the previous week
 // Second index: comparison of the week with the previous week
@@ -64,7 +72,7 @@ function compareWithLastDayOfWeek(){
         if (result > 0){
             plusOrMinus = 'meno';
         }
-        textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(result) + '% in ' + plusOrMinus + ' di ' + previousDate;
+        textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(result).toFixed(ROUND_TO_DIGITS) + '% in ' + plusOrMinus + ' di ' + previousDate;
         if (result === 0)
             textToShow = 'Nel giorno selezionato hai consumato esattamente quanto ' + previousDate;
     }
@@ -72,5 +80,17 @@ function compareWithLastDayOfWeek(){
     document.getElementById('firstIndex').textContent = textToShow;
 
     setContentOfBattery(result, 'firstIndexBattery')
+
+}
+
+/**
+ * Finds the day of the selected week and month when more KWh were consumed.
+ */
+function findWorstDays() {
+    const actualDate = fromDatePickerToFormat(document.getElementById('datePicker').value);
+    const monthValues = getMonthSubArray(energyDayValues, actualDate);
+
+    console.log(monthValues)
+
 
 }

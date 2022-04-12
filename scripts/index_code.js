@@ -44,7 +44,6 @@ const curDate = new Date();
 //curDate.setMinutes(curDate.getMinutes()-curDate.getTimezoneOffset());
 datePicker.value = curDate.toJSON().slice(0, 10);
 datePicker.max = curDate.toJSON().slice(0, 10);
-console.log(curDate.getHours().toString())
 timePicker.value = (curDate.getHours()+1).toString()
 timePicker.style.display = 'none';
 
@@ -73,6 +72,7 @@ datePicker.addEventListener('change', ()=> {
                 break;
         }
     });
+    updateIndexes();
     compareWithLastDayOfWeek();
 });
 

@@ -230,7 +230,8 @@ async function initializeEnergyValues(){
                 day.kWh = (day.watt * MISURATION_INTERVAL) / (3600 * 1000);
             });
             showWeekChart(fromDatePickerToFormat(datePicker.value));
-            compareWithLastDayOfWeek();
+            updateIndexes();
+            console.log(energyDayValues)
         }
     });
 

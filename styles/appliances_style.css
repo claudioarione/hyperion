@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-::selection{
-    color: #ffff;
-    background: rgba(37, 84, 2, 0.68);
-}
+
 .wrapper{
     background: rgb(255, 255, 255);
     max-width: 460px;
