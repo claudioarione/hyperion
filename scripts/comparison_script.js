@@ -21,8 +21,6 @@ function setContentOfBattery(charge, batteryId) {
             index++;
         }
     });
-
-
 }
 
 
@@ -61,11 +59,13 @@ function compareWithLastDayOfWeek(){
         textToShow = 'Non sono disponibili dati per ' + previousDate;
     else {
         result = 100 - (actualDateKwh.kWh / previousDateKwh.kWh) * 100;
+        let resultString = result.toFixed(ROUND_TO_DIGITS);
+
         let plusOrMinus = 'più';
-        if (result > 0){
+        if (result > 0) {
             plusOrMinus = 'meno';
         }
-        textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(result) + '% in ' + plusOrMinus + ' di ' + previousDate;
+        textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(parseFloat(resultString)) + '% in ' + plusOrMinus + ' di ' + previousDate;
         if (result === 0)
             textToShow = 'Nel giorno selezionato hai consumato esattamente quanto ' + previousDate;
     }

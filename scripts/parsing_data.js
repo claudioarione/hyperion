@@ -67,7 +67,7 @@ function showHourValues(day, hSt) {
             sum += energyValues[firstHourIndex]["watt"];
             firstHourIndex++;
         }
-        const value = (sum*misurationInterval)/(1000*3600);
+        const value = (sum * MISURATION_INTERVAL) / (1000 * 3600);
         result.push([
             key, value
         ]);
@@ -227,7 +227,7 @@ async function initializeEnergyValues(){
             //del valore che si sarebbe ottenuto SE il Rasp fosse stato acceso tutto il giorno
             //Il calcolo, testato su vari giorni, è praticamente uguale a quello derivato dalla somma dei valori delle singole ore
             energyDayValues.forEach((day) => {
-                day.kWh = (day.watt * misurationInterval)/(3600*1000);
+                day.kWh = (day.watt * MISURATION_INTERVAL) / (3600 * 1000);
             });
             showWeekChart(fromDatePickerToFormat(datePicker.value));
             compareWithLastDayOfWeek();

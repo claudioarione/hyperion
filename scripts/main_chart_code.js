@@ -54,9 +54,8 @@ let chart = new Highcharts.Chart({
     tooltip: {
         shared: true,
         headerFormat: '<span style="font-size: 15px">{point.point.name}</span><br/>',
-        // pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y} kWh</b><br/>',
         pointFormatter: function () {
-            return '<span style="color:' + this.color + '">\u25CF</span>' + this.series.name + ': <b>' + this.y.toFixed(2) + ' kWh</b><br/>'
+            return '<span style="color:' + this.color + '">\u25CF</span>' + this.series.name + ': <b>' + this.y.toFixed(ROUND_TO_DIGITS) + ' kWh</b><br/>'
         }
     },
     xAxis: {
