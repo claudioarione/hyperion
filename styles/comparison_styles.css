@@ -17,7 +17,7 @@
 }
 
 .bar {
-    cursor: pointer;
+    cursor: none;
     display: inline-block;
     width: 4px;
     border: solid thin rgba(255, 255, 255, .1);
