@@ -27,4 +27,4 @@ const exampleRate = {
 rates = [];
 rates.push(exampleRate);
 
-localStorage.setItem("rates", rates)
+localStorage.setItem("rates", JSON.stringify(rates))

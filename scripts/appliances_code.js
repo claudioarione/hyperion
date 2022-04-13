@@ -5,7 +5,7 @@ const applWatt = document.getElementById('applianceWatt');
 const applCategoryName = document.getElementById('applianceCategoryName');
 const applCategoryImg = document.getElementById('applianceCategoryImg');
 const addApplianceBtn = document.getElementById('addApplianceBtn');
-const todoList = document.querySelector(".appliancesList");
+const appliancesList = document.getElementById("appliancesList");
 const deleteAllBtn = document.getElementById('deleteAllAppliances');
 let isNameAcceptable = false;
 let isConsumptionAcceptable = false;
@@ -34,32 +34,32 @@ applWatt.addEventListener('change', () => {
     enableOrDisableBtn(addApplianceBtn, isConsumptionAcceptable && isNameAcceptable);
 })
 
-function showTasks(){
+function showAppliances() {
     let getLocalStorageData = localStorage.getItem("appliances");
-    if(getLocalStorageData == null){
+    if (getLocalStorageData == null) {
         appliances = [];
-    }else{
+    } else {
         appliances = JSON.parse(getLocalStorageData);
     }
     const pendingTasksNumb = document.querySelector(".pendingTasks");
     pendingTasksNumb.textContent = appliances.length.toString(); //passing the array length in pendingtask
-    if(appliances.length > 0){ //if array length is greater than 0
+    if (appliances.length > 0) { //if array length is greater than 0
         deleteAllBtn.classList.add("active");
-    }else{
+    } else {
         deleteAllBtn.classList.remove("active");
     }
     let newLiTag = "";
     appliances.forEach((element, index) => {
-        newLiTag += `<li><div style="display: flex;"><img src="../images/appliance_icons/${element.category}.png" width="48px" alt=""><div style="display: grid; margin-left: 10px"><span>${element.name}</span><span>${element.watt} Watt</span></div></div><span class="icon" onclick="deleteTask(${index})"><i class="fa fa-trash"></i></span></li>`;
+        newLiTag += `<li><div style="display: flex;"><img src="../images/appliance_icons/${element.category}.png" width="48px" alt=""><div style="display: grid; margin-left: 10px"><span>${element.name}</span><span>${element.watt} Watt</span></div></div><span class="icon" onclick="deleteAppliance(${index})"><i class="fa fa-trash"></i></span></li>`;
     });
-    todoList.innerHTML = newLiTag; //adding new li tag inside ul tag
+    appliancesList.innerHTML = newLiTag; //adding new li tag inside ul tag
     applName.value = "";
     applWatt.value = "";
     applCategoryName.value = "";
     applCategoryImg.src = "/images/appliance_icons/general.png";
 }
 
-showTasks();
+showAppliances();
 
 addApplianceBtn.onclick = ()=>{
     appliances.push({
@@ -68,20 +68,20 @@ addApplianceBtn.onclick = ()=>{
         "category" : applCategoryName.value
     });
     localStorage.setItem("appliances", JSON.stringify(appliances));
-    showTasks();
+    showAppliances();
     enableOrDisableBtn(addApplianceBtn, false)
 }
 
-function deleteTask(index){
+function deleteAppliance(index) {
     let getLocalStorageData = localStorage.getItem("appliances");
     appliances = JSON.parse(getLocalStorageData);
     appliances.splice(index, 1);
     localStorage.setItem("appliances", JSON.stringify(appliances));
-    showTasks();
+    showAppliances();
 }
 
 deleteAllBtn.onclick = ()=>{
     appliances = []
     localStorage.setItem("appliances", JSON.stringify(appliances));
-    showTasks();
+    showAppliances();
 }
