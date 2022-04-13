@@ -43,27 +43,30 @@ function showHourValues(day, hSt) {
         return result;
     }
     let firstHourIndex = approximateDayIndex;
-    while (energyValues[firstHourIndex]["ora"] >= hSt && !dateCompare(energyValues[firstHourIndex]["data"], day) && firstHourIndex >= 0){
+    while (firstHourIndex >= 0 && energyValues[firstHourIndex]["ora"] >= hSt && !dateCompare(energyValues[firstHourIndex]["data"], day)) {
         firstHourIndex--
     }
     firstHourIndex++
-    while(energyValues[firstHourIndex]["ora"] < hSt && !dateCompare(energyValues[firstHourIndex]["data"], day) && firstHourIndex < energyValues.length){
+    while (firstHourIndex < energyValues.length && energyValues[firstHourIndex]["ora"] < hSt && !dateCompare(energyValues[firstHourIndex]["data"], day)) {
         firstHourIndex++;
     }
-    if(energyValues[firstHourIndex]["ora"].split(":")[0] !== hSt.split(":")[0]){
-        for (let min = 0; min < 60; min+=5) {
-            const key = getStringFromNumber(min) + "-" + getStringFromNumber(min+4);
+    if (energyValues[firstHourIndex] === undefined) {
+        firstHourIndex--;
+    }
+    if (energyValues[firstHourIndex]["ora"].split(":")[0] !== hSt.split(":")[0]) {
+        for (let min = 0; min < 60; min += 5) {
+            const key = getStringFromNumber(min) + "-" + getStringFromNumber(min + 4);
             result.push([
                 key, 0
             ]);
         }
     }
-    for (let min = 0; min < 60; min+=5) {
-        const key = getStringFromNumber(min) + "-" + getStringFromNumber(min+4);
+    for (let min = 0; min < 60; min += 5) {
+        const key = getStringFromNumber(min) + "-" + getStringFromNumber(min + 4);
         let sum = 0;
-        const firstHour = changeMinuteAndSecondOfHour(energyValues[firstHourIndex]["ora"], min, 0);
-        const lastHour = changeMinuteAndSecondOfHour(energyValues[firstHourIndex]["ora"], min+4, 59);
-        while (energyValues[firstHourIndex]["ora"] >= firstHour && energyValues[firstHourIndex]["ora"] <= lastHour) {
+        const firstHour = changeMinuteAndSecondOfHour(hSt, min, 0);
+        const lastHour = changeMinuteAndSecondOfHour(hSt, min + 4, 59);
+        while (energyValues[firstHourIndex] !== undefined && energyValues[firstHourIndex]["ora"] >= firstHour && energyValues[firstHourIndex]["ora"] <= lastHour) {
             sum += energyValues[firstHourIndex]["watt"];
             firstHourIndex++;
         }
@@ -109,12 +112,15 @@ function showDayValues(day) {
             for (; firstDayIndex < energyValues.length; firstDayIndex++) {
                 hourlyWatts += energyValues[firstDayIndex]["watt"];
                 count++;
-                if(parseInt(energyValues[firstDayIndex+1]["ora"].split(":")[0]) !== hour){
+                if (energyValues[firstDayIndex + 1] === undefined) {
                     lastTime = energyValues[firstDayIndex]["ora"].split(":");
+                    break;
+                } else if (parseInt(energyValues[firstDayIndex + 1]["ora"].split(":")[0]) !== hour) {
+                    lastTime = energyValues[firstDayIndex]["ora"].split(":");
+                    firstDayIndex++;
                     break;
                 }
             }
-            firstDayIndex++;
             const deltaTime = (lastTime[0] - firstTime[0])*3600 + (lastTime[1] -  firstTime[1])*60 + (lastTime[2] - firstTime[2]);
             totalKwh = (hourlyWatts/count)*deltaTime/(3600*1000);
         }
