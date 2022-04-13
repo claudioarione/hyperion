@@ -64,12 +64,12 @@
     pointer-events: auto;
 }
 
-.wrapper .appliancesList {
+.wrapper .itemsList {
     height: 15rem;
     overflow-y: auto;
 }
 
-.appliancesList li {
+.itemsList li {
     position: relative;
     list-style: none;
     margin-bottom: 8px;
@@ -81,7 +81,7 @@
     word-wrap: break-word;
 }
 
-.appliancesList li .icon {
+.itemsList li .icon {
     position: absolute;
     right: -45px;
     top: 50%;
@@ -96,7 +96,7 @@
     transition: all 0.2s ease;
 }
 
-.appliancesList li:hover .icon {
+.itemsList li:hover .icon {
     right: 0;
 }
 
