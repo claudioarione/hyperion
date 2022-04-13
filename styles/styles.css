@@ -16,15 +16,12 @@
     --h2-font-size: 1.25rem;
     --normal-font-size: .938rem;
     --smaller-font-size: .75rem;
-    /*===== Margenes =====*/
+    /*===== Margins =====*/
     --mb-2: 1rem;
     --mb-4: 2rem;
-    --mb-5: 2.5rem;
     --mb-6: 3rem;
     /*===== z index =====*/
-    --z-back: -10;
     --z-fixed: 100;
-    /*===== images in slider ====*/
 }
 
 @media screen and (min-width: 1000px) {
@@ -186,12 +183,6 @@ img {
     float: left;
 }
 
-.nav__toggle {
-    color: var(--second-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
 /*===== HOME =====*/
 .home {
     position: relative;
@@ -200,31 +191,10 @@ img {
     padding: 4rem 0 5rem;
 }
 
-.home__data {
-    align-self: center;
-}
-
-
-/*BUTTONS*/
-
 /* ===== ABOUT =====*/
 .about__container {
     row-gap: 2rem;
     text-align: center;
-}
-
-.about__subtitle {
-  text-align: center;
-    margin-bottom: var(--mb-2);
-}
-
-.about__img {
-    justify-self: center;
-}
-
-.about__img img {
-    width: 200px;
-    border-radius: .5rem;
 }
 
 
@@ -276,9 +246,6 @@ img {
         margin-left: var(--mb-6);
         margin-bottom: 0;
     }
-    .nav__toggle {
-        display: none;
-    }
     .nav__link {
         color: var(--second-color);
     }
@@ -288,10 +255,6 @@ img {
     .about__container {
         padding-top: 2rem;
     }
-    .about__img img {
-        width: 300px;
-    }
-
 }
 
 @media screen and (min-width: 992px) {
