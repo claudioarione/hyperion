@@ -1,3 +1,26 @@
+/*==== SCROLL SECTIONS ACTIVE LINK ====================*/
+const sections = document.querySelectorAll('section[id]')
+
+/**
+ * Updates navbar indicator section according to page scroll
+ */
+function scrollActive() {
+    const scrollY = window.pageYOffset
+
+    sections.forEach(current => {
+        const sectionHeight = current.offsetHeight
+        const sectionTop = current.offsetTop - 50;
+        let sectionId = current.getAttribute('id')
+
+        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active')
+        } else {
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active')
+        }
+    })
+}
+
+window.addEventListener('scroll', scrollActive)
 //DatePicker
 const datePicker = document.getElementById('datePicker');
 const timePicker = document.getElementById('timePicker');
@@ -5,7 +28,7 @@ const curDate = new Date();
 //curDate.setMinutes(curDate.getMinutes()-curDate.getTimezoneOffset());
 datePicker.value = curDate.toJSON().slice(0, 10);
 datePicker.max = curDate.toJSON().slice(0, 10);
-timePicker.value = (curDate.getHours()+1).toString()
+timePicker.value = (curDate.getHours() + 1).toString()
 timePicker.style.display = 'none';
 
 datePicker.addEventListener('change', ()=> {
