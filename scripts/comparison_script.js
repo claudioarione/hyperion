@@ -204,6 +204,7 @@ function findWorstDays() {
     const worstWeekDay = findWorstDay(weekValues);      // is null if weekValues is empty
 
     const ul = document.getElementById('worstDay');
+    ul.innerHTML = '';      // remove precedent indexes
 
     if (worstWeekDay != null || worstMonthDay != null) {
         if (worstWeekDay) {
