@@ -6,10 +6,10 @@
  */
 function fillBarsInBattery(batteryId, classToChange, charge) {
     let index = 0;
-    document.querySelectorAll("#" + batteryId + " .bar").forEach((element) => {
+    document.querySelectorAll("#" + batteryId + " .energyBar").forEach((element) => {
         const power = Math.ceil(charge / 10);
         $(element).removeClass();
-        $(element).addClass('bar');
+        $(element).addClass('energyBar');
         if (index !== power) {
             $(element).addClass(classToChange);
             index++;
@@ -259,7 +259,7 @@ function compareSamePeriodInDifferentMonths() {
 
     const pastDate = getStringFromNumber(curDayOfMonth) + '/' + (supportDate.getMonth() + 1).toString();
     let pastMonthKWh = 0;
-    for (let i = 0; pastMonthValues[i][0] <= pastDate; i++) {
+    for (let i = 0; i < pastMonthValues.length && pastMonthValues[i][0] <= pastDate; i++) {
         pastMonthKWh += pastMonthValues[i][1];
     }
 
