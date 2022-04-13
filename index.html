@@ -71,42 +71,6 @@
 <main class="l-main" id="main" style="display: none">
     <!--HOME-->
     <section class="home bd-grid" id="home">
-        <div class="home__data">
-        </div>
-
-        <div class="wrapper">
-            <header>I tuoi elettrodomestici</header>
-            <div class="inputField">
-                <div class="input__appliance__container">
-                    <input type="text" id="applianceName" placeholder="Nome dell'elettrodomestico">
-                    <div class="details__appliance__container">
-                        <input id="applianceWatt" type="number" min="0" max="20000" step="0.01" class="input__number__watt" placeholder="Consumo" oninput="validity.valid||(value='');">
-                        <span style="margin: 0.4rem 0.5rem 0 0.25rem;">Watt</span>
-                        <select id="applianceCategoryName">
-                            <option value="" disabled selected>Categoria...</option>
-                            <option value="general">Generale</option>
-                            <option value="iron">Ferro da stiro</option>
-                            <option value="oven">Forno</option>
-                            <option value="television">Televisione</option>
-                            <option value="dishwasher">Lavastoviglie</option>
-                            <option value="washing_machine">Lavatrice</option>
-                            <option value="vacuum_cleaner">Aspirapolvere</option>
-                            <option value="hair_dryer">Asciugacapelli</option>
-                        </select>
-                        <img id="applianceCategoryImg" src="images/appliance_icons/general.png" width="32px" alt="">
-                    </div>
-                </div>
-                <button id="addApplianceBtn"><i class="fa fa-plus"></i></button>
-            </div>
-            <ul class="todoList">
-                <!-- data comes from local storage -->
-            </ul>
-            <div class="footer">
-                <span>Hai <span class="pendingTasks"></span> elettrodomestici</span>
-                <button id="deleteAllAppliances">Cancella tutto</button>
-            </div>
-        </div>
-
         <div class="btn-chart-container">
 
             <div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 2rem">
@@ -243,27 +207,53 @@
         </div>
     </section>
 
-    <!--===== WORK =====-->
+    <!--===== ELETTRODOMESTICI =====-->
     <section class="work section" id="details">
         <h2 class="section-title">Dettaglio dei consumi</h2>
-
+        <div class="wrapper">
+            <header>I tuoi elettrodomestici</header>
+            <div class="inputField">
+                <div class="input__appliance__container">
+                    <input id="applianceName" placeholder="Nome dell'elettrodomestico" type="text">
+                    <div class="details__appliance__container">
+                        <input class="input__number__watt" id="applianceWatt" max="20000" min="0"
+                               oninput="validity.valid||(value='');" placeholder="Consumo" step="0.01" type="number">
+                        <span style="margin: 0.4rem 0.5rem 0 0.25rem;">Watt</span>
+                        <select id="applianceCategoryName">
+                            <option disabled selected value="">Categoria...</option>
+                            <option value="general">Generale</option>
+                            <option value="iron">Ferro da stiro</option>
+                            <option value="oven">Forno</option>
+                            <option value="television">Televisione</option>
+                            <option value="dishwasher">Lavastoviglie</option>
+                            <option value="washing_machine">Lavatrice</option>
+                            <option value="vacuum_cleaner">Aspirapolvere</option>
+                            <option value="hair_dryer">Asciugacapelli</option>
+                        </select>
+                        <img alt="" id="applianceCategoryImg" src="images/appliance_icons/general.png" width="32px">
+                    </div>
+                </div>
+                <button id="addApplianceBtn"><i class="fa fa-plus"></i></button>
+            </div>
+            <ul class="appliancesList">
+                <!-- data comes from local storage -->
+            </ul>
+            <div class="footer">
+                <span>Hai <span class="pendingTasks"></span> elettrodomestici</span>
+                <button id="deleteAllAppliances">Cancella tutto</button>
+            </div>
+        </div>
     </section>
 
-    <!--===== CONTACT =====-->
+    <!--===== TARIFFE =====-->
     <section class="contact section" id="rates">
+        <h2 class="section-title">Confronto tra tariffe</h2>
+        <div class="wrapper">
+            <header>Tariffe</header>
 
-        <h2 class="section-title">Contattaci</h2>
-
+        </div>
     </section>
 
 </main>
-
-<!--===== SCROLL REVEAL =====-->
-<script src="https://unpkg.com/scrollreveal"></script>
-
-<!--===== MAIN JS =====-->
-<script src="scripts/index_code.js"></script>
-<script src="scripts/appliances_code.js"></script>
-
 </body>
 </html>
