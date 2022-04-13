@@ -107,7 +107,36 @@
     align-items: center;
     justify-content: space-between;
 }
-.footer button{
+
+.removeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0.2rem;
+    background-color: #ff0009;
+    color: white;
+    padding: 0.1rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.removeButton:hover {
+    background-color: #ff5c61;
+}
+
+.barWrapper {
+    height: 0.3rem;
+    width: 23rem;
+    display: flex;
+    margin: auto 2rem auto auto;
+    border-radius: 0.2rem;
+}
+
+.rateBar {
+    height: 100%;
+}
+
+.footer button {
     padding: 6px 10px;
     border-radius: 3px;
     border: none;

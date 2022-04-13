@@ -34,6 +34,9 @@ applWatt.addEventListener('change', () => {
     enableOrDisableBtn(addApplianceBtn, isConsumptionAcceptable && isNameAcceptable);
 })
 
+/**
+ * Shows the list of appliances in the DOM taken from local storage data
+ */
 function showAppliances() {
     let getLocalStorageData = localStorage.getItem("appliances");
     if (getLocalStorageData == null) {

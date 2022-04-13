@@ -250,8 +250,30 @@
         <h2 class="section-title">Confronto tra tariffe</h2>
         <div class="wrapper">
             <header>Tariffe</header>
-            <ul class="itemsList" id="ratesList">
+            <ul class="itemsList" id="ratesList" style="height: 25rem; margin: 0.5rem 0;">
                 <!-- data comes from local storage -->
+                <li>
+                    <div style="position:relative;">
+                        <div class="removeButton">X</div>
+                        <h3 style="margin: 0">Tariffa ENEL</h3>
+                        <p><span style="color: #ff0000">●</span> 0.29875 €/Kwh</p>
+                        <p><span style="color: #00ff80">●</span> 0.31874 €/Kwh</p>
+                        <div style="display: flex">
+                            <p>Feriali</p>
+                            <div class="barWrapper">
+                                <div class="rateBar" style="width: 20%; background-color: #ff0000"></div>
+                                <div class="rateBar" style="width: 40%; background-color: #00ff80"></div>
+                                <div class="rateBar" style="width: 40%; background-color: #ff0000"></div>
+                            </div>
+                        </div>
+                        <div style="display: flex">
+                            <p>Festivi</p>
+                            <div class="barWrapper">
+                                <div class="rateBar" style="width: 100%; background-color: #ff0000"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </section>
