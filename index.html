@@ -17,15 +17,28 @@
 
 </head>
 <body>
-<script src="utils/constants.js"></script>
-<script src="scripts/utilities.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js" integrity="sha512-EbdJQSugx0nVWrtyK3JdQQ/03mS3Q1UiAhRtErbwl1YL/+e2hZdlIcSURxxh7WXHTzn83sjlh2rysACoJGfb6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="scripts/parsing_data.js"></script>
+
+
+<!--===== LIBRARIES  =====-->
+<script defer src="https://code.highcharts.com/highcharts.js"></script>
+<script defer src="https://code.highcharts.com/modules/exporting.js"></script>
+<script defer src="https://code.highcharts.com/modules/export-data.js"></script>
+<script defer src="https://code.highcharts.com/highcharts-more.js"></script>
+<script defer src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script crossorigin="anonymous" defer
+        integrity="sha512-EbdJQSugx0nVWrtyK3JdQQ/03mS3Q1UiAhRtErbwl1YL/+e2hZdlIcSURxxh7WXHTzn83sjlh2rysACoJGfb6g=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"></script>
+
+<!--===== MAIN JS  =====-->
+<script defer src="utils/constants.js"></script>
+<script defer src="scripts/utilities.js"></script>
+<script defer src="scripts/parsing_data.js"></script>
+<script defer src="scripts/main_chart_code.js"></script>
+<script defer src="scripts/comparison_script.js"></script>
+<script defer src="scripts/index_code.js"></script>
+<script defer src="scripts/appliances_code.js"></script>
+<script defer src="scripts/rates_code.js"></script>
 
 <!--HEADER-->
 <header class="l-header">
@@ -148,8 +161,6 @@
 
             <div class="main-chart-container" id="chartContainer">
             </div>
-            <script src="scripts/main_chart_code.js">
-            </script>
 
         </div>
 
@@ -227,8 +238,6 @@
                     <ul class="comparison_list" id="worstDay"></ul>
                 </div>
             </div>
-            <script src="scripts/comparison_script.js"></script>
-
         </div>
     </section>
 
