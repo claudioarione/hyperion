@@ -231,9 +231,19 @@ async function initializeEnergyValues(){
             });
             showWeekChart(fromDatePickerToFormat(datePicker.value));
             updateIndexes();
+            showPage();
         }
     });
+}
 
+/**
+ * Hides the "loading..." div and displays the main page
+ */
+function showPage() {
+    const loading = document.getElementById("loading");
+    const main = document.getElementById("main");
+    loading.style.display = "none";
+    main.style.display = "";
 }
 
 initializeEnergyValues();

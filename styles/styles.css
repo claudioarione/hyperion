@@ -98,6 +98,14 @@ img {
     padding-bottom: 2rem;
 }
 
+/*===== LOADING =====*/
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 43%;
+    font-family: 'Poppins', sans-serif;
+}
+
 /*===== LAYOUT =====*/
 .title {
     position: relative;
