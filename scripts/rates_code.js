@@ -1,4 +1,4 @@
-/*const exampleRate = {
+const exampleRate1 = {
     nome: "Tariffa ENEL E light",
     tva: 79,
     prezzi:
@@ -6,9 +6,9 @@
             prezzo: 0.23473,
             colore: "#ff0000"
         },
-        {
-            prezzo: 0.21269,
-            colore: "#ffdd00"
+            {
+                prezzo: 0.21269,
+                colore: "#ffdd00"
         }],
     fasce: {
         feriali:
@@ -22,7 +22,42 @@
                 to: 8,
                 prezzo: 1
             },
-        ],
+            ],
+        festive: [{
+            dayType: "festivi",
+            from: 0,
+            to: 24,
+            prezzo: 1
+        }]
+    }
+};
+
+const exampleRate2 = {
+    nome: "Tariffa A2A",
+    tva: 79,
+    prezzi:
+        [{
+            prezzo: 0.23473,
+            colore: "#ff0000"
+        },
+            {
+                prezzo: 0.21269,
+                colore: "#ffdd00"
+            }],
+    fasce: {
+        feriali:
+            [
+                {
+                    from: 18,
+                    to: 24,
+                    prezzo: 1
+                },
+                {
+                    from: 0,
+                    to: 7,
+                    prezzo: 1
+                },
+            ],
         festive: [{
             dayType: "festivi",
             from: 0,
@@ -33,9 +68,10 @@
 };
 
 rates = [];
-rates.push(exampleRate);
+rates.push(exampleRate1);
+rates.push(exampleRate2);
 
-localStorage.setItem("rates", JSON.stringify(rates))*/
+localStorage.setItem("rates", JSON.stringify(rates))
 
 /**
  * Takes the list of rates from local storage and creates the rate items
@@ -43,6 +79,7 @@ localStorage.setItem("rates", JSON.stringify(rates))*/
 function showRates() {
     const rates = JSON.parse(localStorage.getItem("rates"));
     const ratesList = document.getElementById("ratesList");
+    // ratesList.innerHTML = "";
 
     for (let i = 0; i < rates.length; i++) {
         const rate = rates[i];
@@ -75,10 +112,27 @@ function showRates() {
         li.appendChild(div)
         ratesList.appendChild(li);
     }
+
+    const addButtonDiv = document.createElement("div");
+    addButtonDiv.className = "addButton";
+    addButtonDiv.innerText = "Aggiungi Tariffa";
+    addButtonDiv.onclick = () => displayForm(addButtonDiv);
+    const addButtonLi = document.createElement("li");
+    addButtonLi.style.padding = "0";
+    addButtonLi.appendChild(addButtonDiv);
+    ratesList.appendChild(addButtonLi);
+
 }
 
 showRates();
 
+/**
+ * Generate a bar containing multiple bars which show the different price band during a day
+ * @param fasce array of price bands
+ * @param prezzi array of prices
+ * @param tipo tipe of day (feriale, festivo, ...)
+ * @returns {HTMLDivElement}
+ */
 function generateBars(fasce, prezzi, tipo) {
     const res = document.createElement("div");
     res.style.display = "flex";
@@ -133,6 +187,60 @@ function createBar(price, i) {
  * @param index the index of the rate to remove
  */
 function removeRate(index) {
-    console.log(index)
-    console.log("Frero");
+    console.log(index);
+
+    const rates = JSON.parse(localStorage.getItem("rates"));
+    rates.splice(index, 1);     // remove from rates list
+
+    console.log(rates);
+
+    localStorage.setItem("rates", JSON.stringify(rates));
+    showRates();
+}
+
+/**
+ * Shows the form to add a new rate
+ * @param div the div which contained the "Add rate" button and which will contain the form
+ */
+function displayForm(div) {
+    div.innerHTML = "";
+    div.className = "";
+    div.onclick = "";
+    div.style.padding = "10px 15px";
+
+    const titleDiv = document.createElement("div");
+    titleDiv.className = "inputRateContainer";
+    const nameLabel = document.createElement("label");
+    nameLabel.for = "name";
+    nameLabel.style.padding = "0.2rem 0.3rem 0.2rem 0";
+    nameLabel.innerText = "Nome";
+
+    const nameInput = document.createElement("input");
+    nameInput.id = "name";
+    nameInput.name = "name";
+    nameInput.placeholder = "es: Tariffa ENEL, ...";
+
+    const tvaLabel = document.createElement("label");
+    tvaLabel.for = "tva";
+    tvaLabel.style.padding = "0.2rem 0.3rem 0.2rem 1rem";
+    tvaLabel.innerText = "TVA";
+
+    const tvaInput = document.createElement("input");
+    tvaInput.id = "tva";
+    tvaInput.name = "tva";
+    tvaInput.placeholder = "es: 79";
+    tvaInput.style.width = "5rem";
+
+    const eurP = document.createElement("p");
+    eurP.style.padding = "0.2rem 0.5rem 0.2rem 0.2rem";
+    eurP.innerText = "€";
+
+    titleDiv.appendChild(nameLabel);
+    titleDiv.appendChild(nameInput);
+    titleDiv.appendChild(tvaLabel);
+    titleDiv.appendChild(tvaInput);
+    titleDiv.appendChild(eurP);
+
+    div.appendChild(titleDiv);
+
 }

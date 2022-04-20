@@ -115,7 +115,7 @@
     border-radius: 0.2rem;
     background-color: #ff0009;
     color: white;
-    padding: 0.1rem 0.5rem;
+    padding: 0 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -157,24 +157,64 @@
     pointer-events: auto;
 }
 
-.input__number__watt{
+.input__number__watt {
     height: 32px;
     font-size: 0.1rem;
     width: 20%;
     margin-right: 2px;
     border-radius: 4px;
-    box-shadow:  0 10px 15px rgba(0,0,0,0.1)
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1)
 }
 
-.details__appliance__container{
+.addButton {
+    cursor: pointer;
+    background-color: #7db457;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1em;
+    padding: 6px 10px;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.addButton:hover {
+    background-color: #acce95;
+}
+
+.inputRateContainer {
+    display: flex;
+}
+
+.inputRateContainer input {
+    width: 100%;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;;
+    padding-left: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0.1rem 0.15rem rgba(0, 0, 0, 0.1);
+}
+
+.inputRateContainer input:focus {
+    border-color: rgba(0, 255, 128, 0.43);
+}
+
+.inputRateContainer label {
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.details__appliance__container {
     margin: 1rem 0.25rem 0 0;
     display: flex;
 }
 
-#applianceCategoryName{
+#applianceCategoryName {
     margin-right: 10px;
     border-radius: 4px;
-    box-shadow:  0 10px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     font-family: 'Poppins', sans-serif;;
 }
 

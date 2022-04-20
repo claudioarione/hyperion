@@ -197,9 +197,17 @@ img {
     text-align: center;
 }
 
+/* Remove arrows from number input forms */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
-/*JQUERIES*/
-
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
 
 @media screen and (max-width: 320px) {
     .home {
