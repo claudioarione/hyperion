@@ -1,16 +1,22 @@
-.btn-chart-container{
-    justify-content: right;
+.btn-chart-container {
     width: 70%;
-    height: 400px;
-    position: absolute;
-    top: 65%;
-    left: 80%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    left: 30rem;
     background-size: 100% 100%;
     shape-margin: 40px;
 }
 
-.buttons{
+.date-picker-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+    left: 10rem;
+    width: 70%;
+}
+
+.buttons {
     min-width: 310px;
     text-align: center;
     font-size: 0;
@@ -50,14 +56,14 @@
     color: white;
 }
 
-.main-chart-container{
+.main-chart-container {
     min-width: 310px;
     max-width: 880px;
     height: 100%;
     margin: 0 auto;
 }
 
-.date__picker{
+.date__picker {
     width: 25%;
     height: 40px;
     text-align: center;
@@ -66,7 +72,8 @@
     box-shadow: 4px 2px rgba(102, 102, 102, 0.3);
     font-size: 0.9rem;
 }
-.time__picker{
+
+.time__picker {
     width: 25%;
     height: 40px;
     text-align: center;
