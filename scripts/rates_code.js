@@ -1,3 +1,6 @@
+// ------------- TEST CODE ------------------------
+// creates two rates and saves to local storage
+// TODO: delete this code after implementation
 const exampleRate1 = {
     nome: "Tariffa ENEL E light",
     tva: 79,
@@ -9,7 +12,7 @@ const exampleRate1 = {
             {
                 prezzo: 0.21269,
                 colore: "#ffdd00"
-        }],
+            }],
     fasce: {
         feriali:
             [{
@@ -17,11 +20,11 @@ const exampleRate1 = {
                 to: 24,
                 prezzo: 1
             },
-            {
-                from: 0,
-                to: 8,
-                prezzo: 1
-            },
+                {
+                    from: 0,
+                    to: 8,
+                    prezzo: 1
+                },
             ],
         festive: [{
             dayType: "festivi",
@@ -73,58 +76,65 @@ rates.push(exampleRate2);
 
 localStorage.setItem("rates", JSON.stringify(rates))
 
+// ------------------ END TEST CODE ------------------------
+
 /**
  * Takes the list of rates from local storage and creates the rate items
  */
 function showRates() {
     const rates = JSON.parse(localStorage.getItem("rates"));
     const ratesList = document.getElementById("ratesList");
-    // ratesList.innerHTML = "";
+    ratesList.innerHTML = "";
 
+    // Create a list item for every rate in rates
     for (let i = 0; i < rates.length; i++) {
-        const rate = rates[i];
-        const li = document.createElement("li");
-        const div = document.createElement("div");
-        div.style.position = "relative";
-
-        const removeButton = document.createElement("div");
-        removeButton.innerText = "X";
-        removeButton.className = "removeButton";
-        removeButton.onclick = () => removeRate(i);
-        div.appendChild(removeButton);
-
-        const rateName = document.createElement("h3");
-        rateName.style.margin = "0";
-        rateName.innerText = rate.nome;
-        div.appendChild(rateName);
-
-        for (let j = 0; j < rate.prezzi.length; j++) {
-            const value = rate.prezzi[j]
-            const p = document.createElement("p");
-            p.innerHTML = "<p><span style=\"color: " + value.colore + "\">● </span>" + value.prezzo + " €/Kwh</p>";
-
-            div.appendChild(p);
-        }
-
-        div.appendChild(generateBars(rate.fasce.feriali, rate.prezzi, "Feriali"));
-        div.appendChild(generateBars(rate.fasce.festive, rate.prezzi, "Festivi"));
-
-        li.appendChild(div)
-        ratesList.appendChild(li);
+        const rateLi = createRateLi(rates[i], i)
+        ratesList.appendChild(rateLi);
     }
 
-    const addButtonDiv = document.createElement("div");
-    addButtonDiv.className = "addButton";
-    addButtonDiv.innerText = "Aggiungi Tariffa";
-    addButtonDiv.onclick = () => displayForm(addButtonDiv);
-    const addButtonLi = document.createElement("li");
-    addButtonLi.style.padding = "0";
-    addButtonLi.appendChild(addButtonDiv);
-    ratesList.appendChild(addButtonLi);
-
+    // Create the button to add new rates
+    const newRateButton = createAddRateButton()
+    ratesList.appendChild(newRateButton);
 }
 
-showRates();
+showRates();        // TODO: move this to PapaParse "complete" section
+
+/**
+ * Creates an HTML "li" element containing the rate information
+ * @param rate rate object containing all the information
+ * @param index rate index in the rates array
+ * @returns {HTMLLIElement} "li" element containing the rate information
+ */
+function createRateLi(rate, index) {
+    const li = document.createElement("li");
+    const div = document.createElement("div");
+    div.style.position = "relative";
+
+    const removeButton = document.createElement("div");
+    removeButton.innerText = "X";
+    removeButton.className = "removeButton";
+    removeButton.onclick = () => removeRate(index);
+    div.appendChild(removeButton);
+
+    const rateName = document.createElement("h3");
+    rateName.style.margin = "0";
+    rateName.innerText = rate.nome;
+    div.appendChild(rateName);
+
+    for (let j = 0; j < rate.prezzi.length; j++) {
+        const value = rate.prezzi[j]
+        const p = document.createElement("p");
+        p.innerHTML = "<p><span style=\"color: " + value.colore + "\">● </span>" + value.prezzo + " €/Kwh</p>";
+
+        div.appendChild(p);
+    }
+
+    div.appendChild(generatePriceBars(rate.fasce.feriali, rate.prezzi, "Feriali"));
+    div.appendChild(generatePriceBars(rate.fasce.festive, rate.prezzi, "Festivi"));
+
+    li.appendChild(div)
+    return li;
+}
 
 /**
  * Generate a bar containing multiple bars which show the different price band during a day
@@ -133,7 +143,7 @@ showRates();
  * @param tipo tipe of day (feriale, festivo, ...)
  * @returns {HTMLDivElement}
  */
-function generateBars(fasce, prezzi, tipo) {
+function generatePriceBars(fasce, prezzi, tipo) {
     const res = document.createElement("div");
     res.style.display = "flex";
 
@@ -160,7 +170,6 @@ function generateBars(fasce, prezzi, tipo) {
     return res;
 }
 
-
 /**
  * Creates a rateBar associated with a price
  * @param price the price
@@ -183,18 +192,30 @@ function createBar(price, i) {
 }
 
 /**
+ * Creates and return a "li" element which serves as an "add rate" button
+ * When clicked, the button renders the form to add a new rate
+ * @returns {HTMLLIElement} "add rate" button
+ */
+function createAddRateButton() {
+    const addButtonDiv = document.createElement("div");
+    addButtonDiv.className = "addButton";
+    addButtonDiv.innerText = "Aggiungi Tariffa";
+    addButtonDiv.onclick = () => displayNewRateForm(addButtonDiv);
+    const addButtonLi = document.createElement("li");
+    addButtonLi.style.padding = "0";
+    addButtonLi.appendChild(addButtonDiv);
+    return addButtonLi;
+}
+
+/**
  * Removes the Rate from the local storage and from the page
  * @param index the index of the rate to remove
  */
 function removeRate(index) {
-    console.log(index);
-
     const rates = JSON.parse(localStorage.getItem("rates"));
     rates.splice(index, 1);     // remove from rates list
-
-    console.log(rates);
-
     localStorage.setItem("rates", JSON.stringify(rates));
+
     showRates();
 }
 
@@ -202,12 +223,20 @@ function removeRate(index) {
  * Shows the form to add a new rate
  * @param div the div which contained the "Add rate" button and which will contain the form
  */
-function displayForm(div) {
+function displayNewRateForm(div) {
     div.innerHTML = "";
     div.className = "";
     div.onclick = "";
     div.style.padding = "10px 15px";
 
+    div.appendChild(createNewRateTitleDiv());
+}
+
+/**
+ * Creates a new div containing the rate name and tva input forms
+ * @returns {HTMLDivElement} the created div
+ */
+function createNewRateTitleDiv() {
     const titleDiv = document.createElement("div");
     titleDiv.className = "inputRateContainer";
     const nameLabel = document.createElement("label");
@@ -241,6 +270,5 @@ function displayForm(div) {
     titleDiv.appendChild(tvaInput);
     titleDiv.appendChild(eurP);
 
-    div.appendChild(titleDiv);
-
+    return titleDiv;
 }
