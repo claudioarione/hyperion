@@ -1,50 +1,57 @@
 /**
- * Fills the given battery with the given charge
- * @param batteryId id of the provided battery
- * @param classToChange a {@code String} which can be "active", "active_medium" or "active_negative"
- * @param charge an integer representing the charge level of the battery
+ * Sets the percentage charge level of the provided battery. If result is positive (more energy spent
+ * compared to the last period) the battery is "charged" and green; if result is negative (less energy spent)
+ * than the battery is "uncharged" and red/yellow.
+ * @param result a number from -100 to +infinity comparing the energy used between two periods of time
+ * @param batteryId the id of the battery element to "charge"
  */
-function fillBarsInBattery(batteryId, classToChange, charge) {
-    let index = 0;
-    document.querySelectorAll("#" + batteryId + " .energyBar").forEach((element) => {
-        const power = Math.ceil(charge / 10);
-        $(element).removeClass();
-        $(element).addClass('energyBar');
-        if (index !== power) {
-            $(element).addClass(classToChange);
-            index++;
-        }
-    });
+function setContentOfBattery(result, batteryId) {
+    const batteryChargeDiv = document.getElementById(batteryId);
+
+    // con result negativo ho consumato meno energia dello scorso periodo ----> batteria "carica" ( > 50% width) e verde
+    // con result positivo ho consumato più energia ----> batteria "scarica" ( < 50% width) e rossa / gialla
+
+    batteryChargeDiv.style.backgroundImage = computeBackgroundColors(result);
+
+    const charge = computeChargeLevel(result);
+
+    batteryChargeDiv.style.width = `${charge}%`;
 }
 
 /**
- * Sets the percentage charge level of the provided battery
- * @param charge an integer representing the % of kWh consumed in addiction (in subtraction if negative) to
- * @param batteryId
+ * Computes the charge level of a battery
+ * @param result a number from -100 to +infinity comparing the energy used between two periods of time
+ * @returns {number} a number from 0 to 100 indicating the level of charge of the battery
  */
-function setContentOfBattery(charge, batteryId) {
-    let classToChange = "active";
-    if (charge < 0) {
-        classToChange = "active_negative";
-        charge = 0 - charge;
-    } else if (charge < 20)
-        classToChange = "active_medium";
-    fillBarsInBattery(batteryId, classToChange, charge)
+function computeChargeLevel(result) {
+    if (result < 0) {
+        return 50 + (-result / 2);   // -100 is 100% charged, 0 is 50% charged
+    }
+    if (result > 200)
+        return 10;       // 200% more KWa used, battery discharged
+
+    return 50 - (result / 5);         // 0 is 50%, 100 is ~25%, 200 is ~10%
 }
 
 /**
- * Sets the absolute charge level of the provided battery
- * @param charge an integer representing the % of kWh consumed in addiction (in subtraction if negative) to
- * @param batteryId
+ * Computes the background colors of a battery
+ * @param result a number from -100 to +infinity comparing the energy used between two periods of time
+ * @returns {string} a string like "linear-gradient(color1, color2)"
  */
-function setAbsoluteContentOfBattery(charge, batteryId) {
-    let classToChange = "active_medium";
-    if (charge > 100) {
-        classToChange = "active_negative";
-        charge = 100;
-    } else if (charge < 40)
-        classToChange = "active";
-    fillBarsInBattery(batteryId, classToChange, charge);
+function computeBackgroundColors(result) {
+    // TODO: ora ci sono solo 3 colori, potremmo personalizzare ulteriormente i colori a seconda del result
+
+    // less than 50% energy than last period
+    if (result < -50) {
+        return "linear-gradient(to right, #57f93e, #abfc9f)"  // green
+    }
+
+    // more than 50% energy than last period
+    if (result > 50) {
+        return "linear-gradient(to right, #f93c22, #fc6b58)"  // red
+    }
+
+    return "linear-gradient(to right, #eaea02, #efefac)" // yellow
 }
 
 /**
@@ -94,10 +101,10 @@ function compareWithLastDayOfWeek() {
     else if (previousDateKwh === undefined || previousDateKwh === null)
         textToShow = 'Non sono disponibili dati per ' + previousDate;
     else {
-        result = 100 - (actualDateKwh.kWh / previousDateKwh.kWh) * 100;
-        let plusOrMinus = 'più';
-        if (result > 0) {
-            plusOrMinus = 'meno';
+        result = (actualDateKwh.kWh / previousDateKwh.kWh) * 100 - 100; // is a number from -100 to infinity
+        let plusOrMinus = 'meno';
+        if (result > 0) {       // if number is greater than 0 than I consumed MORE than previous period
+            plusOrMinus = 'più';
         }
         textToShow = 'Nel giorno selezionato hai consumato il ' + Math.abs(result).toFixed(ROUND_TO_DIGITS) + '% in ' + plusOrMinus + ' rispetto a ' + previousDate;
         if (result === 0)
@@ -105,7 +112,6 @@ function compareWithLastDayOfWeek() {
     }
 
     document.getElementById('firstIndex').textContent = textToShow;
-
     setContentOfBattery(result, 'firstIndexBattery')
 
 }
@@ -132,10 +138,10 @@ function compareWithPreviousWeek() {
     let result = 0;
 
     if (parseFloat(kWhOfCurrentWeek) !== 0 && parseFloat(kWhOfPastWeek) !== 0) {
-        result = 100 - (kWhOfCurrentWeek / kWhOfPastWeek) * 100;
-        let plusOrMinus = 'più';
+        result = (kWhOfCurrentWeek / kWhOfPastWeek) * 100 - 100; // is a number from -100 to infinity
+        let plusOrMinus = 'meno';
         if (result > 0) {
-            plusOrMinus = 'meno';
+            plusOrMinus = 'più';
         }
 
         textToShow += ', il ' + Math.abs(result).toFixed(ROUND_TO_DIGITS) + '% in ' + plusOrMinus + ' dei sette giorni precedenti'
@@ -180,7 +186,7 @@ function compareWithPreviousMonth() {
 
     if (actualMonthTotal === undefined || actualMonthTotal === 0)
         textToShow = 'Non sono disponibili dati per il mese selezionato';
-    else if (previousMonthTotal === undefined || previousMonthTotal === null || previousMonthTotal === 0)
+    else if (previousMonthTotal === undefined || previousMonthTotal === 0)
         textToShow = 'Non sono disponibili dati per ' + previousDate;
     else {
         result = (actualMonthTotal / previousMonthTotal) * 100;
@@ -189,7 +195,7 @@ function compareWithPreviousMonth() {
 
     document.getElementById('fourthIndex').textContent = textToShow;
 
-    setAbsoluteContentOfBattery(result, 'fourthIndexBattery');
+    setContentOfBattery(result, 'fourthIndexBattery');
 }
 
 /**
