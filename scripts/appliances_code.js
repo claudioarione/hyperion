@@ -53,9 +53,21 @@ function showAppliances() {
     }
     let newLiTag = "";
     appliances.forEach((element, index) => {
-        newLiTag += `<li><div style="display: flex;"><img src="../images/appliance_icons/${element.category}.png" width="48px" alt=""><div style="display: grid; margin-left: 10px"><span>${element.name}</span><span>${element.watt} Watt</span></div></div><span class="icon" onclick="deleteAppliance(${index})"><i class="fa fa-trash"></i></span></li>`;
+        newLiTag += `
+            <li>
+                <div class="removeButton" onclick="deleteAppliance(${index})" style="position: absolute; top: 0.5rem; right: 0.5rem">X</div>
+                <div style="display: flex;">
+                    <img src="../images/appliance_icons/${element.category}.png" width="48px" alt="">
+                    <div style="display: grid; margin-left: 10px">
+                        <span>${element.name}</span>
+                        <span>${element.watt} Watt</span>
+                    </div>
+                </div>
+            </li>`;
     });
-    appliancesList.innerHTML = newLiTag; //adding new li tag inside ul tag
+
+
+    appliancesList.innerHTML = newLiTag; //adding new li tags inside ul tag
     applName.value = "";
     applWatt.value = "";
     applCategoryName.value = "";
