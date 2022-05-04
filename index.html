@@ -92,9 +92,8 @@
                     </button>
                 </div>
 
-                <input id="datePicker" type="date" class="date__picker" onkeydown="return false;">
-<!--                <input id="timePicker" type="time" class="time__picker" value="17:00" onkeydown="return false;">-->
-<!--                <label for="timePicker"></label>-->
+                <label for="datePicker"></label><input class="date__picker" id="datePicker" onkeydown="return false;"
+                                                       type="date">
                 <label for="timePicker"></label>
                 <select name="tp" id="timePicker" class="time__picker" onkeydown="return false;">
                     <option value="1">00:00-01:00</option>
@@ -177,11 +176,15 @@
             <header>Elettrodomestici</header>
             <div class="inputField">
                 <div class="input__appliance__container">
-                    <input id="applianceName" placeholder="Nome dell'elettrodomestico" type="text">
+                    <label for="applianceName"></label><input id="applianceName"
+                                                              placeholder="Nome dell'elettrodomestico" type="text">
                     <div class="details__appliance__container">
-                        <input class="input__number__watt" id="applianceWatt" max="20000" min="0"
-                               oninput="validity.valid||(value='');" placeholder="Consumo" step="0.01" type="number">
+                        <label for="applianceWatt"></label><input class="input__number__watt" id="applianceWatt"
+                                                                  max="20000" min="0"
+                                                                  oninput="validity.valid||(value='');"
+                                                                  placeholder="Consumo" step="0.01" type="number">
                         <span style="margin: 0.4rem 0.5rem 0 0.25rem;">Watt</span>
+                        <label for="applianceCategoryName"></label>
                         <select id="applianceCategoryName">
                             <option disabled selected value="">Categoria...</option>
                             <option value="general">Generale</option>

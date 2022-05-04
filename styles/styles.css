@@ -12,9 +12,9 @@
     --second-color: hsl(var(--hue-color), 56%, 12%);
     /*===== Carattere =====*/
     --body-font: 'Poppins', sans-serif;
-    --big-font-size: 2rem;
-    --h2-font-size: 1.25rem;
-    --normal-font-size: .938rem;
+    --big-font-size: 2.25rem;
+    --h2-font-size: 1.75rem;
+    --normal-font-size: 1rem;
     --smaller-font-size: .75rem;
     /*===== Margins =====*/
     --mb-2: 1rem;
@@ -34,7 +34,7 @@ html {
 }
 
 body {
-    margin: var(--header-height) 0 0 0;
+    margin: 0 0 0 0;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     color: var(--second-color);
@@ -64,25 +64,25 @@ img {
     font-size: var(--h2-font-size);
     color: var(--first-color);
     margin-top: 2rem;
-    margin-bottom: var(--mb-4);
+    margin-bottom: var(--mb-6);
     text-align: center;
 }
 
 .section-title::after {
     position: absolute;
     content: '';
-    width: 64px;
+    width: 80px;
     height: 0.18rem;
     left: 0;
     right: 0;
     margin: auto;
-    top: 2rem;
+    top: 3rem;
     background-color: var(--first-color);
 }
 
 .section {
-    padding-top: 3rem;
-    padding-bottom: 2rem;
+    padding-top: 4rem;
+    padding-bottom: 3rem;
 }
 
 /*===== LOADING =====*/
@@ -103,8 +103,8 @@ img {
 .bd-grid {
     max-width: 1024px;
     display: flex;
-    margin-left: var(--mb-2);
-    margin-right: var(--mb-2);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .l-header {
@@ -119,20 +119,26 @@ img {
 
 /*===== NAV =====*/
 .nav {
-    height: var(--header-height);
+    height: 4.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: var(--font-semi);
 }
 
+.nav__list {
+    display: flex;
+    padding-top: 0;
+}
+
 .nav__item {
-    margin-bottom: var(--mb-4);
+    margin-left: var(--mb-6);
+    margin-bottom: 0;
 }
 
 .nav__link {
     position: relative;
-    color: #00ff80;
+    color: black;
 }
 
 .nav__link:hover {
@@ -172,7 +178,7 @@ img {
     position: relative;
     height: 600px;
     row-gap: 3rem;
-    padding: 4rem 0 5rem;
+    padding: 10rem 0 2rem;
 }
 
 /* ===== INDEXES =====*/
@@ -192,3 +198,6 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+
+
