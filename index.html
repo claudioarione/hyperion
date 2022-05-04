@@ -39,6 +39,7 @@
 <script defer src="scripts/index_code.js"></script>
 <script defer src="scripts/appliances_code.js"></script>
 <script defer src="scripts/rates_code.js"></script>
+<script defer src="scripts/details_script.js"></script>
 
 <!--HEADER-->
 <header class="l-header">
@@ -185,7 +186,7 @@
                                                                   placeholder="Consumo" step="0.01" type="number">
                         <span style="margin: 0.4rem 0.5rem 0 0.25rem;">Watt</span>
                         <label for="applianceCategoryName"></label>
-                        <select id="applianceCategoryName">
+                        <select class="dropdown_list" id="applianceCategoryName">
                             <option disabled selected value="">Categoria...</option>
                             <option value="general">Generale</option>
                             <option value="iron">Ferro da stiro</option>
@@ -205,9 +206,37 @@
                 <!-- data comes from local storage -->
             </ul>
             <div class="footer">
-                <span>Hai <span class="pendingTasks"></span> elettrodomestici</span>
+                <span>Hai <span class="numAppliances"></span> elettrodomestici</span>
                 <button id="deleteAllAppliances">Cancella tutto</button>
             </div>
+        </div>
+
+        <div class="wrapper">
+            <h2 id="detailsTitle">Fasce di utilizzo del 02/04</h2>
+            <div class="inputField">
+                <div style="display: grid; width: 100%">
+                    <div style="display: flex;">
+                        <span style="margin-right: 0.2rem"> Elettrodomestico</span>
+                        <label for="detailsDropdownList"></label><select class="dropdown_list" id="detailsDropdownList"
+                                                                         style="margin-bottom: 0.5rem; width: 70%">
+                        <option disabled selected value="">Scegli...</option>
+
+                    </select>
+                        <img id="detailsPreviewImg" src="images/appliance_icons/general.png"
+                             style="width: 32px; height: 34px">
+                    </div>
+                    <div style="display: flex; margin-top: 1rem">
+                        <span style="margin-right: 0.25rem">Orario di inizio</span>
+                        <input id="detailsStartingTime" step="300" style="margin-right: 0.25rem" type="time">
+                        <span style="margin-right: 0.25rem">Orario di fine</span>
+                        <input id="detailsEndingTime" step="300" style="margin-right: 0.25rem" type="time">
+                    </div>
+                </div>
+                <button id="addDetailButton"><i class="fa fa-plus"></i></button>
+            </div>
+            <ul class="itemsList" id="detailsList">
+                <!-- TODO remove stub -->
+            </ul>
         </div>
     </section>
 

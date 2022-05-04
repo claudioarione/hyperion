@@ -211,15 +211,21 @@
     display: flex;
 }
 
-#applianceCategoryName {
+.dropdown_list {
     margin-right: 10px;
     border-radius: 4px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     font-family: 'Poppins', sans-serif;;
 }
 
-@media screen and (max-width: 1104px){
-    .wrapper{
+.remove_item {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem
+}
+
+@media screen and (max-width: 1104px) {
+    .wrapper {
         margin-left: 0;
     }
 }

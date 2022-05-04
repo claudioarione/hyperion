@@ -280,3 +280,16 @@ function findWorstDay(array) {
 
     return array.reduce((prev, curr) => (prev.kWh > curr.kWh) ? prev : curr);
 }
+
+/**
+ * Rounds the input hour to the given precision (e.g. rounds 22:43 into 22:45 and 22:42 into 22:40)
+ * @param hour hh:mm {@code String}
+ * @param precision integer indicating the time interval into which the hour is divided (e.g. 5 minutes)
+ * @return {string} the "rounded" output hour
+ */
+function roundHourToPrecision(hour, precision) {
+    const partsOfHour = hour.split(":");
+    const minutes = parseInt(partsOfHour[1]);
+    const newMinutes = Math.round(minutes / precision) * precision;
+    return partsOfHour[0] + ":" + getStringFromNumber(newMinutes);
+}

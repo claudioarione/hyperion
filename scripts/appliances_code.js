@@ -11,13 +11,12 @@ let isNameAcceptable = false;
 let isConsumptionAcceptable = false;
 
 applName.addEventListener('change', () => {
-    const name = applName.value;
-    if (name.trim().length === 0) {
+    const applianceName = applName.value;
+    if (applianceName.trim().length === 0) {
         isNameAcceptable = false;
-    }
-    else {
+    } else {
         isNameAcceptable = true;
-        const categorySelected = checkImageCompatibility(name);
+        const categorySelected = checkImageCompatibility(applianceName);
         applCategoryName.value = categorySelected;
         applCategoryImg.src = "/images/appliance_icons/" + categorySelected + ".png";
     }
@@ -39,13 +38,13 @@ applWatt.addEventListener('change', () => {
  */
 function showAppliances() {
     let getLocalStorageData = localStorage.getItem("appliances");
-    if (getLocalStorageData == null) {
-        appliances = [];
+    if (getLocalStorageData === null || getLocalStorageData === undefined) {
+        localStorage.setItem("appliances", JSON.stringify([]))
     } else {
         appliances = JSON.parse(getLocalStorageData);
     }
-    const pendingTasksNumb = document.querySelector(".pendingTasks");
-    pendingTasksNumb.textContent = appliances.length.toString(); //passing the array length in pendingtask
+    const numAppliances = document.querySelector(".numAppliances");
+    numAppliances.textContent = appliances.length.toString();
     if (appliances.length > 0) { //if array length is greater than 0
         deleteAllBtn.classList.add("active");
     } else {
@@ -85,6 +84,7 @@ addApplianceBtn.onclick = ()=>{
     localStorage.setItem("appliances", JSON.stringify(appliances));
     showAppliances();
     enableOrDisableBtn(addApplianceBtn, false)
+    setUpDetailsDropdown();
 }
 
 function deleteAppliance(index) {
@@ -93,10 +93,12 @@ function deleteAppliance(index) {
     appliances.splice(index, 1);
     localStorage.setItem("appliances", JSON.stringify(appliances));
     showAppliances();
+    setUpDetailsDropdown();
 }
 
 deleteAllBtn.onclick = ()=>{
     appliances = []
     localStorage.setItem("appliances", JSON.stringify(appliances));
     showAppliances();
+    setUpDetailsDropdown();
 }
