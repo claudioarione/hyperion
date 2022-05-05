@@ -2,8 +2,8 @@
 
 .wrapper{
     background: rgb(255, 255, 255);
-    max-width: 35rem;
     margin-left: 5rem;
+    margin-right: 5rem;
     margin-top: 2rem;
     padding: 1rem;
     border-radius: 5px;

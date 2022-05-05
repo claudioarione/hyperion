@@ -134,7 +134,7 @@
 
 
     <!--===== INDICI E CONFRONTI =====-->
-    <section class="about section " id="indexes">
+    <section class="section " id="indexes">
         <h2 class="section-title">Indici e confronti</h2>
 
         <div class="index_container bd-grid">
@@ -171,77 +171,79 @@
     </section>
 
     <!--===== ELETTRODOMESTICI =====-->
-    <section class="work section" id="details">
+    <section class="section" id="details">
         <h2 class="section-title">Dettaglio dei consumi</h2>
-        <div class="wrapper">
-            <header>Elettrodomestici</header>
-            <div class="inputField">
-                <div class="input__appliance__container">
-                    <label for="applianceName"></label><input id="applianceName"
-                                                              placeholder="Nome dell'elettrodomestico" type="text">
-                    <div class="details__appliance__container">
-                        <label for="applianceWatt"></label><input class="input__number__watt" id="applianceWatt"
-                                                                  max="20000" min="0"
-                                                                  oninput="validity.valid||(value='');"
-                                                                  placeholder="Consumo" step="0.01" type="number">
-                        <span style="margin: 0.4rem 0.5rem 0 0.25rem;">Watt</span>
-                        <label for="applianceCategoryName"></label>
-                        <select class="dropdown_list" id="applianceCategoryName">
-                            <option disabled selected value="">Categoria...</option>
-                            <option value="general">Generale</option>
-                            <option value="iron">Ferro da stiro</option>
-                            <option value="oven">Forno</option>
-                            <option value="television">Televisione</option>
-                            <option value="dishwasher">Lavastoviglie</option>
-                            <option value="washing_machine">Lavatrice</option>
-                            <option value="vacuum_cleaner">Aspirapolvere</option>
-                            <option value="hair_dryer">Asciugacapelli</option>
-                        </select>
-                        <img alt="" id="applianceCategoryImg" src="images/appliance_icons/general.png" width="32px">
+        <div style="display: flex">
+            <div class="wrapper" style="width: 35%">
+                <header>Elettrodomestici</header>
+                <div class="inputField">
+                    <div class="input__appliance__container">
+                        <label for="applianceName"></label><input id="applianceName"
+                                                                  placeholder="Nome dell'elettrodomestico" type="text">
+                        <div class="details__appliance__container">
+                            <label for="applianceWatt"></label><input class="input__number__watt" id="applianceWatt"
+                                                                      max="20000" min="0"
+                                                                      oninput="validity.valid||(value='');"
+                                                                      placeholder="Consumo" step="0.01" type="number">
+                            <span style="margin: 0.4rem 0.5rem 0 0.25rem;">Watt</span>
+                            <label for="applianceCategoryName"></label>
+                            <select class="dropdown_list" id="applianceCategoryName">
+                                <option disabled selected value="">Categoria...</option>
+                                <option value="general">Generale</option>
+                                <option value="iron">Ferro da stiro</option>
+                                <option value="oven">Forno</option>
+                                <option value="television">Televisione</option>
+                                <option value="dishwasher">Lavastoviglie</option>
+                                <option value="washing_machine">Lavatrice</option>
+                                <option value="vacuum_cleaner">Aspirapolvere</option>
+                                <option value="hair_dryer">Asciugacapelli</option>
+                            </select>
+                            <img alt="" id="applianceCategoryImg" src="images/appliance_icons/general.png" width="32px">
+                        </div>
                     </div>
+                    <button id="addApplianceBtn"><i class="fa fa-plus"></i></button>
                 </div>
-                <button id="addApplianceBtn"><i class="fa fa-plus"></i></button>
+                <ul class="itemsList" id="appliancesList">
+                    <!-- data comes from local storage -->
+                </ul>
+                <div class="footer">
+                    <span>Hai <span class="numAppliances"></span> elettrodomestici</span>
+                    <button id="deleteAllAppliances">Cancella tutto</button>
+                </div>
             </div>
-            <ul class="itemsList" id="appliancesList">
-                <!-- data comes from local storage -->
-            </ul>
-            <div class="footer">
-                <span>Hai <span class="numAppliances"></span> elettrodomestici</span>
-                <button id="deleteAllAppliances">Cancella tutto</button>
-            </div>
-        </div>
 
-        <div class="wrapper">
-            <h2 id="detailsTitle">Fasce di utilizzo del 02/04</h2>
-            <div class="inputField">
-                <div style="display: grid; width: 100%">
-                    <div style="display: flex;">
-                        <span style="margin-right: 0.2rem"> Elettrodomestico</span>
-                        <label for="detailsDropdownList"></label>
-                        <select class="dropdown_list" id="detailsDropdownList"
-                                style="margin-bottom: 0.5rem; width: 70%">
-                            <option disabled selected value="">Scegli...</option>
-                        </select>
-                        <img id="detailsPreviewImg" src="images/appliance_icons/general.png"
-                             style="width: 32px; height: 34px">
+            <div class="wrapper" style="width: 65%">
+                <h2 id="detailsTitle">Fasce di utilizzo del 02/04</h2>
+                <div class="inputField">
+                    <div style="display: grid; width: 100%">
+                        <div style="display: flex;">
+                            <span style="margin-right: 0.2rem"> Elettrodomestico</span>
+                            <label for="detailsDropdownList"></label>
+                            <select class="dropdown_list" id="detailsDropdownList"
+                                    style="margin-bottom: 0.5rem; width: 70%">
+                                <option disabled selected value="">Scegli...</option>
+                            </select>
+                            <img id="detailsPreviewImg" src="images/appliance_icons/general.png"
+                                 style="width: 32px; height: 34px">
+                        </div>
+                        <div style="display: flex; margin-top: 1rem">
+                            <span style="margin-right: 0.25rem">Orario di inizio</span>
+                            <input id="detailsStartingTime" step="300" style="margin-right: 0.25rem" type="time">
+                            <span style="margin-right: 0.25rem">Orario di fine</span>
+                            <input id="detailsEndingTime" step="300" style="margin-right: 0.25rem" type="time">
+                        </div>
                     </div>
-                    <div style="display: flex; margin-top: 1rem">
-                        <span style="margin-right: 0.25rem">Orario di inizio</span>
-                        <input id="detailsStartingTime" step="300" style="margin-right: 0.25rem" type="time">
-                        <span style="margin-right: 0.25rem">Orario di fine</span>
-                        <input id="detailsEndingTime" step="300" style="margin-right: 0.25rem" type="time">
-                    </div>
+                    <button id="addDetailButton"><i class="fa fa-plus"></i></button>
                 </div>
-                <button id="addDetailButton"><i class="fa fa-plus"></i></button>
+                <ul class="itemsList" id="detailsList">
+
+                </ul>
             </div>
-            <ul class="itemsList" id="detailsList">
-                <!-- TODO remove stub -->
-            </ul>
         </div>
     </section>
 
     <!--===== TARIFFE =====-->
-    <section class="contact section" id="rates">
+    <section class="section" id="rates">
         <h2 class="section-title">Confronto tra tariffe</h2>
         <div class="wrapper">
             <header>Tariffe</header>

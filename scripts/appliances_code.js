@@ -93,6 +93,7 @@ function deleteAppliance(index) {
     appliances.splice(index, 1);
     localStorage.setItem("appliances", JSON.stringify(appliances));
     showAppliances();
+    // TODO delete all usages for the appliance in details object
     setUpDetailsDropdown();
 }
 
