@@ -6,10 +6,11 @@ const detailsInitialTime = document.getElementById('detailsStartingTime');
 const detailsEndingTime = document.getElementById('detailsEndingTime');
 const addDetailBtn = document.getElementById('addDetailButton');
 const detailsList = document.getElementById('detailsList');
-let isInitialTimeOk = false, isFinalTimeOk = false, isApplianceOk = false;
+let isInitialTimeOk = false, isFinalTimeOk = false, isApplianceOk = appliances.length !== 0, isTimeDiffOkay = false;
 
 function checkAddDetailBtnEnabling() {
-    enableOrDisableBtn(addDetailBtn, isInitialTimeOk && isFinalTimeOk && isApplianceOk)
+    isTimeDiffOkay = detailsInitialTime.value < detailsEndingTime.value;
+    enableOrDisableBtn(addDetailBtn, isInitialTimeOk && isFinalTimeOk && isApplianceOk && isTimeDiffOkay)
 }
 
 function setUpDetailsDropdown() {
@@ -56,15 +57,29 @@ function addDetail() {
     const objectToPush = {
         "start": detailsInitialTime.value,
         "end": detailsEndingTime.value,
-        "appliance": detailsDropdown.value
     };
     if (searchSameDate !== undefined) {
-        searchSameDate.details.push(objectToPush);
+        const searchSameAppliance = searchSameDate.details.find(({appliance}) => appliance === detailsDropdown.value);
+        if (searchSameAppliance !== undefined) {
+            searchSameAppliance.ranges.push(objectToPush);
+        } else {
+            searchSameDate.details.push({
+                "appliance": detailsDropdown.value,
+                "ranges": [
+                    objectToPush
+                ]
+            })
+        }
     } else {
         details.push({
             "date": datePicker.value,
             "details": [
-                objectToPush
+                {
+                    "appliance": detailsDropdown.value,
+                    "ranges": [
+                        objectToPush
+                    ]
+                }
             ]
         })
     }
@@ -76,9 +91,13 @@ addDetailBtn.addEventListener('click', () => {
     addDetail();
 })
 
-function removeDetail(value, index) {
-    // TODO remove value from details and save it in localStorage
-    console.log("Remove button pressed");
+function removeDetail(activeDate, curAppliance) {
+    const searchDate = details.find(({date}) => date === activeDate);
+    const searchAppliance = searchDate.details.find(({appliance}) => appliance === curAppliance);
+    const index = searchDate.details.indexOf(searchAppliance);
+    searchDate.details.splice(index, 1);
+    localStorage.setItem("details", JSON.stringify(details));
+    showDetails();
 }
 
 function createDetailListItem(detail, index) {
@@ -86,14 +105,17 @@ function createDetailListItem(detail, index) {
 
     const divRemoveDetail = document.createElement('div');
     divRemoveDetail.classList.add("removeButton", "remove_item")
-    divRemoveDetail.onclick = () => removeDetail(datePicker.value, index);
+    divRemoveDetail.onclick = () => removeDetail(datePicker.value, detail.appliance);
     divRemoveDetail.textContent = "X";
 
     const divWrapper = document.createElement('div');
     divWrapper.style.display = "flex";
 
     const image = document.createElement('img');
-    image.src = "/images/appliance_icons/iron.png"
+    const categorySearch = appliances.find(({name}) => name === detail.appliance);
+    let category = "general";
+    if (categorySearch !== undefined) category = categorySearch.category;
+    image.src = "/images/appliance_icons/" + category + ".png"
     image.width = 48;
 
     const divInfo = document.createElement('div');
@@ -102,7 +124,11 @@ function createDetailListItem(detail, index) {
     const spanName = document.createElement('span');
     spanName.textContent = detail.appliance
     const spanHour = document.createElement('span');
-    spanHour.textContent = detail.start + " - " + detail.end;
+    let text = "";
+    detail.ranges.forEach((element) => {
+        text += element.start + " - " + element.end + ", ";
+    });
+    spanHour.textContent = text.slice(0, -2);
 
     divInfo.replaceChildren(spanName, spanHour);
 
@@ -124,10 +150,10 @@ function showDetails() {
     details = JSON.parse(json);
     const selectedDay = datePicker.value;
     const search = details.find(({date}) => date === selectedDay);
+    detailsList.replaceChildren();
     if (search === undefined) return;
     search.details.forEach((element, index) => {
         // Create a new element based on the info contained here
-        console.log(element)
         createDetailListItem(element, index)
     })
 }

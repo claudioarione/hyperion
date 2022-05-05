@@ -25,7 +25,6 @@ window.addEventListener('scroll', scrollActive)
 const datePicker = document.getElementById('datePicker');
 const timePicker = document.getElementById('timePicker');
 const curDate = new Date();
-//curDate.setMinutes(curDate.getMinutes()-curDate.getTimezoneOffset());
 datePicker.value = curDate.toJSON().slice(0, 10);
 datePicker.max = curDate.toJSON().slice(0, 10);
 timePicker.value = (curDate.getHours() + 1).toString()
@@ -59,6 +58,7 @@ datePicker.addEventListener('change', ()=> {
     updateIndexes();
     compareWithLastDayOfWeek();
     compareWithPreviousWeek();
+    showDetails();
 });
 
 timePicker.addEventListener('change', () => {
