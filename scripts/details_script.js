@@ -156,6 +156,89 @@ function showDetails() {
         // Create a new element based on the info contained here
         createDetailListItem(element, index)
     })
+    setUpDetailsChart(search.details)
 }
 
 showDetails();
+
+function getDataForDetails(detailsArr, index, watt) {
+    return detailsArr.map((element) => {
+        const start = fromTimeStringToTotal(element.start, 5)
+        const end = fromTimeStringToTotal(element.end, 5)
+        console.log(watt)
+        console.log((end - start) * 5)
+        const kWh = fromWattAndMinutesToKwh(watt, (end - start) * 5)
+        console.log(kWh)
+        return {
+            x: start,
+            x2: end,
+            y: index,
+            color: getColorByKwh(kWh, 1)
+        }
+    })
+}
+
+function setUpDetailsChart(searchDetails) {
+
+    let applianceLabels = []
+    let detailsValues = []
+    let wattValues = []
+    searchDetails.forEach((element, index) => {
+        applianceLabels.push(element.appliance);
+        const searchWatt = appliances.find(({name}) => name === element.appliance);
+        let watt = 0;
+        if (searchWatt !== undefined) watt = searchWatt.watt;
+        detailsValues = detailsValues.concat(getDataForDetails(element.ranges, index, watt));
+        wattValues.push(watt);
+    });
+    let pointWidth = 80 - applianceLabels.length * 10;
+    if (pointWidth < 10) pointWidth = 10;
+
+    console.log(detailsValues)
+    console.log(wattValues)
+
+    Highcharts.chart('detailsChartContainer', {
+        chart: {
+            type: 'xrange'
+        },
+        title: {
+            text: 'Dettaglio dei consumi di ' + fromFormatToItalian(fromDatePickerToFormat(datePicker.value))
+        },
+        plotOptions: {
+            series: {
+                grouping: false,
+                pointPadding: 0,
+                groupPadding: 0
+            }
+        },
+        xAxis: {
+            min: 0,
+            max: 24 * 12,
+            visible: false
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            categories: applianceLabels,
+            reversed: true
+        },
+        tooltip: {
+            shared: true,
+            headerFormat: '<span style="font-size: 15px">{point.point.name}</span><br/>',
+            pointFormatter: function () {
+                return '<span style="color:' + this.color + '">\u25CF</span>'
+                    + applianceLabels[this.y] + ', ' + fromTotalToTimeString(this.x, 5) + ' - '
+                    + fromTotalToTimeString(this.x2, 5) + ': <b>' +
+                    +(fromWattAndMinutesToKwh(wattValues[this.y], (this.x2 - this.x) * 5) * 1000).toFixed(ROUND_TO_DIGITS)
+                    + ' Wh</b><br/>'
+            }
+        },
+        series: [{
+            name: 'Consumi',
+            borderColor: 'gray',
+            pointWidth: pointWidth,
+            data: detailsValues
+        }]
+    });
+}

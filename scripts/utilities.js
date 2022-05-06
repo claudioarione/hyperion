@@ -290,6 +290,46 @@ function findWorstDay(array) {
 function roundHourToPrecision(hour, precision) {
     const partsOfHour = hour.split(":");
     const minutes = parseInt(partsOfHour[1]);
-    const newMinutes = Math.round(minutes / precision) * precision;
-    return partsOfHour[0] + ":" + getStringFromNumber(newMinutes);
+    let newMinutes = Math.round(minutes / precision) * precision;
+    let h = partsOfHour[0];
+    if (newMinutes === 60) {
+        newMinutes = 0;
+        h = getStringFromNumber(parseInt(h) + 1);
+    }
+    return h + ":" + getStringFromNumber(newMinutes);
+}
+
+/**
+ * Converts the selected time value in an integer representing how many intervals are present from 00:00 to it -
+ * e.g. time = "04:05", interval = 5 => 49, because there are 49 interval of 5 minutes each from 00:00 to 04:05
+ * @param time hh:mm {@code String}
+ * @param interval an integer
+ * @returns an integer
+ */
+function fromTimeStringToTotal(time, interval) {
+    const partsOfHour = time.split(":");
+    const intervalInOneHour = 60 / interval;
+    return parseInt(partsOfHour[0]) * intervalInOneHour + Math.floor(parseInt(partsOfHour[1]) / intervalInOneHour);
+}
+
+/**
+ * Converts the total amount of interval into an hour string - e.g. total = 10, interval = 5 => "00:50"
+ * @param total an integer
+ * @param interval an integer
+ * @returns {string} "hh:mm"
+ */
+function fromTotalToTimeString(total, interval) {
+    const totalHour = Math.floor(total * interval / 60);
+    const totalMinutes = (total - Math.floor(totalHour * 60 / interval)) * interval;
+    return getStringFromNumber(totalHour) + ":" + getStringFromNumber(totalMinutes);
+}
+
+/**
+ * Calculates the value in kwh associated to an appliance whose power is {watt} W turned on for {minutes} min
+ * @param watt integer
+ * @param minutes integer
+ * @return {number} integer representing the result [in kWh]
+ */
+function fromWattAndMinutesToKwh(watt, minutes) {
+    return (watt / 1000) * (minutes / 60);
 }

@@ -63,6 +63,12 @@
     margin: 0 auto;
 }
 
+.details_chart_container {
+    min-width: 310px;
+    max-width: 880px;
+    margin: auto;
+}
+
 .date__picker {
     width: 25%;
     height: 40px;

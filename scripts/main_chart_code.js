@@ -80,9 +80,6 @@ let chart = new Highcharts.Chart({
     }],
     series: [{
         name : 'Consumo',
-        color: 'rgb(158, 159, 163)',
-        pointPlacement: -0.2,
-        linkedTo: 'main',
         data: initialValues["Settimana1"].slice()
     }],
     exporting: {
