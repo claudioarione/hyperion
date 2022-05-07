@@ -8,11 +8,17 @@ const addDetailBtn = document.getElementById('addDetailButton');
 const detailsList = document.getElementById('detailsList');
 let isInitialTimeOk = false, isFinalTimeOk = false, isApplianceOk = appliances.length !== 0, isTimeDiffOkay = false;
 
+/**
+ * Checks if the Add Detail button should be active and, if so, enables it
+ */
 function checkAddDetailBtnEnabling() {
     isTimeDiffOkay = detailsInitialTime.value < detailsEndingTime.value;
     enableOrDisableBtn(addDetailBtn, isInitialTimeOk && isFinalTimeOk && isApplianceOk && isTimeDiffOkay)
 }
 
+/**
+ * Shows all the possible appliances in the detail dropdown
+ */
 function setUpDetailsDropdown() {
     detailsDropdown.replaceChildren();
     appliances.forEach((appliance, index) => {
@@ -25,8 +31,6 @@ function setUpDetailsDropdown() {
         }
     })
 }
-
-setUpDetailsDropdown();
 
 detailsDropdown.addEventListener('change', () => {
     const applName = detailsDropdown.value;
@@ -52,6 +56,9 @@ detailsEndingTime.addEventListener('change', () => {
 
 
 // [{"date":"...", "details":["appliance":"", "ranges"=[{"start":"", "end":""}, {}]]]
+/**
+ * Adds the selected detail to the "details" array saved in localStorage
+ */
 function addDetail() {
     const searchSameDate = details.find(({date}) => date === datePicker.value);
     const objectToPush = {
@@ -91,6 +98,11 @@ addDetailBtn.addEventListener('click', () => {
     addDetail();
 })
 
+/**
+ * Removes from localStorage all the details about the use of the selected appliance in the selected day
+ * @param activeDate "dd-mm-yyyy" string
+ * @param curAppliance the name of the selected appliance
+ */
 function removeDetail(activeDate, curAppliance) {
     const searchDate = details.find(({date}) => date === activeDate);
     const searchAppliance = searchDate.details.find(({appliance}) => appliance === curAppliance);
@@ -100,6 +112,11 @@ function removeDetail(activeDate, curAppliance) {
     showDetails();
 }
 
+/**
+ * Creates a <li> to add to the list of showed details
+ * @param detail object containing an "appliance" field and a "ranges" array of objects
+ * @param index the position of the object in the "details" list
+ */
 function createDetailListItem(detail, index) {
     const li = document.createElement("li");
 
@@ -139,11 +156,13 @@ function createDetailListItem(detail, index) {
     detailsList.appendChild(li);
 }
 
+/**
+ * Refreshes the changes applied to "details" array, saved in localStorage
+ */
 function showDetails() {
     const json = localStorage.getItem("details");
     if (json == null) {
         localStorage.setItem("details", JSON.stringify([]));
-        // Potential problem on the following line
         details = []
         return;
     }
@@ -159,16 +178,18 @@ function showDetails() {
     setUpDetailsChart(search.details)
 }
 
-showDetails();
-
+/**
+ * Converts the given input values in an object representable with HighCharts
+ * @param detailsArr array of objects
+ * @param index position of the appliance whose details array is detailsArr inside the parent array (saved in localStorage)
+ * @param watt power of the appliance
+ * @return {*} array of objects with fields x, x2, y and color
+ */
 function getDataForDetails(detailsArr, index, watt) {
     return detailsArr.map((element) => {
         const start = fromTimeStringToTotal(element.start, 5)
         const end = fromTimeStringToTotal(element.end, 5)
-        console.log(watt)
-        console.log((end - start) * 5)
         const kWh = fromWattAndMinutesToKwh(watt, (end - start) * 5)
-        console.log(kWh)
         return {
             x: start,
             x2: end,
@@ -178,6 +199,10 @@ function getDataForDetails(detailsArr, index, watt) {
     })
 }
 
+/**
+ * Shows an X-range chart with the details of the use of the appliances in the selected day
+ * @param searchDetails object containing the result of the research of the current date inside the "details" array in localStorage
+ */
 function setUpDetailsChart(searchDetails) {
 
     let applianceLabels = []
@@ -193,9 +218,6 @@ function setUpDetailsChart(searchDetails) {
     });
     let pointWidth = 80 - applianceLabels.length * 10;
     if (pointWidth < 10) pointWidth = 10;
-
-    console.log(detailsValues)
-    console.log(wattValues)
 
     Highcharts.chart('detailsChartContainer', {
         chart: {
@@ -242,3 +264,6 @@ function setUpDetailsChart(searchDetails) {
         }]
     });
 }
+
+showDetails();
+setUpDetailsDropdown();
