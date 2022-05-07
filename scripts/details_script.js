@@ -6,6 +6,7 @@ const detailsInitialTime = document.getElementById('detailsStartingTime');
 const detailsEndingTime = document.getElementById('detailsEndingTime');
 const addDetailBtn = document.getElementById('addDetailButton');
 const detailsList = document.getElementById('detailsList');
+const detailsTitle = document.getElementById('detailsTitle');
 let isInitialTimeOk = false, isFinalTimeOk = false, isApplianceOk = appliances.length !== 0, isTimeDiffOkay = false;
 
 /**
@@ -160,6 +161,9 @@ function createDetailListItem(detail, index) {
  * Refreshes the changes applied to "details" array, saved in localStorage
  */
 function showDetails() {
+    const selectedDay = datePicker.value;
+    detailsTitle.textContent = "Fasce di utilizzo di " + fromFormatToItalian(fromDatePickerToFormat(selectedDay));
+
     const json = localStorage.getItem("details");
     if (json == null) {
         localStorage.setItem("details", JSON.stringify([]));
@@ -167,7 +171,6 @@ function showDetails() {
         return;
     }
     details = JSON.parse(json);
-    const selectedDay = datePicker.value;
     const search = details.find(({date}) => date === selectedDay);
     detailsList.replaceChildren();
     if (search === undefined) return;
