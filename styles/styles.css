@@ -176,9 +176,17 @@ img {
 /*===== HOME =====*/
 .home {
     position: relative;
-    height: 600px;
+    height: 100%;
+    max-height: 40rem;
     row-gap: 3rem;
-    padding: 10rem 0 2rem;
+    padding: 8rem 0 2rem;
+}
+
+.info_and_dp_home {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ===== INDEXES =====*/

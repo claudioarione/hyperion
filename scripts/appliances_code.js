@@ -87,6 +87,10 @@ addApplianceBtn.onclick = ()=>{
     setUpDetailsDropdown();
 }
 
+/**
+ * Deletes the appliance at the given position of the "appliances" array saved in localStorage
+ * @param index integer
+ */
 function deleteAppliance(index) {
     let getLocalStorageData = localStorage.getItem("appliances");
     appliances = JSON.parse(getLocalStorageData);
