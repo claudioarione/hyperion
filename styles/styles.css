@@ -185,8 +185,6 @@ img {
 .info_and_dp_home {
     width: 30%;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 /* ===== INDEXES =====*/

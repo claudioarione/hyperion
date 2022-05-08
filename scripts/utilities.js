@@ -309,18 +309,18 @@ function roundHourToPrecision(hour, precision) {
 function fromTimeStringToTotal(time, interval) {
     const partsOfHour = time.split(":");
     const intervalInOneHour = 60 / interval;
-    return parseInt(partsOfHour[0]) * intervalInOneHour + Math.floor(parseInt(partsOfHour[1]) / intervalInOneHour);
+    return parseInt(partsOfHour[0]) * intervalInOneHour + Math.floor(parseInt(partsOfHour[1]) / interval);
 }
 
 /**
  * Converts the total amount of interval into an hour string - e.g. total = 10, interval = 5 => "00:50"
- * @param total an integer
- * @param interval an integer
+ * @param total an integer - in interval
+ * @param interval an integer - in minutes
  * @returns {string} "hh:mm"
  */
 function fromTotalToTimeString(total, interval) {
     const totalHour = Math.floor(total * interval / 60);
-    const totalMinutes = (total - Math.floor(totalHour * 60 / interval)) * interval;
+    const totalMinutes = total * interval - totalHour * 60;
     return getStringFromNumber(totalHour) + ":" + getStringFromNumber(totalMinutes);
 }
 
