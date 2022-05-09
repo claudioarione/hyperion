@@ -173,7 +173,11 @@ function showDetails() {
     details = JSON.parse(json);
     const search = details.find(({date}) => date === selectedDay);
     detailsList.replaceChildren();
-    if (search === undefined) return;
+    if (search === undefined) {
+        const emptyArr = []
+        setUpDetailsChart(emptyArr);
+        return;
+    }
     search.details.forEach((element, index) => {
         // Create a new element based on the info contained here
         createDetailListItem(element, index)
