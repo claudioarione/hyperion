@@ -241,13 +241,21 @@ function setUpDetailsChart(searchDetails) {
             }
         },
         xAxis: {
+            title: {
+                text: 'Tempo'
+            },
             min: 0,
             max: 24 * 12,
-            visible: false
+            tickInterval: 12,
+            labels: {
+                formatter() {
+                    return fromTotalToTimeString(this.value, 5);
+                }
+            }
         },
         yAxis: {
             title: {
-                text: ''
+                text: 'Elettrodomestici'
             },
             categories: applianceLabels,
             reversed: true
