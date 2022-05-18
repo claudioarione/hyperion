@@ -70,10 +70,10 @@ function showAppliances() {
 showAppliances();
 
 addApplianceBtn.onclick = ()=>{
-    appliances.push({
-        "name" : applName.value,
-        "watt" : parseFloat(applWatt.value),
-        "category" : applCategoryName.value
+    appliances.unshift({
+        "name": applName.value,
+        "watt": parseFloat(applWatt.value),
+        "category": applCategoryName.value
     });
     localStorage.setItem("appliances", JSON.stringify(appliances));
     showAppliances();
@@ -88,9 +88,17 @@ addApplianceBtn.onclick = ()=>{
 function deleteAppliance(index) {
     let getLocalStorageData = localStorage.getItem("appliances");
     appliances = JSON.parse(getLocalStorageData);
+    let foundUsage = false;
+    details.forEach((element) => {
+        const search = element.details.find(({appliance}) => appliance === appliances[index].name);
+        if (search !== undefined) {
+            alert("Sono presenti dati relativi a questo elemento: impossibile eliminare");
+            foundUsage = true;
+        }
+    })
+    if (foundUsage) return;
     appliances.splice(index, 1);
     localStorage.setItem("appliances", JSON.stringify(appliances));
     showAppliances();
-    // TODO delete all usages for the appliance in details object
     setUpDetailsDropdown();
 }
