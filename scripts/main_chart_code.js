@@ -91,15 +91,21 @@ function showHourChart(day, hourStart) {
     const values = showHourValues(day, hourStart);
 
     chart.update({
+        chart: {
+            type: 'line'
+        },
+        colors: [
+            "rgba(160,243,232,0.56)"
+        ],
         title: {
             text: 'Consumi energetici dell\'ora'
         },
         subtitle: {
-            text: 'Grafico dei consumi energetici di ' + fromFormatToItalian(day) + ' tra le ' + hourStart.split(":")[0] + ':00 e le ' + getStringFromNumber(parseInt(hourStart.split(":")[0])+1) + ':00',
+            text: 'Grafico dei consumi energetici di ' + fromFormatToItalian(day) + ' tra le ' + hourStart.split(":")[0] + ':00 e le ' + getStringFromNumber(parseInt(hourStart.split(":")[0]) + 1) + ':00',
             align: 'center'
         },
-        xAxis : {
-            max : 11
+        xAxis: {
+            max: 11
         },
         series: [{
             name: "Consumo",
@@ -118,6 +124,9 @@ function showDayChart(day){
     const values = showDayValues(day);
 
     chart.update({
+        chart: {
+            type: 'column'
+        },
         title: {
             text: 'Consumi energetici del giorno'
         },
@@ -125,8 +134,8 @@ function showDayChart(day){
             text: 'Grafico dei consumi energetici di ' + fromFormatToItalian(day),
             align: 'center'
         },
-        xAxis : {
-            max : 23
+        xAxis: {
+            max: 23
         },
         series: [{
             name: "Consumo",
@@ -148,15 +157,18 @@ function showWeekChart(day) {
     const values = showWeekValues(week);
 
     chart.update({
-        title : {
-            text : 'Consumi energetici della settimana corrente'
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Consumi energetici della settimana corrente'
         },
         subtitle: {
             text: 'Grafico dei consumi energetici della settimana da ' + fromFormatToItalian(week[0]) + ' a ' + fromFormatToItalian(week[6]),
             align: 'center'
         },
-        xAxis : {
-            max : 6
+        xAxis: {
+            max: 6
         },
         series: [{
             data: getData(values, 2).slice()
@@ -176,15 +188,18 @@ function showMonthChart(day) {
     const values = showMonthValues(arrByDate[0], arrByDate[2]);
 
     chart.update({
-        title : {
-            text : 'Consumi energetici del mese'
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Consumi energetici del mese'
         },
         subtitle: {
-            text: 'Grafico dei consumi energetici di ' + italianMonth(parseInt(arrByDate[0])) + ' ' + (parseInt(arrByDate[2])+2000).toString(),
+            text: 'Grafico dei consumi energetici di ' + italianMonth(parseInt(arrByDate[0])) + ' ' + (parseInt(arrByDate[2]) + 2000).toString(),
             align: 'center'
         },
-        xAxis : {
-            max : new Date(parseInt(arrByDate[2])+2000, parseInt(arrByDate[0]), 0).getDate() - 1
+        xAxis: {
+            max: new Date(parseInt(arrByDate[2]) + 2000, parseInt(arrByDate[0]), 0).getDate() - 1
         },
         series: [{
             //name: "" ,
@@ -203,15 +218,18 @@ function showYearChart(year) {
     const values = showYearValues(year);
 
     chart.update({
-        title : {
-            text : 'Consumi energetici dell\'anno'
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Consumi energetici dell\'anno'
         },
         subtitle: {
             text: 'Grafico dei consumi energetici del 20' + year,
             align: 'center'
         },
-        xAxis : {
-            max : 11
+        xAxis: {
+            max: 11
         },
         series: [{
             data: getData(values, 3).slice()
