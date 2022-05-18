@@ -16,7 +16,8 @@
 }
 
 .index__text {
-    margin-left: 24px;
+    margin-left: 3rem;
+    max-width: 48rem;
 }
 
 .comparison_list {

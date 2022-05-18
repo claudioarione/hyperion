@@ -112,6 +112,7 @@ function compareWithLastDayOfWeek() {
     }
 
     document.getElementById('firstIndex').textContent = textToShow;
+    document.getElementById('firstIndexValue').textContent = Math.abs(result).toFixed(ROUND_TO_DIGITS) + "%";
     setContentOfBattery(result, 'firstIndexBattery')
 
 }
@@ -150,6 +151,7 @@ function compareWithPreviousWeek() {
     setContentOfBattery(result, 'secondIndexBattery')
 
     document.getElementById('secondIndex').textContent = textToShow;
+    document.getElementById('secondIndexValue').textContent = kWhOfCurrentWeek + ' kWh';
 
 }
 
@@ -194,6 +196,7 @@ function compareWithPreviousMonth() {
     }
 
     document.getElementById('fourthIndex').textContent = textToShow;
+    document.getElementById('fourthIndexValue').textContent = result.toFixed(ROUND_TO_DIGITS) + "%";
 
     setContentOfBattery(result, 'fourthIndexBattery');
 }
@@ -283,6 +286,7 @@ function compareSamePeriodInDifferentMonths() {
     }
 
     document.getElementById('thirdIndex').textContent = textToShow;
+    document.getElementById('thirdIndexValue').textContent = curMonthKWh.toFixed(ROUND_TO_DIGITS) + ' kWh';
 
     setContentOfBattery(result, 'thirdIndexBattery');
 }

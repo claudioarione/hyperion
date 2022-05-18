@@ -193,6 +193,13 @@ img {
     text-align: center;
 }
 
+.index__value {
+    font-weight: bold;
+    font-size: 1.0rem;
+    margin-left: 0.5rem;
+    width: 6rem;
+}
+
 /* Remove arrows from number input forms */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -204,6 +211,3 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
-
-
-
