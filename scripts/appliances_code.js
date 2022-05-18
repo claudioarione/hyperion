@@ -70,6 +70,13 @@ function showAppliances() {
 showAppliances();
 
 addApplianceBtn.onclick = ()=>{
+
+    const searchForSameName = appliances.find(({name}) => name === applName.value);
+    if (searchForSameName !== undefined) {
+        alert("Esiste già un elettrodomestico con lo stesso nome!");
+        return;
+    }
+
     appliances.unshift({
         "name": applName.value,
         "watt": parseFloat(applWatt.value),
@@ -92,7 +99,7 @@ function deleteAppliance(index) {
     details.forEach((element) => {
         const search = element.details.find(({appliance}) => appliance === appliances[index].name);
         if (search !== undefined) {
-            alert("Sono presenti dati relativi a questo elemento: impossibile eliminare");
+            alert("Sono presenti dati relativi a questo elettrodomestico: impossibile eliminare");
             foundUsage = true;
         }
     })
