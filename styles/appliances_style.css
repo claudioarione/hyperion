@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
-.wrapper{
+.wrapper {
     background: rgb(255, 255, 255);
     margin-left: 5rem;
     margin-right: 5rem;
@@ -10,22 +10,25 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: 30rem;
 }
-.wrapper header{
+
+.wrapper header {
     font-size: 1.5rem;
     font-weight: 600;
 }
+
 .wrapper .inputField {
     margin: 20px 0;
     width: 100%;
     display: flex;
     height: 5rem;
 }
-.input__appliance__container{
+
+.input__appliance__container {
     display: grid;
     width: 100%;
 }
 
-.input__appliance__container input{
+.input__appliance__container input {
     width: 100%;
     outline: none;
     border-radius: 3px;
@@ -34,12 +37,14 @@
     font-family: 'Poppins', sans-serif;;
     padding-left: 15px;
     transition: all 0.3s ease;
-    box-shadow: 0 0.1rem 0.15rem rgba(0,0,0,0.1);
+    box-shadow: 0 0.1rem 0.15rem rgba(0, 0, 0, 0.1);
 }
-.input__appliance__container input:focus{
+
+.input__appliance__container input:focus {
     border-color: rgba(0, 255, 128, 0.43);
 }
-.inputField button{
+
+.inputField button {
     width: 50px;
     height: 100%;
     border: none;
@@ -54,8 +59,9 @@
     pointer-events: none;
     transition: all 0.3s ease;
 }
+
 .inputField button:hover,
-.footer button:hover{
+.footer button:hover {
     background: rgb(0, 255, 128);
 }
 
@@ -153,7 +159,8 @@
     pointer-events: none;
     transition: all 0.3s ease;
 }
-.footer button.active{
+
+.footer button.active {
     opacity: 1;
     pointer-events: auto;
 }
@@ -267,8 +274,15 @@
 }
 
 .priceContainer {
+    display: flex;
     margin: 1rem auto;
     padding: 0.5rem;
+}
+
+.priceContainer input {
+    font-family: 'Poppins', sans-serif;
+    margin: 0 1rem;
+    width: 6rem;
 }
 
 .rateTable {
@@ -281,6 +295,62 @@
     padding: 0 1rem;
 }
 
+.checkboxContainer {
+    margin: 1rem auto;
+    padding: 0.5rem;
+    border-left: 2px black solid;
+    border-right: 2px black solid;
+}
+
+.checkboxContainer input {
+    display: none !important;
+}
+
+.checkboxContainer input[type=checkbox] + label {
+    display: inline-block;
+    border-radius: 6px;
+    background: #dddddd;
+    height: 40px;
+    width: 30px;
+    margin-right: 3px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.checkboxContainer input[type=checkbox]:checked + label {
+    background: #219521;
+    color: #ffffff;
+}
+
+.hourContainer input {
+    width: 2rem;
+    font-family: 'Poppins', sans-serif;
+    margin: 0 0.2rem 0 1rem;
+    padding: 0 0.2rem;
+}
+
+.hourContainer label {
+    font-family: 'Poppins', sans-serif;
+    margin: 0 0.2rem 0 1rem;
+}
+
+#addPriceToRate {
+    float: right;
+    padding: 1rem;
+    font-size: 2rem;
+    border-radius: 10px;
+    margin: 0 2rem 0 0;
+    cursor: pointer;
+    background: #219521;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+#addPriceToRate:hover {
+    background-color: #29bd29;
+}
 
 .closeFormButton {
     float: right;

@@ -2,106 +2,69 @@
 // creates two rates and saves to local storage
 // TODO: delete this code after implementation
 const exampleRate1 = {
-    nome: "Tariffa ENEL E light",
+    nome: "Tariffa Bioraria",
     prezzi: [
         {
             giorni: [true, true, true, true, true, false, false],
-            prezzo: 0.23473,
-            inizio: 0,
-            fine: 8
-        },
-        {
-            giorni: [true, true, true, true, true, false, false],
-            prezzo: 0.23890,
+            prezzo: 0.32189,
             inizio: 8,
             fine: 19
         },
         {
             giorni: [true, true, true, true, true, false, false],
-            prezzo: 0.23890,
+            prezzo: 0.26679,
             inizio: 19,
-            fine: 24
+            fine: 8
         },
         {
-            giorni: [false, false, false, false, false, true, false],
-            prezzo: 0.23890,
+            giorni: [false, false, false, false, false, true, true],
+            prezzo: 0.26679,
             inizio: 0,
-            fine: 19
-        },
-        {
-            giorni: [false, false, false, false, false, true, false],
-            prezzo: 0.21321,
-            inizio: 19,
             fine: 24
-        },
-        {
-            giorni: [false, false, false, false, false, false, true],
-            prezzo: 0.21321,
-            inizio: 0,
-            fine: 17
-        },
-        {
-            giorni: [false, false, false, false, false, false, true],
-            prezzo: 0.21321,
-            inizio: 17,
-            fine: 24
-        },
-
+        }
     ],
 };
 
 const exampleRate2 = {
-    nome: "Tariffa A2A",
+    nome: "Tariffa Senza orari",
     prezzi: [
         {
-            giorni: [true, true, true, true, true, false, false],
-            prezzo: 0.23573,
+            giorni: [true, true, true, true, true, true, true],
+            prezzo: 0.285,
             inizio: 0,
-            fine: 8
-        },
-        {
-            giorni: [true, true, true, true, true, false, false],
-            prezzo: 0.23890,
-            inizio: 8,
-            fine: 19
-        },
-        {
-            giorni: [true, true, true, true, true, false, false],
-            prezzo: 0.23890,
-            inizio: 19,
             fine: 24
-        },
-        {
-            giorni: [false, false, false, false, false, true, false],
-            prezzo: 0.23890,
-            inizio: 0,
-            fine: 19
-        },
-        {
-            giorni: [false, false, false, false, false, true, false],
-            prezzo: 0.20321,
-            inizio: 19,
-            fine: 24
-        },
-        {
-            giorni: [false, false, false, false, false, false, true],
-            prezzo: 0.20321,
-            inizio: 0,
-            fine: 17
-        },
-        {
-            giorni: [false, false, false, false, false, false, true],
-            prezzo: 0.20321,
-            inizio: 17,
-            fine: 24
-        },
+        }
+    ],
+};
 
+const exampleRate3 = {
+    nome: "Tariffa Notte e Festivi",
+    prezzi: [
+        {
+            giorni: [true, true, true, true, true, true, false],
+            prezzo: 0,
+            inizio: 23,
+            fine: 7
+        },
+        {
+            giorni: [false, false, false, false, false, false, true],
+            prezzo: 0,
+            inizio: 0,
+            fine: 24
+        },
+        {
+            giorni: [true, true, true, true, true, true, false],
+            prezzo: 0.56973,
+            inizio: 7,
+            fine: 23
+        },
     ],
 };
 
 rates = [];
 rates.push(exampleRate1);
 rates.push(exampleRate2);
+rates.push(exampleRate3);
 
 localStorage.setItem("rates", JSON.stringify(rates))
 
@@ -115,6 +78,8 @@ function showRates() {
     const ratesList = document.getElementById("ratesList");
     ratesList.innerHTML = "";
 
+
+    // TODO: "Nessuna tariffa" se array vuoto
     // Create a list item for every rate in rates
     for (let i = 0; i < rates.length; i++) {
         const rateLi = createRateLi(rates[i], i)
@@ -126,6 +91,11 @@ function showRates() {
  * Sets the event listeners for the new rate form
  */
 function initNewRateForm() {
+    let newRate = {
+        nome: "",
+        prezzi: []
+    }
+
     const newRateForm = document.getElementById("newRateFormId");
 
     // Display new rate form when user clicks "Aggiungi Tariffa"
@@ -133,9 +103,16 @@ function initNewRateForm() {
         newRateForm.style.display = "block";
     }
 
-    // When the user clicks on the "X" in the new rate form, close it
+    // When the user clicks on the "X" in the new rate form, close it and reset price table
     document.getElementById("closeNewRateForm").onclick = () => {
         newRateForm.style.display = "none";
+        newRate = {
+            nome: "",
+            prezzi: []
+        }
+        const newTable = createPriceTable(newRate.prezzi);
+        newTable.id = "prices";
+        document.getElementById("prices").replaceWith(newTable);
     }
 
     // When the user clicks anywhere outside the new rate form, close it
@@ -144,6 +121,31 @@ function initNewRateForm() {
             newRateForm.style.display = "none";
         }
     }
+
+    // Button to add a new price to the new rate
+    const addPriceBtn = document.getElementById("addPriceToRate")
+    addPriceBtn.addEventListener("click", function () {
+        let newPrice = {
+            prezzo: document.getElementById("newRatePrice").value,
+            inizio: document.getElementById("start").value,
+            fine: document.getElementById("end").value,
+            giorni: [
+                document.getElementById("L").checked,
+                document.getElementById("Mar").checked,
+                document.getElementById("Mer").checked,
+                document.getElementById("G").checked,
+                document.getElementById("V").checked,
+                document.getElementById("S").checked,
+                document.getElementById("D").checked,
+            ]
+        }
+
+        newRate.prezzi.push(newPrice);
+
+        const newTable = createPriceTable(newRate.prezzi);
+        newTable.id = "prices";
+        document.getElementById("prices").replaceWith(newTable);
+    });
 }
 
 showRates();        // TODO: move this to PapaParse "complete" section
@@ -216,7 +218,7 @@ function removeRate(index) {
 }
 
 /**
- * Returns a string like "L M M G V " or "S D " or "" from an array of booleans
+ * Returns a string like "Lun-Ven" or "Sab" or "" from an array of booleans
  * @param giorni an array of booleans with 7 elements, representing the week days
  * @returns {string} a string representing the array; empty string if all elements are "false"
  */
@@ -235,6 +237,19 @@ function boolArrayToString(giorni) {
         return "Dom ";
     }
 
+    if (!giorni[0] && !giorni[1] && !giorni[2] && !giorni[3] && !giorni[4] && giorni[5] && giorni[6]) {
+        return "Sab-Dom ";
+    }
+
+    if (giorni[0] && giorni[1] && giorni[2] && giorni[3] && giorni[4] && giorni[5] && !giorni[6]) {
+        return "Lun-Sab ";
+    }
+
+    if (giorni[0] && giorni[1] && giorni[2] && giorni[3] && giorni[4] && giorni[5] && giorni[6]) {
+        return "Lun-Dom ";
+    }
+
+    // Less common week combinations
     if (giorni[0]) res += "L "
     if (giorni[1]) res += "M "
     if (giorni[2]) res += "M "
