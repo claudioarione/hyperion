@@ -229,9 +229,6 @@ async function initializeEnergyValues(){
         },
         complete : function () {
             console.log('Ho finito di analizzare i dati');
-            //SOLUZIONE OTTIMALE: innanzitutto è più veloce, poi è più precisa perché il 21/11/2021 il vecchio modello dà 3.3335kWh, che è una stima
-            //del valore che si sarebbe ottenuto SE il Rasp fosse stato acceso tutto il giorno
-            //Il calcolo, testato su vari giorni, è praticamente uguale a quello derivato dalla somma dei valori delle singole ore
             energyDayValues.forEach((day) => {
                 day.kWh = (day.watt * MISURATION_INTERVAL) / (3600 * 1000);
             });
