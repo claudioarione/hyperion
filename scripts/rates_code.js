@@ -174,18 +174,33 @@ function createRateLi(rate, index) {
     div.appendChild(rateName);
 
     // Prices
-    for (let j = 0; j < rate.prezzi.length; j++) {
-        const value = rate.prezzi[j];
-        const p = document.createElement("p");
-        p.textContent = boolArrayToString(value.giorni) + "| ";
-        p.textContent += value.inizio + ":00" + " - " + value.fine + ":00" + " | "
-        p.textContent += value.prezzo + " €/Kwh";
-
-        div.appendChild(p);
-    }
-
+    const table = createPriceTable(rate.prezzi);
+    div.appendChild(table);
     li.appendChild(div)
     return li;
+}
+
+/**
+ * Creates and returns an HTML table displaying the prices of the given rate
+ * @param prezzi an array of prices (with a day, hour start and end and value)
+ * @returns {HTMLTableElement} an HTML table with 3 columns: fascia, ora, prezzo
+ */
+function createPriceTable(prezzi) {
+    const table = document.createElement("table");
+    table.className = "rateTable";
+    for (let j = 0; j < prezzi.length; j++) {
+        const value = prezzi[j];
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        td1.innerText = boolArrayToString(value.giorni);
+        const td2 = document.createElement("td");
+        td2.innerText = value.inizio + ":00" + " - " + value.fine + ":00";
+        const td3 = document.createElement("td");
+        td3.innerText = value.prezzo + " €/Kwh";
+        tr.append(td1, td2, td3);
+        table.appendChild(tr);
+    }
+    return table;
 }
 
 /**
@@ -207,6 +222,19 @@ function removeRate(index) {
  */
 function boolArrayToString(giorni) {
     let res = "";
+
+    if (giorni[0] && giorni[1] && giorni[2] && giorni[3] && giorni[4] && !giorni[5] && !giorni[6]) {
+        return "Lun-Ver ";
+    }
+
+    if (!giorni[0] && !giorni[1] && !giorni[2] && !giorni[3] && !giorni[4] && giorni[5] && !giorni[6]) {
+        return "Sab ";
+    }
+
+    if (!giorni[0] && !giorni[1] && !giorni[2] && !giorni[3] && !giorni[4] && !giorni[5] && giorni[6]) {
+        return "Dom ";
+    }
+
     if (giorni[0]) res += "L "
     if (giorni[1]) res += "M "
     if (giorni[2]) res += "M "
@@ -216,3 +244,8 @@ function boolArrayToString(giorni) {
     if (giorni[6]) res += "D "
     return res;
 }
+
+// Quando clicco su "Aggiungi prezzo":
+// se la fascia finisce NON alle 24 la fascia dopo inizia all'orario di fine di quella prima e mantiene gli stessi giorni
+// se la fascia finisce alle 24 la fascia dopo inizia alle zero [e viene spuntato il giorno successivo?]
+// in entrambi i casi mantiene lo stesso prezzo

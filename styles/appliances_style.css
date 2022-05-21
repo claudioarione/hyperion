@@ -247,6 +247,41 @@
     width: 80%;
 }
 
+.modalForm input {
+    width: 100%;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;;
+    padding-left: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0.1rem 0.15rem rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.modalForm label {
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.priceContainer {
+    margin: 1rem auto;
+    padding: 0.5rem;
+}
+
+.rateTable {
+    font-family: 'Poppins', sans-serif;
+    border-collapse: collapse;
+}
+
+.rateTable td, .rateTable th {
+    text-align: left;
+    padding: 0 1rem;
+}
+
+
 .closeFormButton {
     float: right;
     font-weight: bold;
