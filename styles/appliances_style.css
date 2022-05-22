@@ -181,11 +181,28 @@
     text-align: center;
     font-size: 1em;
     padding: 6px 10px;
-    border-radius: 0.25rem;
+    border-radius: 10px;
     transition: all 0.3s ease;
 }
 
 .addButton:hover {
+    background-color: #29bd29;
+}
+
+.addRateButton {
+    width: 50%;
+    margin: 2rem auto;
+    font-size: 1.25rem;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #219521;
+    color: #ffffff;
+    text-align: center;
+    padding: 6px 10px;
+    transition: all 0.3s ease;
+}
+
+.addRateButton:hover {
     background-color: #29bd29;
 }
 
@@ -339,7 +356,7 @@
 
 #addPriceToRate {
     float: right;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     font-size: 2rem;
     border-radius: 10px;
     margin: 0 2rem 0 0;

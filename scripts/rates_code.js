@@ -92,15 +92,17 @@ const newRatePrice = document.getElementById("newRatePrice");
 const newRatePriceStart = document.getElementById("start");
 const newRatePriceEnd = document.getElementById("end");
 const addPriceBtn = document.getElementById("addPriceToRate");
+const addRateButton = document.getElementById("addRateButtonId");
+
+let newRate = {
+    nome: "",
+    prezzi: []
+}
 
 /**
  * Sets the event listeners for the new rate form
  */
 function initNewRateForm() {
-    let newRate = {
-        nome: "",
-        prezzi: []
-    }
 
     const newRateForm = document.getElementById("newRateFormId");
 
@@ -112,13 +114,7 @@ function initNewRateForm() {
     // When the user clicks on the "X" in the new rate form, close it and reset price table
     document.getElementById("closeNewRateForm").onclick = () => {
         newRateForm.style.display = "none";
-        newRate = {
-            nome: "",
-            prezzi: []
-        }
-        const newTable = createPriceTable(newRate.prezzi);
-        newTable.id = "prices";
-        document.getElementById("prices").replaceWith(newTable);
+        resetForm();
     }
 
     // When the user clicks anywhere outside the new rate form, close it WITHOUT resetting the price table
@@ -154,6 +150,30 @@ function initNewRateForm() {
 
         suggestNextValues();
     });
+
+    // Confirm and add new rate to list
+    addRateButton.addEventListener("click", function () {
+        if (!newRateTitle.checkValidity()) {
+            return;
+        }
+
+        if (newRate.prezzi.length === 0) {
+            alert("Aggiungere almeno una fascia di prezzo");
+        }
+
+        // TODO: controllo di completezza delle fasce di prezzo
+        // TODO: devono poter esistere due tariffe con lo stesso nome?
+
+        newRate.nome = newRateTitle.value;
+
+        const rates = JSON.parse(localStorage.getItem("rates"));
+        rates.push(newRate);
+        localStorage.setItem("rates", JSON.stringify(rates));
+
+        resetForm();
+        newRateForm.style.display = "none";
+        showRates();
+    })
 }
 
 showRates();        // TODO: move this to PapaParse "complete" section
@@ -317,5 +337,34 @@ function suggestNextValues() {
     } else if (selectedDays === "Sab ") {
         document.getElementById("D").checked = true;
     }
+}
+
+/**
+ * Resets the form to add a new rate
+ */
+function resetForm() {
+    newRate = {
+        nome: "",
+        prezzi: []
+    }
+
+    newRateTitle.value = "";
+
+    newRatePrice.value = "";
+    newRatePriceStart.value = "0";
+    newRatePriceEnd.value = "24";
+
+    document.getElementById("L").checked = true;
+    document.getElementById("Mar").checked = true;
+    document.getElementById("Mer").checked = true;
+    document.getElementById("G").checked = true;
+    document.getElementById("V").checked = true;
+    document.getElementById("S").checked = false;
+    document.getElementById("D").checked = false;
+
+    const newTable = createPriceTable(newRate.prezzi);
+    newTable.id = "prices";
+    document.getElementById("prices").replaceWith(newTable);
+
 
 }
