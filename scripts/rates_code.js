@@ -142,6 +142,13 @@ function createRateLi(rate, index) {
     const table = createPriceTable(rate.prezzi);
     div.appendChild(table);
     li.appendChild(div)
+
+    // Total cost estimate
+    const costDiv = document.createElement("div")
+    costDiv.className = "costContainer";
+    costDiv.textContent = computeCost(rate) + " €";
+    li.appendChild(costDiv)
+
     return li;
 }
 
@@ -300,6 +307,14 @@ function resetForm() {
     const newTable = createPriceTable(newRate.prezzi);
     newTable.id = "prices";
     document.getElementById("prices").replaceWith(newTable);
+}
 
-
+/**
+ * Computes and returns the estimated cost of a given rate in the selected period
+ * @param rate a rate, containing an array of prices
+ * @returns {number} the estimated cost
+ */
+function computeCost(rate) {
+    // TODO: calculate the real cost
+    return 41.21;
 }

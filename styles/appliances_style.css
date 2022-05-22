@@ -387,6 +387,14 @@
     cursor: pointer;
 }
 
+.costContainer {
+    position: absolute;
+    top: 35%;
+    right: 5%;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
 @media screen and (max-width: 1104px) {
     .wrapper {
         margin-left: 0;
