@@ -1,83 +1,18 @@
-// ------------- TEST CODE ------------------------
-// creates two rates and saves to local storage
-// TODO: delete this code after implementation
-const exampleRate1 = {
-    nome: "Tariffa Bioraria",
-    prezzi: [
-        {
-            giorni: [true, true, true, true, true, false, false],
-            prezzo: 0.32189,
-            inizio: 8,
-            fine: 19
-        },
-        {
-            giorni: [true, true, true, true, true, false, false],
-            prezzo: 0.26679,
-            inizio: 19,
-            fine: 8
-        },
-        {
-            giorni: [false, false, false, false, false, true, true],
-            prezzo: 0.26679,
-            inizio: 0,
-            fine: 24
-        }
-    ],
-};
-
-const exampleRate2 = {
-    nome: "Tariffa Senza orari",
-    prezzi: [
-        {
-            giorni: [true, true, true, true, true, true, true],
-            prezzo: 0.285,
-            inizio: 0,
-            fine: 24
-        }
-    ],
-};
-
-const exampleRate3 = {
-    nome: "Tariffa Notte e Festivi",
-    prezzi: [
-        {
-            giorni: [true, true, true, true, true, true, false],
-            prezzo: 0,
-            inizio: 23,
-            fine: 7
-        },
-        {
-            giorni: [false, false, false, false, false, false, true],
-            prezzo: 0,
-            inizio: 0,
-            fine: 24
-        },
-        {
-            giorni: [true, true, true, true, true, true, false],
-            prezzo: 0.56973,
-            inizio: 7,
-            fine: 23
-        },
-    ],
-};
-
-rates = [];
-rates.push(exampleRate1);
-rates.push(exampleRate2);
-rates.push(exampleRate3);
-
-localStorage.setItem("rates", JSON.stringify(rates))
-
-// ------------------ END TEST CODE ------------------------
-
+let rates;
 /**
  * Takes the list of rates from local storage and creates the rate items
  */
 function showRates() {
-    const rates = JSON.parse(localStorage.getItem("rates"));
+    let getLocalStorageData = localStorage.getItem("rates");
+    if (getLocalStorageData === null || getLocalStorageData === undefined) {
+        rates = [];
+        localStorage.setItem("rates", JSON.stringify(rates))
+    } else {
+        rates = JSON.parse(getLocalStorageData);
+    }
+
     const ratesList = document.getElementById("ratesList");
     ratesList.innerHTML = "";
-
 
     // TODO: "Nessuna tariffa" se array vuoto
     // Create a list item for every rate in rates

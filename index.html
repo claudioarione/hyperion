@@ -274,14 +274,15 @@
                         Fare click fuori dalla form per nasconderla senza svuotare i campi
                     </p>
                     <label for="newRateTitle">Nome della tariffa</label>
-                    <input id="newRateTitle" placeholder="Tariffa 1" type="text">
+                    <input id="newRateTitle" placeholder="es: Tariffa 1" required type="text">
                     <h2>Fasce di prezzi</h2>
                     <table class="rateTable" id="prices"></table>
                     <h3 style="margin: 1rem 0 0 0; top: 1rem; position: relative;">Aggiungi una fascia di prezzo</h3>
                     <div id="newPriceId" style="display: block ruby;">
                         <div class="priceContainer">
                             <label for="newRatePrice">Prezzo</label>
-                            <input class="inputPrice" id="newRatePrice" placeholder="0.26679" step="any" type="number">
+                            <input class="inputPrice" id="newRatePrice" placeholder="es: 0.26679" required step="any"
+                                   type="number">
                             <p>€/KWh</p>
                         </div>
                         <div class="checkboxContainer">
