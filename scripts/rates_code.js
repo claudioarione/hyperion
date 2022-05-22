@@ -87,6 +87,12 @@ function showRates() {
     }
 }
 
+const newRateTitle = document.getElementById("newRateTitle");
+const newRatePrice = document.getElementById("newRatePrice");
+const newRatePriceStart = document.getElementById("start");
+const newRatePriceEnd = document.getElementById("end");
+const addPriceBtn = document.getElementById("addPriceToRate");
+
 /**
  * Sets the event listeners for the new rate form
  */
@@ -115,29 +121,29 @@ function initNewRateForm() {
         document.getElementById("prices").replaceWith(newTable);
     }
 
-    // When the user clicks anywhere outside the new rate form, close it
+    // When the user clicks anywhere outside the new rate form, close it WITHOUT resetting the price table
     window.onclick = (event) => {
         if (event.target === newRateForm) {
             newRateForm.style.display = "none";
         }
     }
 
-    // Button to add a new price to the new rate
-    const addPriceBtn = document.getElementById("addPriceToRate")
     addPriceBtn.addEventListener("click", function () {
+        // Report non valid input
+        if (!newRatePrice.reportValidity() || !newRatePriceStart.reportValidity() || !newRatePriceEnd.reportValidity()) {
+            return;
+        }
+
+        if (document.querySelectorAll("#newPriceId input[type=checkbox]:checked").length === 0) {
+            alert("Selezionare almeno un giorno della settimana")
+            return;
+        }
+
         let newPrice = {
-            prezzo: document.getElementById("newRatePrice").value,
-            inizio: document.getElementById("start").value,
-            fine: document.getElementById("end").value,
-            giorni: [
-                document.getElementById("L").checked,
-                document.getElementById("Mar").checked,
-                document.getElementById("Mer").checked,
-                document.getElementById("G").checked,
-                document.getElementById("V").checked,
-                document.getElementById("S").checked,
-                document.getElementById("D").checked,
-            ]
+            prezzo: newRatePrice.value,
+            inizio: newRatePriceStart.value,
+            fine: newRatePriceEnd.value,
+            giorni: getCheckedDays()
         }
 
         newRate.prezzi.push(newPrice);
@@ -145,6 +151,8 @@ function initNewRateForm() {
         const newTable = createPriceTable(newRate.prezzi);
         newTable.id = "prices";
         document.getElementById("prices").replaceWith(newTable);
+
+        suggestNextValues();
     });
 }
 
@@ -260,7 +268,54 @@ function boolArrayToString(giorni) {
     return res;
 }
 
-// Quando clicco su "Aggiungi prezzo":
-// se la fascia finisce NON alle 24 la fascia dopo inizia all'orario di fine di quella prima e mantiene gli stessi giorni
-// se la fascia finisce alle 24 la fascia dopo inizia alle zero [e viene spuntato il giorno successivo?]
-// in entrambi i casi mantiene lo stesso prezzo
+/**
+ * Checks which days have been selected and returns an array of boolean values
+ * @returns {(boolean|boolean|*)[]} a boolean array of 7 elements
+ */
+function getCheckedDays() {
+    return [
+        document.getElementById("L").checked,
+        document.getElementById("Mar").checked,
+        document.getElementById("Mer").checked,
+        document.getElementById("G").checked,
+        document.getElementById("V").checked,
+        document.getElementById("S").checked,
+        document.getElementById("D").checked,
+    ];
+}
+
+/**
+ * Suggests the next values for price start, end and days of the week to select
+ */
+function suggestNextValues() {
+    // end hour becomes start hour of next price
+    // TODO: try to fill in the next values in a "smart" way (try to fill the voids in the price table),
+    // i.e if I add 19-8 then suggest 8-19 next (of the same days)
+    // magari consultando newRate.prezzi
+
+    if (parseInt(newRatePriceEnd.value) !== 24) {
+        newRatePriceStart.value = newRatePriceEnd.value;
+        newRatePriceEnd.value = 24;
+        return;
+    }
+
+    newRatePriceStart.value = 0;
+
+    // Suggest next days if one period of days is done
+    let selectedDays = boolArrayToString(getCheckedDays());
+    // Uncheck all days
+    document.getElementById("L").checked = false;
+    document.getElementById("Mar").checked = false;
+    document.getElementById("Mer").checked = false;
+    document.getElementById("G").checked = false;
+    document.getElementById("V").checked = false;
+    document.getElementById("S").checked = false;
+    document.getElementById("D").checked = false;
+
+    if (selectedDays === "Lun-Ver ") {
+        document.getElementById("S").checked = true;
+    } else if (selectedDays === "Sab ") {
+        document.getElementById("D").checked = true;
+    }
+
+}
