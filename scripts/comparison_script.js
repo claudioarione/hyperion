@@ -39,7 +39,6 @@ function computeChargeLevel(result) {
  * @returns {string} a string like "linear-gradient(color1, color2)"
  */
 function computeBackgroundColors(result) {
-    // TODO: ora ci sono solo 3 colori, potremmo personalizzare ulteriormente i colori a seconda del result
 
     // less than 50% energy than last period
     if (result < -50) {

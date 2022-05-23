@@ -59,6 +59,8 @@ datePicker.addEventListener('change', ()=> {
     compareWithLastDayOfWeek();
     compareWithPreviousWeek();
     showDetails();
+
+    showRates();
 });
 
 timePicker.addEventListener('change', () => {

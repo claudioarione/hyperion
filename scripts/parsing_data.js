@@ -4,6 +4,7 @@
 
 let energyValues = [];
 let energyDayValues = [];
+let energyHourValues = [];
 
 /**
  * Makes an efficient search of the input day inside energyValues
@@ -201,16 +202,20 @@ const showYearValues = (year) => {
     return arrayRes;
 }
 
+// {data:"11/07/22",hours:[0:12.45,1:123,...]}
+// {
+//      date: "11/07/22", hour:0, value: 12.45
+//      key: "11/07/22.1, value: 1.89
 /**
  * Parses input into a structure
  * @returns {Promise<void>}
  */
-async function initializeEnergyValues(){
+async function initializeEnergyValues() {
     const file = await fetch('./csv/energy.csv');
     const blob = await file.blob();
     Papa.parse(blob, {
-        header : true,
-        worker : true,
+        header: true,
+        worker: true,
         dynamicTyping : true,
         step : function (row) {
             const day = row.data["data"];
@@ -219,12 +224,27 @@ async function initializeEnergyValues(){
                 if (energyDayValues.length === 0 || energyDayValues[energyDayValues.length - 1].data !== day) {
                     energyDayValues.push({
                         data: day,
-                        watt : value
+                        watt: value
                     });
                 } else {
                     energyDayValues[energyDayValues.length - 1].watt += value;
                 }
                 energyValues.push(row.data);
+
+                if (row.data["ora"] === undefined) {
+                    return;
+                }
+                const hour = parseInt(row.data["ora"].split(":")[0]);
+
+                if (energyHourValues.length === 0 || energyHourValues[energyHourValues.length - 1].hour !== hour) {
+                    energyHourValues.push({
+                        data: day,
+                        hour: hour,
+                        watt: value
+                    });
+                } else {
+                    energyHourValues[energyHourValues.length - 1].watt += value;
+                }
             }
         },
         complete : function () {
@@ -232,9 +252,13 @@ async function initializeEnergyValues(){
             energyDayValues.forEach((day) => {
                 day.kWh = (day.watt * MISURATION_INTERVAL) / (3600 * 1000);
             });
+            console.log(energyHourValues)
             showWeekChart(fromDatePickerToFormat(datePicker.value));
             updateIndexes();
             showPage();
+
+            showRates();
+            initNewRateForm();
         }
     });
 }

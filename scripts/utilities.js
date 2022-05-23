@@ -159,8 +159,7 @@ function fromDatePickerToFormat(date) {
  */
 function fromFormatToItalian(date) {
     const partsOfDate = date.split("/");
-    const dayToPass = new Date(parseInt(partsOfDate[2])+2000, parseInt(partsOfDate[0])-1, parseInt(partsOfDate[1]));
-    const dayOfTheWeek = italianDayOfTheWeek((dayToPass.getDay()+6)%7).toLowerCase();
+    const dayOfTheWeek = italianDayOfTheWeek(fromFormatToDayInWeekIndex(date)).toLowerCase();
     return dayOfTheWeek + " " + parseInt(partsOfDate[1]) + " " + italianMonth(parseInt(partsOfDate[0])) + " 20" + partsOfDate[2];
 }
 
@@ -236,7 +235,22 @@ function getTotalKwhOfPrevious7Days(date){
 
 /**
  * Returns an array containing the days of the given month
- * @param array an array of objects who have a "data" field
+ * @param array an array of objects which have a "data" field
+ * @param date a MM/DD/YY string
+ * @returns {*} an array containing the days of the given month
+ */
+function getDaySubArray(array, date) {
+    return array
+        .filter(({data}) =>
+            (data.split('/')[0] === date.split('/')[0]) &&
+            (data.split('/')[1] === date.split('/')[1]) &&
+            (data.split('/')[2] === date.split('/')[2])
+        )
+}
+
+/**
+ * Returns an array containing the days of the given month
+ * @param array an array of objects which have a "data" field
  * @param date a MM/DD/YY string
  * @returns {*} an array containing the days of the given month
  */
@@ -244,6 +258,19 @@ function getMonthSubArray(array, date) {
     return array
         .filter(({data}) =>
             (data.split('/')[0] === date.split('/')[0]) &&
+            (data.split('/')[2] === date.split('/')[2])
+        )
+}
+
+/**
+ * Returns an array containing the days of the given year
+ * @param array an array of objects which have a "data" field
+ * @param date a MM/DD/YY string
+ * @returns {*} an array containing the days of the given year
+ */
+function getYearSubArray(array, date) {
+    return array
+        .filter(({data}) =>
             (data.split('/')[2] === date.split('/')[2])
         )
 }
@@ -332,4 +359,16 @@ function fromTotalToTimeString(total, interval) {
  */
 function fromWattAndMinutesToKwh(watt, minutes) {
     return (watt / 1000) * (minutes / 60);
+}
+
+
+/**
+ * Returns an integer representing the day of the week, from 0 (Monday) to 6 (Sunday)
+ * @param date "mm/dd/yy" string
+ * @return {number} an integer representing the day of the week, from 0 (Monday) to 6 (Sunday)
+ */
+function fromFormatToDayInWeekIndex(date) {
+    const partsOfDate = date.split("/");
+    const dayToPass = new Date(parseInt(partsOfDate[2]) + 2000, parseInt(partsOfDate[0]) - 1, parseInt(partsOfDate[1]));
+    return (dayToPass.getDay() + 6) % 7;
 }
