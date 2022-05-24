@@ -111,9 +111,6 @@ function initNewRateForm() {
     })
 }
 
-showRates();        // TODO: move this to PapaParse "complete" section
-initNewRateForm()
-
 /**
  * Creates an HTML "li" element containing the rate information
  * @param rate rate object containing all the information
@@ -196,7 +193,7 @@ function boolArrayToString(giorni) {
     let res = "";
 
     if (giorni[0] && giorni[1] && giorni[2] && giorni[3] && giorni[4] && !giorni[5] && !giorni[6]) {
-        return "Lun-Ver ";
+        return "Lun-Ven ";
     }
 
     if (!giorni[0] && !giorni[1] && !giorni[2] && !giorni[3] && !giorni[4] && giorni[5] && !giorni[6]) {
@@ -274,7 +271,7 @@ function suggestNextValues() {
     document.getElementById("S").checked = false;
     document.getElementById("D").checked = false;
 
-    if (selectedDays === "Lun-Ver ") {
+    if (selectedDays === "Lun-Ven ") {
         document.getElementById("S").checked = true;
     } else if (selectedDays === "Sab ") {
         document.getElementById("D").checked = true;
@@ -310,11 +307,72 @@ function resetForm() {
 }
 
 /**
- * Computes and returns the estimated cost of a given rate in the selected period
+ * Computes and returns the estimated cost of a given rate in the selected month and year
  * @param rate a rate, containing an array of prices
- * @returns {number} the estimated cost
+ * @returns {string} the estimated cost
  */
 function computeCost(rate) {
-    // TODO: calculate the real cost
-    return 41.21;
+    // TODO this function is just a stub, the real functions are monthlyCost and yearlyCost
+    const monthlyCost = computeMonthlyCost(rate);
+    const yearlyCost = computeYearlyCost(rate);
+
+    return computeDailyCost(rate);
+}
+
+/**
+ * Computes and returns the estimated cost of a given rate in the selected year
+ * @param rate a rate, containing an array of prices
+ * @returns {string} the estimated cost
+ */
+function computeDailyCost(rate) {
+
+    const dayArray = getDaySubArray(energyHourValues, fromDatePickerToFormat(datePicker.value));
+
+    return getTotalCostFromArray(dayArray, rate);
+}
+
+/**
+ * Computes and returns the estimated cost of a given rate in the selected month
+ * @param rate a rate, containing an array of prices
+ * @returns {string} the estimated cost
+ */
+function computeMonthlyCost(rate) {
+
+    const monthArray = getMonthSubArray(energyHourValues, fromDatePickerToFormat(datePicker.value));
+
+    return getTotalCostFromArray(monthArray, rate);
+}
+
+/**
+ * Computes and returns the estimated cost of a given rate in the selected year
+ * @param rate a rate, containing an array of prices
+ * @returns {string} the estimated cost
+ */
+function computeYearlyCost(rate) {
+
+    const yearArray = getYearSubArray(energyHourValues, fromDatePickerToFormat(datePicker.value));
+
+    return getTotalCostFromArray(yearArray, rate);
+}
+
+/**
+ * Returns the total cost of kWh consumed accordingly to the provided array
+ * @param array array of objects of type {data:"MM/DD/YY",hour:integer[0-23],watt:double}
+ * @param rate a rate, containing an array of prices
+ * @returns {string} the estimated cost
+ */
+function getTotalCostFromArray(array, rate) {
+    let res = 0;
+    array.forEach((element) => {
+        const dayOfTheWeek = fromFormatToDayInWeekIndex(element.data);
+        rate.prezzi.forEach((priceElement) => {
+            if (priceElement.giorni[dayOfTheWeek] === true) {
+                if (element.hour >= priceElement.inizio && element.hour < priceElement.fine) {
+                    res += ((element.watt * MISURATION_INTERVAL) / (1000 * 3600)) * priceElement.prezzo;
+                }
+            }
+        });
+    });
+
+    return res.toFixed(ROUND_TO_DIGITS);
 }
