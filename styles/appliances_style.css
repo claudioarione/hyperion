@@ -293,8 +293,10 @@
 
 .priceContainer {
     display: flex;
-    margin: 1rem auto;
     padding: 0.5rem;
+    float: left;
+    margin: 1.5rem auto;
+    align-items: center;
 }
 
 .priceContainer input {
@@ -318,6 +320,7 @@
     padding: 0.5rem;
     border-left: 2px black solid;
     border-right: 2px black solid;
+    float: left;
 }
 
 .checkboxContainer input {

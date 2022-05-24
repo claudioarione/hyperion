@@ -277,8 +277,8 @@
                     <input id="newRateTitle" placeholder="es: Tariffa 1" required type="text">
                     <h2>Fasce di prezzi</h2>
                     <table class="rateTable" id="prices"></table>
-                    <h3 style="margin: 1rem 0 0 0; top: 1rem; position: relative;">Aggiungi una fascia di prezzo</h3>
-                    <div id="newPriceId" style="display: block ruby;">
+                    <h3 style="margin: 1.5rem 0 0 0; top: 1rem; position: relative;">Aggiungi una fascia di prezzo</h3>
+                    <div id="newPriceId" style="display: inline-block;">
                         <div class="priceContainer">
                             <label for="newRatePrice">Prezzo</label>
                             <input class="inputPrice" id="newRatePrice" placeholder="es: 0.26679" required step="any"
@@ -295,15 +295,15 @@
                             <input id="S" type="checkbox"> <label for="S">S</label>
                             <input id="D" type="checkbox"><label for="D">D</label>
                         </div>
-                        <div class="hourContainer" style="display: flex">
-                            <label for="start">Inizio</label>
-                            <input id="start" max="23" min="0" step="1" type="number" value="0">
-                            <p>:00</p>
-                            <label for="end">Fine</label>
-                            <input id="end" max="24" min="1" step="1" type="number" value="24">
-                            <p>:00</p>
+                        <div class="hourContainer" style="display: flex; float: left; margin: 2rem auto">
+                            <label for="start" style="float: left">Inizio</label>
+                            <input id="start" max="23" min="0" step="1" style="float: left" type="number" value="0">
+                            <p style="float: left">:00</p>
+                            <label for="end" style="float: left">Fine</label>
+                            <input id="end" max="24" min="1" step="1" style="float: left" type="number" value="24">
+                            <p style="float: left">:00</p>
                         </div>
-                        <div id="addPriceToRate">+</div>
+                        <div id="addPriceToRate" style="position: relative; left: 5rem;">+</div>
                     </div>
                     <div class="addRateButton" id="addRateButtonId">Conferma</div>
                 </div>
