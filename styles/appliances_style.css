@@ -391,11 +391,25 @@
 }
 
 .costContainer {
+    display: flex;
     position: absolute;
     top: 35%;
     right: 5%;
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.dayCostContainer {
+    display: flex;
+    position: absolute;
+    top: 1.25rem;
+    right: 6%;
+    font-size: 1.25rem;
+}
+
+.cost {
+    width: 8rem;
+    text-align: center;
 }
 
 @media screen and (max-width: 1104px) {

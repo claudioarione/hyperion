@@ -1,4 +1,5 @@
 let rates;
+
 /**
  * Takes the list of rates from local storage and creates the rate items
  */
@@ -138,13 +139,23 @@ function createRateLi(rate, index) {
     // Prices
     const table = createPriceTable(rate.prezzi);
     div.appendChild(table);
-    li.appendChild(div)
+    li.appendChild(div);
 
     // Total cost estimate
-    const costDiv = document.createElement("div")
+    const costDiv = document.createElement("div");
     costDiv.className = "costContainer";
-    costDiv.textContent = computeCost(rate) + " €";
-    li.appendChild(costDiv)
+    const costDivDay = document.createElement("div");
+    const costDivMonth = document.createElement("div");
+    const costDivYear = document.createElement("div");
+    costDivDay.className = "cost";
+    costDivMonth.className = "cost";
+    costDivYear.className = "cost";
+    costDivDay.textContent = computeDailyCost(rate) + " €";
+    costDivMonth.textContent = computeMonthlyCost(rate) + " €";
+    costDivYear.textContent = computeYearlyCost(rate) + " €";
+
+    costDiv.append(costDivDay, costDivMonth, costDivYear);
+    li.appendChild(costDiv);
 
     return li;
 }
@@ -307,19 +318,6 @@ function resetForm() {
 }
 
 /**
- * Computes and returns the estimated cost of a given rate in the selected month and year
- * @param rate a rate, containing an array of prices
- * @returns {string} the estimated cost
- */
-function computeCost(rate) {
-    // TODO this function is just a stub, the real functions are monthlyCost and yearlyCost
-    const monthlyCost = computeMonthlyCost(rate);
-    const yearlyCost = computeYearlyCost(rate);
-
-    return computeDailyCost(rate);
-}
-
-/**
  * Computes and returns the estimated cost of a given rate in the selected year
  * @param rate a rate, containing an array of prices
  * @returns {string} the estimated cost
@@ -367,6 +365,7 @@ function getTotalCostFromArray(array, rate) {
         const dayOfTheWeek = fromFormatToDayInWeekIndex(element.data);
         rate.prezzi.forEach((priceElement) => {
             if (priceElement.giorni[dayOfTheWeek] === true) {
+                // TODO: what if inizio > fine (ES: dalle 8 alle 19) ?!
                 if (element.hour >= priceElement.inizio && element.hour < priceElement.fine) {
                     res += ((element.watt * MISURATION_INTERVAL) / (1000 * 3600)) * priceElement.prezzo;
                 }
