@@ -21,6 +21,12 @@ function showRates() {
         const rateLi = createRateLi(rates[i], i)
         ratesList.appendChild(rateLi);
     }
+
+    // Change day, month and year labels
+    const [year, month, day] = datePicker.value.split('-')
+    document.querySelector("#dayCostId > span").textContent = day;
+    document.querySelector("#monthCostId > span").textContent = italianMonth(parseInt(month));
+    document.querySelector("#yearCostId > span").textContent = year;
 }
 
 const newRateTitle = document.getElementById("newRateTitle");
