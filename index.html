@@ -255,8 +255,11 @@
     <!--===== TARIFFE =====-->
     <section class="section" id="rates">
         <h2 class="section-title">Confronto tra tariffe</h2>
-        <div class="wrapper" style="height: 32.5rem; position:relative;">
+        <div class="ratesWrapper">
             <header>Tariffe</header>
+            <div id="dayBoxId"></div>
+            <div id="monthBoxId"></div>
+            <div id="yearBoxId"></div>
             <div class="dayCostContainer">
                 <div class="cost" id="dayCostId">
                     <p>Giorno:</p>
@@ -271,7 +274,7 @@
                     <span>2022</span>
                 </div>
             </div>
-            <ul class="itemsList" id="ratesList" style="height: 25rem; margin: 0.5rem 0;">
+            <ul class="itemsList" id="ratesList">
                 <!-- data comes from local storage -->
             </ul>
             <div class="addButton" id="openNewRateForm">Aggiungi tariffa</div>

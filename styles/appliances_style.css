@@ -125,6 +125,7 @@
     padding: 0 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    z-index: 25;
 }
 
 .removeButton:hover {
@@ -247,6 +248,28 @@
     position: absolute;
     top: 0.5rem;
     right: 0.5rem
+}
+
+.ratesWrapper {
+    background: rgb(255, 255, 255);
+    margin-left: 5rem;
+    margin-right: 5rem;
+    margin-top: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    padding: 2rem 1rem 1rem;
+}
+
+.ratesWrapper header {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.ratesWrapper .itemsList {
+    overflow-y: auto;
+    height: 25rem;
+    margin: 0.5rem 0 1.5rem 0;
 }
 
 .modalFormContainer {
@@ -394,7 +417,7 @@
     display: flex;
     position: absolute;
     top: 35%;
-    right: 5%;
+    right: 2rem;
     font-size: 1.5rem;
     font-weight: bold;
 }
@@ -402,8 +425,8 @@
 .dayCostContainer {
     display: flex;
     position: absolute;
-    top: 0.5rem;
-    right: 6%;
+    top: 1.25rem;
+    right: 3rem;
 }
 
 .cost {
@@ -416,6 +439,32 @@
 .cost > p {
     font-size: 0.8rem;
     font-weight: normal;
+}
+
+#dayBoxId, #monthBoxId, #yearBoxId {
+    border-radius: 20px;
+    position: absolute;
+    z-index: 5;
+    width: 8rem;
+    height: 30.5rem;
+    top: 0.3rem;
+    transition: all 0.3s ease;
+}
+
+#dayBoxId:hover, #monthBoxId:hover, #yearBoxId:hover {
+    background-color: rgba(0, 0, 0, 0.05)
+}
+
+#dayBoxId {
+    right: 19rem;
+}
+
+#monthBoxId {
+    right: 11rem;
+}
+
+#yearBoxId {
+    right: 3rem;
 }
 
 @media screen and (max-width: 1104px) {
