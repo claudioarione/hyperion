@@ -360,7 +360,8 @@ function computeYearlyCost(rate) {
 }
 
 /**
- * Returns the total cost of kWh consumed accordingly to the provided array
+ * Returns the total cost of kWh consumed accordingly to the provided array.
+ * It is assumed that the rate is correct, meaning that for each hour there is one and only one price
  * @param array array of objects of type {data:"MM/DD/YY",hour:integer[0-23],watt:double}
  * @param rate a rate, containing an array of prices
  * @returns {string} the estimated cost
@@ -371,8 +372,7 @@ function getTotalCostFromArray(array, rate) {
         const dayOfTheWeek = fromFormatToDayInWeekIndex(element.data);
         rate.prezzi.forEach((priceElement) => {
             if (priceElement.giorni[dayOfTheWeek] === true) {
-                // TODO: what if inizio > fine (ES: dalle 8 alle 19) ?!
-                if (element.hour >= priceElement.inizio && element.hour < priceElement.fine) {
+                if (hourIsInPriceRate(element.hour, priceElement)) {
                     res += ((element.watt * MISURATION_INTERVAL) / (1000 * 3600)) * priceElement.prezzo;
                 }
             }
@@ -380,4 +380,21 @@ function getTotalCostFromArray(array, rate) {
     });
 
     return res.toFixed(ROUND_TO_DIGITS);
+}
+
+/**
+ * Checks whether a given hour is included in a price element.
+ * If priceElement.inizio > priceElement.fine (ES: from 19 to 8) it is assumed that the time slot is "from 0 to 8 or from 19 to 24"
+ * @param hour {number} a number from 0 to 23
+ * @param priceElement an object with both an "inizio" and a "fine" fields
+ * @returns {boolean} whether the given hour is included in the given price element
+ */
+function hourIsInPriceRate(hour, priceElement) {
+    // ES: from 8 to 19
+    if (priceElement.inizio <= priceElement.fine) {
+        return (priceElement.inizio <= hour && hour < priceElement.fine);     // (  inizio <= hour < fine  )
+    }
+
+    // ES: from 19 to 8 ----> from 0 to 8 OR from 19 to 24
+    return (hour < priceElement.fine || hour >= priceElement.inizio);
 }
