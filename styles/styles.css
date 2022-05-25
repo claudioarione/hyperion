@@ -8,7 +8,7 @@
     /*Purple 260 - Red 355 - Blue 224 - Pink 340*/
     /* HSL color mode */
     --hue-color: 150;
-    --first-color: hsl(var(--hue-color), 89%, 60%);
+    --first-color: #00934a;
     --second-color: hsl(var(--hue-color), 56%, 12%);
     /*===== Carattere =====*/
     --body-font: 'Poppins', sans-serif;

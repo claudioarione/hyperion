@@ -41,7 +41,7 @@
 }
 
 .input__appliance__container input:focus {
-    border-color: rgba(0, 255, 128, 0.43);
+    border-color: #00dd6f;
 }
 
 .inputField button {
@@ -52,21 +52,20 @@
     margin-left: 5px;
     font-size: 21px;
     outline: none;
-    background: rgba(0, 255, 128, 0.43);
+    background: #eeeeee;
     cursor: pointer;
     border-radius: 3px;
-    opacity: 0.6;
     pointer-events: none;
     transition: all 0.3s ease;
 }
 
-.inputField button:hover,
-.footer button:hover {
-    background: rgb(0, 255, 128);
+.inputField button.active {
+    background-color: #00934a;
+    pointer-events: auto;
 }
 
-.inputField button.active {
-    opacity: 1;
+.inputField button.active:hover {
+    background-color: #00a352;
     pointer-events: auto;
 }
 
@@ -177,7 +176,7 @@
 
 .addButton {
     cursor: pointer;
-    background: #219521;
+    background: #00934a;
     color: #ffffff;
     text-align: center;
     font-size: 1em;
@@ -187,7 +186,7 @@
 }
 
 .addButton:hover {
-    background-color: #29bd29;
+    background-color: #00a352;
 }
 
 .addRateButton {
@@ -196,7 +195,7 @@
     font-size: 1.25rem;
     border-radius: 10px;
     cursor: pointer;
-    background: #219521;
+    background: #00934a;
     color: #ffffff;
     text-align: center;
     padding: 6px 10px;
@@ -204,7 +203,7 @@
 }
 
 .addRateButton:hover {
-    background-color: #29bd29;
+    background-color: #00a352;
 }
 
 .inputRateContainer {

@@ -30,7 +30,7 @@
     font-size: 1rem;
     padding: 0.5rem;
     outline: none;
-    transition-duration: 0.3s;
+    transition: all 0.3s ease;
     margin: 0;
 }
 
@@ -46,13 +46,12 @@
 }
 
 .buttons button:hover {
-    color: white;
-    background-color: rgba(0, 255, 128, 0.43);
+    background-color: #e1e1e1;
     outline: none;
 }
 
 .buttons button.active {
-    background-color: #00ff80;
+    background-color: #00a050;
     color: white;
 }
 
