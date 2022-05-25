@@ -39,6 +39,7 @@ function showAppliances() {
     let getLocalStorageData = localStorage.getItem("appliances");
     if (getLocalStorageData === null || getLocalStorageData === undefined) {
         localStorage.setItem("appliances", JSON.stringify([]))
+        appliances = []
     } else {
         appliances = JSON.parse(getLocalStorageData);
     }

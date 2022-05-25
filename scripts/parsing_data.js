@@ -252,7 +252,6 @@ async function initializeEnergyValues() {
             energyDayValues.forEach((day) => {
                 day.kWh = (day.watt * MISURATION_INTERVAL) / (3600 * 1000);
             });
-            console.log(energyHourValues)
             showWeekChart(fromDatePickerToFormat(datePicker.value));
             updateIndexes();
             showPage();
