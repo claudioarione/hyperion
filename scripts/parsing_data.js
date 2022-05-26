@@ -211,7 +211,7 @@ const showYearValues = (year) => {
  * @returns {Promise<void>}
  */
 async function initializeEnergyValues() {
-    const file = await fetch('./csv/energy.csv');
+    const file = await fetch(ENERGY_VALUES_FILE_PATH);
     const blob = await file.blob();
     Papa.parse(blob, {
         header: true,
