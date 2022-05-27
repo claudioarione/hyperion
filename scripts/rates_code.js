@@ -202,49 +202,6 @@ function removeRate(index) {
 }
 
 /**
- * Returns a string like "Lun-Ven" or "Sab" or "" from an array of booleans
- * @param giorni an array of booleans with 7 elements, representing the week days
- * @returns {string} a string representing the array; empty string if all elements are "false"
- */
-function boolArrayToString(giorni) {
-    let res = "";
-
-    if (giorni[0] && giorni[1] && giorni[2] && giorni[3] && giorni[4] && !giorni[5] && !giorni[6]) {
-        return "Lun-Ven ";
-    }
-
-    if (!giorni[0] && !giorni[1] && !giorni[2] && !giorni[3] && !giorni[4] && giorni[5] && !giorni[6]) {
-        return "Sab ";
-    }
-
-    if (!giorni[0] && !giorni[1] && !giorni[2] && !giorni[3] && !giorni[4] && !giorni[5] && giorni[6]) {
-        return "Dom ";
-    }
-
-    if (!giorni[0] && !giorni[1] && !giorni[2] && !giorni[3] && !giorni[4] && giorni[5] && giorni[6]) {
-        return "Sab-Dom ";
-    }
-
-    if (giorni[0] && giorni[1] && giorni[2] && giorni[3] && giorni[4] && giorni[5] && !giorni[6]) {
-        return "Lun-Sab ";
-    }
-
-    if (giorni[0] && giorni[1] && giorni[2] && giorni[3] && giorni[4] && giorni[5] && giorni[6]) {
-        return "Lun-Dom ";
-    }
-
-    // Less common week combinations
-    if (giorni[0]) res += "L "
-    if (giorni[1]) res += "M "
-    if (giorni[2]) res += "M "
-    if (giorni[3]) res += "G "
-    if (giorni[4]) res += "V "
-    if (giorni[5]) res += "S "
-    if (giorni[6]) res += "D "
-    return res;
-}
-
-/**
  * Checks which days have been selected and returns an array of boolean values
  * @returns {(boolean|boolean|*)[]} a boolean array of 7 elements
  */

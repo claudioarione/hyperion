@@ -7,7 +7,7 @@
 const ENERGY_VALUES_FILE_PATH = './csv/energy.csv';
 
 /**
- * The amount of seconds between each misuration in the energy file.
+ * The amount of seconds between each measurement in the energy file.
  * @type {number}
  */
 const MISURATION_INTERVAL = 17.9;
