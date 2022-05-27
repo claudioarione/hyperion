@@ -18,7 +18,6 @@ const MISURATION_INTERVAL = 17.9;
  * @type {string}
  */
 const DATE_LABEL = "data";
-
 /**
  * The label of the "hour" column in the .csv file, which contains "hh:mm:ss" strings
  * @type {string}
@@ -29,6 +28,13 @@ const HOUR_LABEL = "ora";
  * @type {string}
  */
 const ENERGY_LABEL = "watt";
+
+/**************************** RATES CONFIG ********************************/
+/**
+ * Array of "MM/dd" strings to be considered as a holiday for computing rate costs
+ * @type {string[]}
+ */
+const HOLIDAYS_ARRAY = ["01/01", "01/06", "04/25", "05/01", "06/02", "08/15", "11/01", "12/08", "12/25", "12/26"]
 
 /******************************* DISPLAY **********************************/
 /**
