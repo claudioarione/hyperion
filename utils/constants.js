@@ -5,14 +5,13 @@
  * @type {string}
  */
 const ENERGY_VALUES_FILE_PATH = './csv/energy.csv';
-
 /**
  * The amount of seconds between each measurement in the energy file.
  * @type {number}
  */
 const MISURATION_INTERVAL = 17.9;
 
-/************************** ENERGY FILE FORMAT ****************************/
+/************************** ENERGY FILE CONFIG ****************************/
 /**
  * The label of the "date" column in the .csv file, which contains "MM/dd/yy" strings
  * @type {string}
@@ -28,6 +27,11 @@ const HOUR_LABEL = "ora";
  * @type {string}
  */
 const ENERGY_LABEL = "watt";
+/**
+ * Max Watt value to be considered. If a measurement energy value is greater, it is ignored
+ * @type {number}
+ */
+const MAX_WATT = 20000;
 
 /**************************** RATES CONFIG ********************************/
 /**
@@ -43,7 +47,6 @@ const HOLIDAYS_ARRAY = ["01/01", "01/06", "04/25", "05/01", "06/02", "08/15", "1
  * @type {number}
  */
 const ROUND_TO_DIGITS = 3;
-
 
 /*************************** CHART COLORS **********************************/
 const green = {
@@ -68,5 +71,11 @@ const yellow = {
     ]
 }
 
+/**************************** OTHER CONSTANTS ************************/
+const MIN_INTERVAL = 5;
+const MINS_IN_HOUR = 60;
+const HOURS_IN_DAY = 24;
+const DAYS_IN_WEEK = 7;
+const MONTHS_IN_YEAR = 12;
 
 

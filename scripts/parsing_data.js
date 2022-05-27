@@ -29,14 +29,14 @@ function dateStringBinarySearch(day) {
  *
  * @param day "mm/dd/yy" {@code String} representing the selected day
  * @param hSt "hh:mm:ss" {@code String} representing the starting hour
- * @returns {*[]} array of key-value pair of minute and kWh, grouped every 5 minutes
+ * @returns {*[]} array of key-value pair of minute and kWh, grouped every MIN_INTERVAL minutes
  */
 function showHourValues(day, hSt) {
     const approximateDayIndex = dateStringBinarySearch(day);
     let result = [];
-    if(approximateDayIndex === -1){
-        for (let min = 0; min < 60; min+=5) {
-            const key = getStringFromNumber(min) + "-" + getStringFromNumber(min+4);
+    if(approximateDayIndex === -1) {
+        for (let min = 0; min < MINS_IN_HOUR; min += MIN_INTERVAL) {
+            const key = getStringFromNumber(min) + "-" + getStringFromNumber(min + MIN_INTERVAL - 1);
             result.push([
                 key, 0
             ]);
@@ -55,18 +55,18 @@ function showHourValues(day, hSt) {
         firstHourIndex--;
     }
     if (energyValues[firstHourIndex][HOUR_LABEL].split(":")[0] !== hSt.split(":")[0]) {
-        for (let min = 0; min < 60; min += 5) {
-            const key = getStringFromNumber(min) + "-" + getStringFromNumber(min + 4);
+        for (let min = 0; min < MINS_IN_HOUR; min += MIN_INTERVAL) {
+            const key = getStringFromNumber(min) + "-" + getStringFromNumber(min + MIN_INTERVAL - 1);
             result.push([
                 key, 0
             ]);
         }
     }
-    for (let min = 0; min < 60; min += 5) {
-        const key = getStringFromNumber(min) + "-" + getStringFromNumber(min + 4);
+    for (let min = 0; min < MINS_IN_HOUR; min += MIN_INTERVAL) {
+        const key = getStringFromNumber(min) + "-" + getStringFromNumber(min + MIN_INTERVAL - 1);
         let sum = 0;
         const firstHour = changeMinuteAndSecondOfHour(hSt, min, 0);
-        const lastHour = changeMinuteAndSecondOfHour(hSt, min + 4, 59);
+        const lastHour = changeMinuteAndSecondOfHour(hSt, min + MIN_INTERVAL - 1, 59);
         while (energyValues[firstHourIndex] !== undefined && energyValues[firstHourIndex][HOUR_LABEL] >= firstHour && energyValues[firstHourIndex][HOUR_LABEL] <= lastHour) {
             sum += energyValues[firstHourIndex][ENERGY_LABEL];
             firstHourIndex++;
@@ -88,8 +88,8 @@ function showDayValues(day) {
     const approximateDayIndex = dateStringBinarySearch(day);
     if(approximateDayIndex === -1){
         let result = [];
-        for (let i = 0; i < 24; i++) {
-            const key = getStringFromNumber(i) + "-" + getStringFromNumber(i+1);
+        for (let i = 0; i < HOURS_IN_DAY; i++) {
+            const key = getStringFromNumber(i) + "-" + getStringFromNumber(i + 1);
             const elementToAdd = [
                 key, 0
             ];
@@ -104,7 +104,7 @@ function showDayValues(day) {
             break;
     }
     firstDayIndex++;
-    for (let hour = 0; hour < 24; hour++) {
+    for (let hour = 0; hour < HOURS_IN_DAY; hour++) {
         let totalKwh = 0;
         let firstTime, lastTime;
         if (parseInt(energyValues[firstDayIndex][HOUR_LABEL].split(":")[0]) === hour) {
@@ -140,10 +140,10 @@ function showDayValues(day) {
  */
 const showWeekValues = (week) => {
     let arrayRes = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < DAYS_IN_WEEK; i++) {
         const searchResult = energyDayValues.find(({data}) => data === week[i]);
         let result = 0;
-        if(searchResult !== undefined && searchResult !== null)
+        if (searchResult !== undefined && searchResult !== null)
             result = searchResult.kWh
         const key = italianDayOfTheWeek(i);
         arrayRes.push([
@@ -185,9 +185,9 @@ const showMonthValues = (month, year) => {
  */
 const showYearValues = (year) => {
     let arrayRes = []
-    for (let month = 1; month <= 12; month++) {
+    for (let month = 1; month <= MONTHS_IN_YEAR; month++) {
         let monthlyKwh = 0;
-        const numOfDays = new Date(parseInt(year)+2000, month, 0).getDate();
+        const numOfDays = new Date(parseInt(year) + 2000, month, 0).getDate();
         for (let day = 1; day <= numOfDays; day++) {
             const dayConsidered = getStringFromNumber(month) + "/" + getStringFromNumber(day) + "/" + year;
             const searchResult = energyDayValues.find(({data}) => data === dayConsidered);
@@ -220,7 +220,7 @@ async function initializeEnergyValues() {
         step : function (row) {
             const day = row.data[DATE_LABEL];
             const value = row.data[ENERGY_LABEL];
-            if (value < 20000) {
+            if (value < MAX_WATT) {
                 if (energyDayValues.length === 0 || energyDayValues[energyDayValues.length - 1].data !== day) {
                     energyDayValues.push({
                         data: day,
