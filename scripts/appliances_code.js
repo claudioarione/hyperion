@@ -68,7 +68,6 @@ function showAppliances() {
     applCategoryImg.src = "/images/appliance_icons/general.png";
 }
 
-showAppliances();
 
 addApplianceBtn.onclick = ()=>{
 

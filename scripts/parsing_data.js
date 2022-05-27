@@ -254,10 +254,13 @@ async function initializeEnergyValues() {
             });
             showWeekChart(fromDatePickerToFormat(datePicker.value));
             updateIndexes();
-            showPage();
-
+            showAppliances();
             showRates();
             initNewRateForm();
+            showDetails();
+            setUpDetailsDropdown();
+
+            showPage();
         }
     });
 }

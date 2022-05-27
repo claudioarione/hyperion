@@ -279,6 +279,3 @@ function setUpDetailsChart(searchDetails) {
         }]
     });
 }
-
-showDetails();
-setUpDetailsDropdown();
