@@ -15,7 +15,7 @@ function dateStringBinarySearch(day) {
     let start = 0, end = energyValues.length-1;
     while (start<=end){
         const mid = start + Math.floor((end - start) / 2);
-        const foundDate = energyValues[mid]["data"];
+        const foundDate = energyValues[mid][DATE_LABEL];
         if(foundDate === day) return mid;
         if(dateCompare(foundDate, day) === -1)
             start = mid + 1;
@@ -44,17 +44,17 @@ function showHourValues(day, hSt) {
         return result;
     }
     let firstHourIndex = approximateDayIndex;
-    while (firstHourIndex >= 0 && energyValues[firstHourIndex]["ora"] >= hSt && !dateCompare(energyValues[firstHourIndex]["data"], day)) {
+    while (firstHourIndex >= 0 && energyValues[firstHourIndex][HOUR_LABEL] >= hSt && !dateCompare(energyValues[firstHourIndex][DATE_LABEL], day)) {
         firstHourIndex--
     }
     firstHourIndex++
-    while (firstHourIndex < energyValues.length && energyValues[firstHourIndex]["ora"] < hSt && !dateCompare(energyValues[firstHourIndex]["data"], day)) {
+    while (firstHourIndex < energyValues.length && energyValues[firstHourIndex][HOUR_LABEL] < hSt && !dateCompare(energyValues[firstHourIndex][DATE_LABEL], day)) {
         firstHourIndex++;
     }
     if (energyValues[firstHourIndex] === undefined) {
         firstHourIndex--;
     }
-    if (energyValues[firstHourIndex]["ora"].split(":")[0] !== hSt.split(":")[0]) {
+    if (energyValues[firstHourIndex][HOUR_LABEL].split(":")[0] !== hSt.split(":")[0]) {
         for (let min = 0; min < 60; min += 5) {
             const key = getStringFromNumber(min) + "-" + getStringFromNumber(min + 4);
             result.push([
@@ -67,8 +67,8 @@ function showHourValues(day, hSt) {
         let sum = 0;
         const firstHour = changeMinuteAndSecondOfHour(hSt, min, 0);
         const lastHour = changeMinuteAndSecondOfHour(hSt, min + 4, 59);
-        while (energyValues[firstHourIndex] !== undefined && energyValues[firstHourIndex]["ora"] >= firstHour && energyValues[firstHourIndex]["ora"] <= lastHour) {
-            sum += energyValues[firstHourIndex]["watt"];
+        while (energyValues[firstHourIndex] !== undefined && energyValues[firstHourIndex][HOUR_LABEL] >= firstHour && energyValues[firstHourIndex][HOUR_LABEL] <= lastHour) {
+            sum += energyValues[firstHourIndex][ENERGY_LABEL];
             firstHourIndex++;
         }
         const value = (sum * MISURATION_INTERVAL) / (1000 * 3600);
@@ -100,24 +100,24 @@ function showDayValues(day) {
     let result = [];
     let firstDayIndex = approximateDayIndex;
     for (; firstDayIndex >= 0 ; firstDayIndex--) {
-        if(dateCompare(energyValues[firstDayIndex]["data"], day))
+        if (dateCompare(energyValues[firstDayIndex][DATE_LABEL], day))
             break;
     }
     firstDayIndex++;
     for (let hour = 0; hour < 24; hour++) {
         let totalKwh = 0;
         let firstTime, lastTime;
-        if(parseInt(energyValues[firstDayIndex]["ora"].split(":")[0]) === hour) {
-            let hourlyWatts = 0, count=0;
-            firstTime = energyValues[firstDayIndex]["ora"].split(":");
+        if (parseInt(energyValues[firstDayIndex][HOUR_LABEL].split(":")[0]) === hour) {
+            let hourlyWatts = 0, count = 0;
+            firstTime = energyValues[firstDayIndex][HOUR_LABEL].split(":");
             for (; firstDayIndex < energyValues.length; firstDayIndex++) {
-                hourlyWatts += energyValues[firstDayIndex]["watt"];
+                hourlyWatts += energyValues[firstDayIndex][ENERGY_LABEL];
                 count++;
                 if (energyValues[firstDayIndex + 1] === undefined) {
-                    lastTime = energyValues[firstDayIndex]["ora"].split(":");
+                    lastTime = energyValues[firstDayIndex][HOUR_LABEL].split(":");
                     break;
-                } else if (parseInt(energyValues[firstDayIndex + 1]["ora"].split(":")[0]) !== hour) {
-                    lastTime = energyValues[firstDayIndex]["ora"].split(":");
+                } else if (parseInt(energyValues[firstDayIndex + 1][HOUR_LABEL].split(":")[0]) !== hour) {
+                    lastTime = energyValues[firstDayIndex][HOUR_LABEL].split(":");
                     firstDayIndex++;
                     break;
                 }
@@ -218,9 +218,9 @@ async function initializeEnergyValues() {
         worker: true,
         dynamicTyping : true,
         step : function (row) {
-            const day = row.data["data"];
-            const value = row.data["watt"];
-            if(value < 20000) {
+            const day = row.data[DATE_LABEL];
+            const value = row.data[ENERGY_LABEL];
+            if (value < 20000) {
                 if (energyDayValues.length === 0 || energyDayValues[energyDayValues.length - 1].data !== day) {
                     energyDayValues.push({
                         data: day,
@@ -231,10 +231,10 @@ async function initializeEnergyValues() {
                 }
                 energyValues.push(row.data);
 
-                if (row.data["ora"] === undefined) {
+                if (row.data[HOUR_LABEL] === undefined) {
                     return;
                 }
-                const hour = parseInt(row.data["ora"].split(":")[0]);
+                const hour = parseInt(row.data[HOUR_LABEL].split(":")[0]);
 
                 if (energyHourValues.length === 0 || energyHourValues[energyHourValues.length - 1].hour !== hour) {
                     energyHourValues.push({
