@@ -56,10 +56,7 @@ datePicker.addEventListener('change', ()=> {
         }
     });
     updateIndexes();
-    compareWithLastDayOfWeek();
-    compareWithPreviousWeek();
     showDetails();
-
     showRates();
 });
 
