@@ -1,25 +1,3 @@
-const green = {
-    linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-    stops: [
-        [0, '#00ff80'],
-        [1, '#9cffb8']
-    ]
-};
-const red ={
-    linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-    stops: [
-        [0, '#ff0030'],
-        [1, '#e17a3b']
-    ]
-}
-const yellow = {
-    linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-    stops: [
-        [0, 'rgb(255,233,9)'],
-        [1, 'rgba(255,240,107,0.68)']
-    ]
-}
-
 /**
  * Compares two dates in the "mm/dd/yy" string format
  * @param date1 "mm/dd/yy" string indicating the first date of the comparison
