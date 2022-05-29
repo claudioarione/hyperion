@@ -212,12 +212,17 @@ const showYearValues = (year) => {
  */
 async function initializeEnergyValues() {
     const file = await fetch(ENERGY_VALUES_FILE_PATH);
+
+    if (file.status === 404) {
+        window.alert("File .csv con valori energetici non trovato, controllare nuovamente i file di configurazione")
+    }
+
     const blob = await file.blob();
     Papa.parse(blob, {
         header: true,
         worker: true,
-        dynamicTyping : true,
-        step : function (row) {
+        dynamicTyping: true,
+        step: function (row) {
             const day = row.data[DATE_LABEL];
             const value = row.data[ENERGY_LABEL];
             if (value < MAX_WATT) {
