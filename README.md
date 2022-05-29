@@ -23,19 +23,16 @@ Di seguito una guida per l’istallazione del progetto su un dispositivo generic
 Assegnare al dispositivo su cui si sta installando il progetto un hostname univoco. Nel caso di un Raspberry si può
 usare il comando `raspi-config` da terminale.
 
-<aside>
-⚠️ Dopo aver cambiato l’hostname è necessario riavviare il dispositivo per rendere effettive le modifiche
+In alternativa è possibile impostare un indirizzo IP statico
 
-</aside>
+> ⚠️ Dopo aver cambiato l’hostname è necessario riavviare il dispositivo per rendere effettive le modifiche
 
 ## 2. Installazione di Apache Web Server
 
-Dare il comando `sudo apt-get install apache2 -y`
+Installare Apache web server. Su Rapberry ciò può essere fatto con `sudo apt-get install apache2 -y`
 
-<aside>
-🌐 Al termine dell’installazione, inserendo ***hostname*.local** (oppure l’indirizzo ip del Raspberry) nella barra degli indirizzi di un browser da un dispositivo connesso alla stessa rete locale del Raspberry. Si dovrebbe vedere la pagina di benvenuto di Apache. Per esempio, se come hostname si è impostato *hyperion* la pagina è visibile inserendo ***hyperion.local*** nella barra degli indirizzi del browser
 
-</aside>
+> 🌐 Al termine dell’installazione, inserendo ***hostname*.local** (oppure l’indirizzo ip) nella barra degli indirizzi di un browser da un dispositivo connesso alla stessa rete locale del Raspberry, si dovrebbe visualizzare la pagina di benvenuto di Apache. Per esempio, se come hostname si è impostato *hyperion* la pagina è visibile inserendo ***hyperion.local*** nella barra degli indirizzi del browser. Se così non fosse, controllare la sezione troubleshooting Apache.
 
 ## 3. Download del codice dalla repository
 
@@ -54,7 +51,7 @@ git clone https://github.com/claudioarione/hyperion.git .
 Inserire le seguenti righe nel file di configurazione di Apache, situato in `/etc/apache2/apach2.conf`, sostituendo
 /PATH/TO/FILE con la vera path al file contenente le misurazioni energetiche
 
-NOTA: non aggiungere uno slash alla fine della path
+NOTA: **non** aggiungere uno slash alla fine della path
 
 ```yaml
 # directory per energy.csv
@@ -73,10 +70,9 @@ andrà inserito */home/pi/measurements* (e non */home/pi/measurements/*)
 Aprire con un editor di testo il file `util/constants.js` e modificare le constanti `ENERGY_VALUES_FILE_PATH`
 e `MISURATION_INTERVAL`.
 
-<aside>
-💡 Le altre costanti nel file possono essere lasciate ai valori di default o modificate a proprio piacimento. Non garantiamo il corretto funzionamento del sito con una configurazione non standard
 
-</aside>
+> 💡 Le altre costanti nel file possono essere lasciate ai valori di default o modificate a proprio piacimento. Non garantiamo il corretto funzionamento del sito con una configurazione non standard
+
 
 **a. ENERGY_VALUES_FILE_PATH**
 
