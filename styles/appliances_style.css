@@ -327,6 +327,15 @@
     width: 6rem;
 }
 
+.noRates {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #afafaf;
+    vertical-align: middle;
+    margin-top: 10rem;
+    font-weight: 600;
+}
+
 .rateTable {
     font-family: 'Poppins', sans-serif;
     border-collapse: collapse;

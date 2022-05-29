@@ -15,7 +15,10 @@ function showRates() {
     const ratesList = document.getElementById("ratesList");
     ratesList.innerHTML = "";
 
-    // TODO: "Nessuna tariffa" se array vuoto
+    if (rates.length === 0) {
+        ratesList.appendChild(createNoRatesDiv());
+    }
+
     // Create a list item for every rate in rates
     for (let i = 0; i < rates.length; i++) {
         const rateLi = createRateLi(rates[i], i)
@@ -188,6 +191,14 @@ function createPriceTable(prezzi) {
     }
     return table;
 }
+
+function createNoRatesDiv() {
+    const div = document.createElement("div");
+    div.className = "noRates"
+    div.textContent = "Nessuna Tariffa";
+    return div;
+}
+
 
 /**
  * Removes the Rate from the local storage and from the page
