@@ -79,8 +79,7 @@ e `MISURATION_INTERVAL`.
 **a. ENERGY_VALUES_FILE_PATH**
 
 Stringa contente la path (relativa rispetto a `scripts`) al file che contiene le misurazioni energetiche. Per esempio se
-il file si trova in */home/pi/measurements/energy_values.csv* e la cartella */home/pi/measurements* è stata mappata in *
-/csv* nel file di configurazione del web server, la costante dovrà avere il valore `"./csv/energy_values.csv"`
+il file si trova in */home/pi/measurements/energy_values.csv* e la cartella */home/pi/measurements* è stata mappata in */csv* nel file di configurazione del web server, la costante dovrà avere il valore `"./csv/energy_values.csv"`
 
 **b. MISURATION_INTERVAL**
 
