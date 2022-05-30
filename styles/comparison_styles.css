@@ -15,7 +15,7 @@
     display: flex;
 }
 
-.index-container > span, .index-container ul {
+.index-container > span {
     text-align: left;
 }
 
@@ -26,8 +26,10 @@
 
 .comparison_list {
     list-style: disclosure-closed;
+    text-align: left;
 }
 
 .comparison_list li {
     margin-bottom: 1rem;
+    text-align: left;
 }

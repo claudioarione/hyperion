@@ -62,7 +62,7 @@ function italianDayOfTheWeek(day) {
         case 5: return "Sabato"
         case 6: return "Domenica"
     }
-    throw new Error("Not valid day of the week")
+    return "Lunedì";
 }
 
 /**
