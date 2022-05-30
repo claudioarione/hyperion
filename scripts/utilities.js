@@ -339,15 +339,36 @@ function fromWattAndMinutesToKwh(watt, minutes) {
     return (watt / 1000) * (minutes / 60);
 }
 
+/**
+ * Checks the give date is an italian holiday using HOLIDAYS_ARRAY in constants.js
+ * @param {string} date "mm/dd/yy" string
+ * @returns {boolean} true if the date is a holiday
+ */
+function dateIsHoliday(date) {
+    for (let i = 0; i < HOLIDAYS_ARRAY.length; i++) {
+        if (date.startsWith(HOLIDAYS_ARRAY[i])) {
+            return true;
+        }
+    }
+    return false;
+}
 
 /**
  * Returns an integer representing the day of the week, from 0 (Monday) to 6 (Sunday)
- * @param date "mm/dd/yy" string
- * @return {number} an integer representing the day of the week, from 0 (Monday) to 6 (Sunday)
+ * @param {string} date "mm/dd/yy" string
+ * @return {number} an integer representing the day of the week, from 0 (Monday) to 6 (Sunday), or 6 if the day is in HOLIDAYS_ARRAY
  */
 function fromFormatToDayInWeekIndex(date) {
     const partsOfDate = date.split("/");
-    const dayToPass = new Date(parseInt(partsOfDate[2]) + 2000, parseInt(partsOfDate[0]) - 1, parseInt(partsOfDate[1]));
+    const year = parseInt(partsOfDate[2]) + 2000;
+    const month = parseInt(partsOfDate[0]) - 1;
+    const day = parseInt(partsOfDate[1]);
+
+    if (dateIsHoliday(date)) {
+        return 6;
+    }
+
+    const dayToPass = new Date(year, month, day);
     return (dayToPass.getDay() + 6) % 7;
 }
 
