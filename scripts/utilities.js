@@ -352,6 +352,19 @@ function fromFormatToDayInWeekIndex(date) {
 }
 
 /**
+ * Changes the format of the date from "mm/dd/yy" to "yyyy-mm-dd"
+ * @param date a string representing the date in the csv format "mm/dd/yy"
+ * @returns {string} a "yyyy-mm-dd" string - a date in the format recognised by the date picker
+ */
+function fromFormatToDatePicker(date) {
+    const partsOfDate = date.split("/");
+    const day = partsOfDate[1];
+    const month = partsOfDate[0];
+    const year = parseInt(partsOfDate[2]) + 2000;
+    return year + "-" + month + "-" + day;
+}
+
+/**
  * Returns a string like "Lun-Ven" or "Sab" or "" from an array of booleans
  * @param giorni an array of booleans with 7 elements, representing the week days
  * @returns {string} a string representing the array; empty string if all elements are "false"
