@@ -7,7 +7,6 @@ const detailsEndingTime = document.getElementById('detailsEndingTime');
 const addDetailBtn = document.getElementById('addDetailButton');
 const detailsList = document.getElementById('detailsList');
 const detailsTitle = document.getElementById('detailsTitle');
-console.log("appliance: " + appliances)
 let isInitialTimeOk = false, isFinalTimeOk = false, isTimeDiffOkay = false, isApplianceOk;
 
 /**
@@ -16,7 +15,6 @@ let isInitialTimeOk = false, isFinalTimeOk = false, isTimeDiffOkay = false, isAp
 function checkAddDetailBtnEnabling() {
     isTimeDiffOkay = detailsInitialTime.value < detailsEndingTime.value;
     isApplianceOk = (appliances !== undefined && appliances.length !== 0)
-    console.log(isInitialTimeOk + " and " + isFinalTimeOk + " and " + isApplianceOk + " and " + isTimeDiffOkay)
     enableOrDisableBtn(addDetailBtn, isInitialTimeOk && isFinalTimeOk && isApplianceOk && isTimeDiffOkay)
 }
 
