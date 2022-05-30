@@ -33,7 +33,6 @@ In alternativa è possibile impostare un indirizzo IP statico
 Aggiornare gli elenchi dei pacchetti con `sudo apt-get update`.
 Installare Apache web server. Su Raspberry ciò può essere fatto con `sudo apt-get install apache2 -y`
 
-
 > 🌐 Al termine dell’installazione, inserendo ***hostname*.local** (oppure l’indirizzo ip) nella barra degli indirizzi di un browser da un dispositivo connesso alla stessa rete locale del Raspberry, si dovrebbe visualizzare la pagina di benvenuto di Apache. Per esempio, se come hostname si è impostato *hyperion* la pagina è visibile inserendo ***hyperion.local*** nella barra degli indirizzi del browser. Se così non fosse, controllare la sezione troubleshooting Apache.
 
 ## 3. Download del codice dalla repository
@@ -47,6 +46,7 @@ sudo su
 rm index.html
 git clone https://github.com/claudioarione/hyperion.git .
 ```
+> ⚠️ Non dimenticarsi il '.' alla fine dell'URL nel comando git clone, altrimenti la repository viene clonata in una sottocartella
 
 ## 4. Configurazione del web server
 
