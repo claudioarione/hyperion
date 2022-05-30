@@ -187,6 +187,13 @@ img {
     display: flex;
 }
 
+.info_and_dp_home label {
+    position: absolute;
+    top: 43%;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
 /* ===== INDEXES =====*/
 .index_container {
     row-gap: 2rem;

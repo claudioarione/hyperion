@@ -62,7 +62,7 @@ function italianDayOfTheWeek(day) {
         case 5: return "Sabato"
         case 6: return "Domenica"
     }
-    throw new Error("Not valid day of the week")
+    return "Lunedì";
 }
 
 /**
@@ -370,6 +370,19 @@ function fromFormatToDayInWeekIndex(date) {
 
     const dayToPass = new Date(year, month, day);
     return (dayToPass.getDay() + 6) % 7;
+}
+
+/**
+ * Changes the format of the date from "mm/dd/yy" to "yyyy-mm-dd"
+ * @param date a string representing the date in the csv format "mm/dd/yy"
+ * @returns {string} a "yyyy-mm-dd" string - a date in the format recognised by the date picker
+ */
+function fromFormatToDatePicker(date) {
+    const partsOfDate = date.split("/");
+    const day = partsOfDate[1];
+    const month = partsOfDate[0];
+    const year = parseInt(partsOfDate[2]) + 2000;
+    return year + "-" + month + "-" + day;
 }
 
 /**

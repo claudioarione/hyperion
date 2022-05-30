@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="/images/hyperion.ico" rel="icon"/>
+    <link href="/images/logo/hyperion.ico" rel="icon"/>
 
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/main_chart_style.css">
@@ -34,20 +34,20 @@
 <!--===== MAIN JS  =====-->
 <script defer src="utils/constants.js"></script>
 <script defer src="scripts/utilities.js"></script>
-<script defer src="scripts/parsing_data.js"></script>
-<script defer src="scripts/main_chart_code.js"></script>
-<script defer src="scripts/comparison_script.js"></script>
-<script defer src="scripts/index_code.js"></script>
-<script defer src="scripts/appliances_code.js"></script>
-<script defer src="scripts/rates_code.js"></script>
-<script defer src="scripts/details_script.js"></script>
+<script defer src="scripts/parsing.js"></script>
+<script defer src="scripts/chart.js"></script>
+<script defer src="scripts/comparison.js"></script>
+<script defer src="scripts/main.js"></script>
+<script defer src="scripts/appliances.js"></script>
+<script defer src="scripts/rates.js"></script>
+<script defer src="scripts/details.js"></script>
 
 <!--HEADER-->
 <header class="l-header">
     <nav class="nav bd-grid">
         <div class="logo__container">
             <a href="#home" class="nav__logo">
-                <img src="images/utils/hyperion_logo.png" width="80px" alt="Logo">
+                <img alt="Logo" src="images/logo/hyperion_logo.png" width="80px">
             </a>
             <span class="title">Hyperion</span>
         </div>
@@ -72,9 +72,8 @@
     <section class="home bd-grid" id="home">
 
         <div class="info_and_dp_home">
-            <div style="display: grid">
-                <label for="datePicker"></label><input class="date__picker" id="datePicker" type="date">
-            </div>
+            <label for="datePicker">Seleziona una data</label>
+            <input class="date__picker" id="datePicker" type="date">
         </div>
 
         <div class="btn-chart-container">
@@ -141,7 +140,7 @@
         <h2 class="section-title">Indici e confronti</h2>
 
         <div class="index_container bd-grid">
-            <div id="project_container">
+            <div id="all_indexes_container">
                 <div class="index-container">
                     <div class='battery'>
                         <div class="battery-charge" id="firstIndexBattery"></div>

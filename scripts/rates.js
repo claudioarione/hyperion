@@ -106,9 +106,6 @@ function initNewRateForm() {
             alert("Aggiungere almeno una fascia di prezzo");
         }
 
-        // TODO: controllo di completezza delle fasce di prezzo
-        // TODO: devono poter esistere due tariffe con lo stesso nome?
-
         newRate.nome = newRateTitle.value;
 
         const rates = JSON.parse(localStorage.getItem("rates"));
@@ -233,7 +230,6 @@ function getCheckedDays() {
  */
 function suggestNextValues() {
     // end hour becomes start hour of next price
-    // TODO: try to fill in the next values in a "smart" way (try to fill the voids in the price table),
     // i.e if I add 19-8 then suggest 8-19 next (of the same days)
     // magari consultando newRate.prezzi
 

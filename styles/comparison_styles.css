@@ -15,6 +15,10 @@
     display: flex;
 }
 
+.index-container > span {
+    text-align: left;
+}
+
 .index__text {
     margin-left: 3rem;
     max-width: 48rem;
@@ -22,8 +26,10 @@
 
 .comparison_list {
     list-style: disclosure-closed;
+    text-align: left;
 }
 
 .comparison_list li {
     margin-bottom: 1rem;
+    text-align: left;
 }

@@ -1,7 +1,3 @@
-// noinspection JSUnusedGlobalSymbols
-
-// TODO surround with try-catch block showXValues functions in order to show a warning indicating no data
-
 let energyValues = [];
 let energyDayValues = [];
 let energyHourValues = [];
@@ -253,10 +249,10 @@ async function initializeEnergyValues() {
             }
         },
         complete : function () {
-            console.log('Ho finito di analizzare i dati');
             energyDayValues.forEach((day) => {
                 day.kWh = (day.watt * MISURATION_INTERVAL) / (3600 * 1000);
             });
+            datePicker.value = fromFormatToDatePicker(energyDayValues[energyDayValues.length - 1].data);
             showWeekChart(fromDatePickerToFormat(datePicker.value));
             updateIndexes();
             showAppliances();
