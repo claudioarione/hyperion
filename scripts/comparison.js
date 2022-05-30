@@ -24,13 +24,11 @@ function setContentOfBattery(result, batteryId) {
  * @returns {number} a number from 0 to 100 indicating the level of charge of the battery
  */
 function computeChargeLevel(result) {
-    if (result < 0) {
-        return 50 + (-result / 2);   // -100 is 100% charged, 0 is 50% charged
+    result = Math.abs(result)
+    if (result > 100) {
+        result = 100;
     }
-    if (result > 200)
-        return 10;       // 200% more KWa used, battery discharged
-
-    return 50 - (result / 5);         // 0 is 50%, 100 is ~25%, 200 is ~10%
+    return result;
 }
 
 /**
@@ -41,12 +39,12 @@ function computeChargeLevel(result) {
 function computeBackgroundColors(result) {
 
     // less than 50% energy than last period
-    if (result < -50) {
+    if (result < -10) {
         return "linear-gradient(to right, #57f93e, #abfc9f)"  // green
     }
 
     // more than 50% energy than last period
-    if (result > 50) {
+    if (result > 20) {
         return "linear-gradient(to right, #f93c22, #fc6b58)"  // red
     }
 
@@ -216,28 +214,26 @@ function findWorstDays() {
 
     if (worstWeekDay != null || worstMonthDay != null) {
         if (worstWeekDay) {
-            const weekText = 'Consumo più elevato nella settimana di ' +
+            const li = document.createElement('li')
+            li.innerHTML = 'Consumo più elevato nella settimana di ' +
                 fromFormatToItalian(selectedDay) +
                 ': ' +
                 fromFormatToItalian(worstWeekDay.data) +
-                ' (' +
+                ' (' + '<span style="font-weight: bold">' +
                 worstWeekDay.kWh.toFixed(ROUND_TO_DIGITS) +
-                'kWh)';
-            const li = document.createElement('li')
-            li.textContent = weekText;
+                ' kWh' + '</span>' + ')';
             ul.appendChild(li);
         }
         if (worstMonthDay) {
-            const monthText = 'Consumo più elevato nel mese di ' +
+            const li = document.createElement('li')
+            li.innerHTML = 'Consumo più elevato nel mese di ' +
                 italianMonth(parseInt(selectedDay.split('/')[0])) + ' ' +
                 (parseInt(selectedDay.split('/')[2]) + 2000).toString() +
                 ': ' +
                 fromFormatToItalian(worstMonthDay.data) +
-                ' (' +
+                ' (' + '<span style="font-weight: bold">' +
                 worstMonthDay.kWh.toFixed(ROUND_TO_DIGITS) +
-                'kWh)';
-            const li = document.createElement('li')
-            li.textContent = monthText;
+                ' kWh' + '</span>' + ')';
             ul.appendChild(li);
         }
     }
@@ -276,9 +272,9 @@ function compareSamePeriodInDifferentMonths() {
         ') hai consumato ' + curMonthKWh.toFixed(ROUND_TO_DIGITS) + ' kWh';
 
     if (curMonthKWh !== 0 && pastMonthKWh !== 0) {
-        result = 100 - (curMonthKWh / pastMonthKWh) * 100;
+        result = (curMonthKWh / pastMonthKWh) * 100 - 100;
         let plusOrMinus = 'più';
-        if (result > 0) {
+        if (result < 0) {
             plusOrMinus = 'meno';
         }
         textToShow += ', il ' + Math.abs(result).toFixed(ROUND_TO_DIGITS) + '% in ' + plusOrMinus + ' dello stesso periodo di tempo nel mese precedente'
