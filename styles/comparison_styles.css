@@ -15,6 +15,10 @@
     display: flex;
 }
 
+.index-container > span, .index-container ul {
+    text-align: left;
+}
+
 .index__text {
     margin-left: 3rem;
     max-width: 48rem;
