@@ -18,6 +18,8 @@ L'applicazione è stata sviluppata per il corso PROGETTO DI INGEGNERIA INFORMATI
 
 Di seguito una guida per l’istallazione del progetto su un dispositivo generico Linux
 
+## 0. Aggiornamento elenchi dei pacchetti
+
 ## 1. Configurazione iniziale
 
 Assegnare al dispositivo su cui si sta installando il progetto un hostname univoco. Nel caso di un Raspberry si può
@@ -28,8 +30,8 @@ In alternativa è possibile impostare un indirizzo IP statico
 > ⚠️ Dopo aver cambiato l’hostname è necessario riavviare il dispositivo per rendere effettive le modifiche
 
 ## 2. Installazione di Apache Web Server
-
-Installare Apache web server. Su Rapberry ciò può essere fatto con `sudo apt-get install apache2 -y`
+Aggiornare gli elenchi dei pacchetti con `sudo apt-get update`.
+Installare Apache web server. Su Raspberry ciò può essere fatto con `sudo apt-get install apache2 -y`
 
 
 > 🌐 Al termine dell’installazione, inserendo ***hostname*.local** (oppure l’indirizzo ip) nella barra degli indirizzi di un browser da un dispositivo connesso alla stessa rete locale del Raspberry, si dovrebbe visualizzare la pagina di benvenuto di Apache. Per esempio, se come hostname si è impostato *hyperion* la pagina è visibile inserendo ***hyperion.local*** nella barra degli indirizzi del browser. Se così non fosse, controllare la sezione troubleshooting Apache.
@@ -48,7 +50,7 @@ git clone https://github.com/claudioarione/hyperion.git .
 
 ## 4. Configurazione del web server
 
-Inserire le seguenti righe nel file di configurazione di Apache, situato in `/etc/apache2/apach2.conf`, sostituendo
+Inserire le seguenti righe nel file di configurazione di Apache, situato in `/etc/apache2/apache2.conf`, sostituendo
 /PATH/TO/FILE con la vera path al file contenente le misurazioni energetiche
 
 NOTA: **non** aggiungere uno slash alla fine della path
