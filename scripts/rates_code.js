@@ -6,7 +6,7 @@ let rates;
 function showRates() {
     let getLocalStorageData = localStorage.getItem("rates");
     if (getLocalStorageData === null || getLocalStorageData === undefined) {
-        rates = [];
+        rates = DEFAULT_RATES;
         localStorage.setItem("rates", JSON.stringify(rates))
     } else {
         rates = JSON.parse(getLocalStorageData);

@@ -38,7 +38,125 @@ const MAX_WATT = 20000;
  * Array of "MM/dd" strings to be considered as a holiday for computing rate costs
  * @type {string[]}
  */
-const HOLIDAYS_ARRAY = ["01/01", "01/06", "04/25", "05/01", "06/02", "08/15", "11/01", "12/08", "12/25", "12/26"]
+const HOLIDAYS_ARRAY = ["01/01", "01/06", "04/25", "05/01", "06/02", "08/15", "11/01", "12/08", "12/25", "12/26"];
+/**
+ * Array of default rates to be shown if the local storage is empty (i.e: first visit to the website)
+ */
+const DEFAULT_RATES = [
+    {
+        "nome": "Tariffa Bioraria",
+        "prezzi": [
+            {
+                "giorni": [
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    false,
+                    false
+                ],
+                "prezzo": 0.32189,
+                "inizio": 8,
+                "fine": 19
+            },
+            {
+                "giorni": [
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    false,
+                    false
+                ],
+                "prezzo": 0.26679,
+                "inizio": 19,
+                "fine": 8
+            },
+            {
+                "giorni": [
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    true,
+                    true
+                ],
+                "prezzo": 0.26679,
+                "inizio": 0,
+                "fine": 24
+            }
+        ]
+    },
+    {
+        "nome": "Tariffa Senza orari",
+        "prezzi": [
+            {
+                "giorni": [
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                ],
+                "prezzo": 0.285,
+                "inizio": 0,
+                "fine": 24
+            }
+        ]
+    },
+    {
+        "nome": "Tariffa Notte e Festivi",
+        "prezzi": [
+            {
+                "giorni": [
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    false
+                ],
+                "prezzo": 0,
+                "inizio": 23,
+                "fine": 7
+            },
+            {
+                "giorni": [
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    true
+                ],
+                "prezzo": 0,
+                "inizio": 0,
+                "fine": 24
+            },
+            {
+                "giorni": [
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    false
+                ],
+                "prezzo": 0.56973,
+                "inizio": 7,
+                "fine": 23
+            }
+        ]
+    }
+];
 
 /******************************* DISPLAY **********************************/
 /**
@@ -48,7 +166,7 @@ const HOLIDAYS_ARRAY = ["01/01", "01/06", "04/25", "05/01", "06/02", "08/15", "1
  */
 const ROUND_TO_DIGITS = 3;
 
-/*************************** CHART COLORS **********************************/
+/*************************** CHART COLORS ***************************** ***/
 const green = {
     linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
     stops: [
@@ -77,5 +195,3 @@ const MINS_IN_HOUR = 60;
 const HOURS_IN_DAY = 24;
 const DAYS_IN_WEEK = 7;
 const MONTHS_IN_YEAR = 12;
-
-
