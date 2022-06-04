@@ -33,6 +33,17 @@ const ENERGY_LABEL = "watt";
  */
 const MAX_WATT = 20000;
 
+/**************************** INDEX CONFIG ********************************/
+/** max length of the "batteries" next to the first four indexes */
+const MAX_BATTERY_WIDTH = 100;
+// battery thresholds
+const BATTERY_THRESHOLD_GREEN = -10;
+const BATTERY_THRESHOLD_RED = 20;
+// battery colors
+const BATTERY_COLOR_GREEN = "linear-gradient(to right, #57f93e, #abfc9f)";
+const BATTERY_COLOR_YELLOW = "linear-gradient(to right, #eaea02, #efefac)";
+const BATTERY_COLOR_RED = "linear-gradient(to right, #f93c22, #fc6b58)";
+
 /**************************** RATES CONFIG ********************************/
 /**
  * Array of "MM/dd" strings to be considered as a holiday for computing rate costs
@@ -166,22 +177,22 @@ const DEFAULT_RATES = [
  */
 const ROUND_TO_DIGITS = 3;
 
-/*************************** CHART COLORS ***************************** ***/
-const green = {
+/*************************** CHART COLORS *********************************/
+const CHART_COLOR_GREEN = {
     linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
     stops: [
         [0, '#00ff80'],
         [1, '#9cffb8']
     ]
 };
-const red = {
+const CHART_COLOR_RED = {
     linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
     stops: [
         [0, '#ff0030'],
         [1, '#e17a3b']
     ]
 }
-const yellow = {
+const CHART_COLOR_YELLOW = {
     linearGradient: {x1: 0, x2: 0, y1: 0, y2: 1},
     stops: [
         [0, 'rgb(255,233,9)'],
@@ -195,3 +206,5 @@ const MINS_IN_HOUR = 60;
 const HOURS_IN_DAY = 24;
 const DAYS_IN_WEEK = 7;
 const MONTHS_IN_YEAR = 12;
+const SECONDS_IN_HOUR = 3600;
+const WATT_IN_KW = 1000;

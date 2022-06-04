@@ -25,8 +25,8 @@ function setContentOfBattery(result, batteryId) {
  */
 function computeChargeLevel(result) {
     result = Math.abs(result)
-    if (result > 100) {
-        result = 100;
+    if (result > MAX_BATTERY_WIDTH) {
+        result = MAX_BATTERY_WIDTH;
     }
     return result;
 }
@@ -39,16 +39,16 @@ function computeChargeLevel(result) {
 function computeBackgroundColors(result) {
 
     // less than 50% energy than last period
-    if (result < -10) {
-        return "linear-gradient(to right, #57f93e, #abfc9f)"  // green
+    if (result < BATTERY_THRESHOLD_GREEN) {
+        return BATTERY_COLOR_GREEN // green
     }
 
     // more than 50% energy than last period
-    if (result > 20) {
-        return "linear-gradient(to right, #f93c22, #fc6b58)"  // red
+    if (result > BATTERY_THRESHOLD_RED) {
+        return BATTERY_COLOR_RED  // red
     }
 
-    return "linear-gradient(to right, #eaea02, #efefac)" // yellow
+    return BATTERY_COLOR_YELLOW // yellow
 }
 
 /**

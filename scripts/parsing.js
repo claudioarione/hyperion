@@ -67,7 +67,7 @@ function showHourValues(day, hSt) {
             sum += energyValues[firstHourIndex][ENERGY_LABEL];
             firstHourIndex++;
         }
-        const value = (sum * MISURATION_INTERVAL) / (1000 * 3600);
+        const value = (sum * MISURATION_INTERVAL) / (WATT_IN_KW * SECONDS_IN_HOUR);
         result.push([
             key, value
         ]);
@@ -118,8 +118,8 @@ function showDayValues(day) {
                     break;
                 }
             }
-            const deltaTime = (lastTime[0] - firstTime[0])*3600 + (lastTime[1] -  firstTime[1])*60 + (lastTime[2] - firstTime[2]);
-            totalKwh = (hourlyWatts/count)*deltaTime/(3600*1000);
+            const deltaTime = (lastTime[0] - firstTime[0]) * SECONDS_IN_HOUR + (lastTime[1] - firstTime[1]) * 60 + (lastTime[2] - firstTime[2]);
+            totalKwh = (hourlyWatts / count) * deltaTime / (SECONDS_IN_HOUR * WATT_IN_KW);
         }
         const key = getStringFromNumber(hour)+"-"+getStringFromNumber(hour+1)
         result.push([
@@ -250,7 +250,7 @@ async function initializeEnergyValues() {
         },
         complete : function () {
             energyDayValues.forEach((day) => {
-                day.kWh = (day.watt * MISURATION_INTERVAL) / (3600 * 1000);
+                day.kWh = (day.watt * MISURATION_INTERVAL) / (SECONDS_IN_HOUR * WATT_IN_KW);
             });
             datePicker.value = fromFormatToDatePicker(energyDayValues[energyDayValues.length - 1].data);
             showWeekChart(fromDatePickerToFormat(datePicker.value));

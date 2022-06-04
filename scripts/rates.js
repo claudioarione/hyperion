@@ -337,7 +337,7 @@ function getTotalCostFromArray(array, rate) {
         rate.prezzi.forEach((priceElement) => {
             if (priceElement.giorni[dayOfTheWeek] === true) {
                 if (hourIsInPriceRate(element.hour, priceElement)) {
-                    res += ((element.watt * MISURATION_INTERVAL) / (1000 * 3600)) * priceElement.prezzo;
+                    res += ((element.watt * MISURATION_INTERVAL) / (1000 * SECONDS_IN_HOUR)) * priceElement.prezzo;
                 }
             }
         });

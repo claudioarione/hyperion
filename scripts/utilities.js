@@ -96,21 +96,21 @@ function getWeekArrayFromDate(date){
 function getColorByKwh(kwh, type){
     switch (type) {
         case 0:
-            if(kwh >= (1/12)) return red;
-            if(kwh >= (0.4/12)) return yellow;
-            return green;
+            if (kwh >= (1 / 12)) return CHART_COLOR_RED;
+            if (kwh >= (0.4 / 12)) return CHART_COLOR_YELLOW;
+            return CHART_COLOR_GREEN;
         case 2:
-            if(kwh >= 6.8) return red;
-            if(kwh >= 4.2) return yellow;
-            return green;
+            if (kwh >= 6.8) return CHART_COLOR_RED;
+            if (kwh >= 4.2) return CHART_COLOR_YELLOW;
+            return CHART_COLOR_GREEN;
         case 3:
-            if(kwh >= 190) return red;
-            if(kwh >= 150) return yellow;
-            return green;
+            if (kwh >= 190) return CHART_COLOR_RED;
+            if (kwh >= 150) return CHART_COLOR_YELLOW;
+            return CHART_COLOR_GREEN;
         default:
-            if(kwh >= 1) return red;
-            if(kwh >= 0.4) return yellow;
-            return green;
+            if (kwh >= 1) return CHART_COLOR_RED;
+            if (kwh >= 0.4) return CHART_COLOR_YELLOW;
+            return CHART_COLOR_GREEN;
     }
 }
 
