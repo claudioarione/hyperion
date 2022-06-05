@@ -18,8 +18,6 @@ L'applicazione è stata sviluppata per il corso PROGETTO DI INGEGNERIA INFORMATI
 
 Di seguito una guida per l’istallazione del progetto su un dispositivo generico Linux
 
-## 0. Aggiornamento elenchi dei pacchetti
-
 ## 1. Configurazione iniziale
 
 Assegnare al dispositivo su cui si sta installando il progetto un hostname univoco. Nel caso di un Raspberry si può
